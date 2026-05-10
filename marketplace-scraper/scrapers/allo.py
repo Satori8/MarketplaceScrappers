@@ -14,13 +14,13 @@ class AlloScraper(BaseScraper):
         super().__init__(marketplace_name="allo", config_path=config_path, captcha_callback=captcha_callback)
         self.db = db
 
-    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None) -> list[RawProduct]:
+    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         method = self.config.get("method_preference", "Auto")
         if method == "Browser":
-            return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event)
-        return await self._search_httpx(query, pages, skip_urls, stop_event=stop_event)
+            return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
+        return await self._search_httpx(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
 
-    async def _search_playwright(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None) -> list[RawProduct]:
+    async def _search_playwright(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         try:
             from playwright.async_api import async_playwright
         except ImportError:
@@ -32,7 +32,10 @@ class AlloScraper(BaseScraper):
         selectors = cfg.get("selectors", {})
         
         products: list[RawProduct] = []
-        current_url = search_template.format(query=quote_plus(query))
+        if query.startswith("http"):
+            current_url = query
+        else:
+            current_url = search_template.format(query=quote_plus(query))
 
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=False)
@@ -40,52 +43,98 @@ class AlloScraper(BaseScraper):
             await self.anti_bot.apply_stealth_async(context)
             page = await context.new_page()
             
+            has_reached_out_of_stock = False
             for p_idx in range(int(pages)):
                 if stop_event and stop_event.is_set():
                     logger.info("[Allo] Stop requested.")
                     break
-                await page.goto(current_url, wait_until="networkidle")
+                if has_reached_out_of_stock: break
+                await page.goto(current_url, wait_until="domcontentloaded", timeout=60000)
                 await self.wait_for_captcha(page)
+                await self.auto_scroll_async(page)
                 await page.wait_for_timeout(2000)
 
                 # B17 fix: safety guard against missing selectors
                 card_sel = selectors.get("product_card")
-                if not card_sel:
-                    logger.error("[Allo] 'product_card' selector is missing in config!")
-                    break
 
-                cards = await page.query_selector_all(card_sel)
+                cards = await page.query_selector_all(card_sel) if card_sel else []
+                if not cards:
+                    for fb in ["div.products-layout__item", ".product-card", "a.product-card__title"]:
+                        cards = await page.query_selector_all(fb)
+                        if cards:
+                            logger.info(f"[Allo] Found {len(cards)} cards using fallback '{fb}'")
+                            break
+                            
                 for card in cards:
                     try:
-                        title_sel = selectors.get("title")
-                        price_sel = selectors.get("price")
-                        url_sel = selectors.get("product_url")
+                        # Extract data using JS for precision and speed
+                        data = await card.evaluate("""(node) => {
+                            const find = (sel) => node.querySelector(sel);
+                            
+                            // 1. Link & URL
+                            const a = find('a.product-card__title') || (node.tagName === 'A' ? node : find('a'));
+                            const href = a ? a.getAttribute('href') : null;
+                            
+                            // 2. Title
+                            const title = a ? a.innerText.trim() : '';
+                            
+                            // 3. Price
+                            const priceEl = find('.v-pb__cur .sum') || find('.price-box__cur') || find('.v-price-box__cur .sum');
+                            const priceText = priceEl ? priceEl.innerText : "";
+                            
+                            // 4. Stock Detection (User Markers)
+                            const buyBtn = find('.v-btn--cart');
+                            const outOfStockBtn = find('.v-btn--out-stock');
+                            const outOfStockSpan = find('.out-stock');
+                            
+                            let availability = 'InStock';
+                            if (outOfStockBtn || outOfStockSpan || (buyBtn && buyBtn.title.includes('наличии'))) {
+                                availability = 'OutOfStock';
+                            } else if (buyBtn || (priceText && !outOfStockSpan)) {
+                                availability = 'InStock';
+                            }
+                            
+                            return { href, title, priceText, availability };
+                        }""")
                         
-                        if not all([title_sel, price_sel, url_sel]):
-                            logger.error("[Allo] One or more item selectors are missing!")
-                            continue
+                        if not data['href'] or not data['title']: continue
+                        
+                        
+                        if skip_out_of_stock and data['availability'] == "OutOfStock":
+                            logger.info(f"[Allo] Hit Out of Stock at '{data['title']}'. Stopping pagination.")
+                            has_reached_out_of_stock = True
+                            break
 
-                        title_node = await card.query_selector(title_sel)
-                        price_node = await card.query_selector(price_sel)
-                        url_node = await card.query_selector(url_sel)
-                        if not all([title_node, price_node, url_node]): continue
+                        price = self.parse_price(data['priceText'])
+                        if price is None: continue
                         
-                        title = (await title_node.inner_text()).strip()
-                        price = self.parse_price(await price_node.inner_text())
-                        href = await url_node.get_attribute("href")
-                        if not href or price is None: continue
-                        
-                        products.append(self._create_raw(title, price, urljoin(base_url, href), "allo"))
+                        products.append(
+                            RawProduct(
+                                title=data['title'],
+                                price=price,
+                                currency="UAH",
+                                url=urljoin(base_url, data['href']),
+                                marketplace="allo",
+                                brand=None, model=None, raw_specs={}, description=None,
+                                image_url=None, availability=data['availability'],
+                                rating=None, reviews_count=None, category_path=None,
+                                scraped_at=datetime.now(timezone.utc)
+                            )
+                        )
                     except: continue
                 
-                next_btn = await page.query_selector(selectors.get("next_page"))
-                if not next_btn: break
-                current_url = urljoin(base_url, await next_btn.get_attribute("href"))
+                nxt = await page.query_selector(selectors.get("next_page"))
+                if not nxt: break
+                nxt_url = urljoin(base_url, await nxt.get_attribute("href"))
+                if nxt_url == current_url:
+                    logger.warning("[Allo] Pagination stuck on same page. Stopping.")
+                    break
+                current_url = nxt_url
             
             await browser.close()
         return products
 
-    async def _search_httpx(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None) -> list[RawProduct]:
+    async def _search_httpx(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         import httpx
         from bs4 import BeautifulSoup
         cfg = self.config.get("marketplaces", {}).get("allo", {})
@@ -94,29 +143,99 @@ class AlloScraper(BaseScraper):
         selectors = cfg.get("selectors", {})
         
         products: list[RawProduct] = []
-        current_url = search_template.format(query=quote_plus(query))
+        if query.startswith("http"):
+            current_url = query
+        else:
+            current_url = search_template.format(query=quote_plus(query))
         headers = {"User-Agent": self.get_random_user_agent()}
         
+        has_reached_out_of_stock = False
         async with httpx.AsyncClient(timeout=30.0, follow_redirects=True, headers=headers) as client:
             for _ in range(int(pages)):
                 if stop_event and stop_event.is_set():
                     logger.info("[Allo] Stop requested.")
                     break
+                if has_reached_out_of_stock: break
                 response = await client.get(current_url)
                 if response.status_code != 200: break
                 soup = BeautifulSoup(response.text, "html.parser")
-                cards = soup.select(selectors.get("product_card"))
+                card_sel = selectors.get("product_card")
+                cards = soup.select(card_sel) if card_sel else []
+                if not cards:
+                    for fb in ["div.products-layout__item", ".product-card", "a.product-card__title"]:
+                        cards = soup.select(fb)
+                        if cards:
+                            logger.info(f"[Allo] Found {len(cards)} cards using fallback '{fb}'")
+                            break
+                            
                 page_count = 0
+                has_reached_out_of_stock = False
                 for card in cards:
-                    t_node = card.select_one(selectors.get("title"))
-                    p_node = card.select_one(selectors.get("price"))
-                    u_node = card.select_one(selectors.get("product_url"))
-                    if not all([t_node, p_node, u_node]): continue
+                    title_sel = selectors.get("title")
+                    price_sel = selectors.get("price")
+                    url_sel = selectors.get("product_url")
                     
-                    price = self.parse_price(p_node.get_text())
-                    if price:
-                        products.append(self._create_raw(t_node.get_text(strip=True), price, urljoin(base_url, u_node.get("href")), "allo"))
-                        page_count += 1
+                    t_node = card.select_one(title_sel) if title_sel else None
+                    p_node = card.select_one(price_sel) if price_sel else None
+                    u_node = card.select_one(url_sel) if url_sel else None
+                    
+                    if not u_node and card.name == "a":
+                        u_node = card
+                    if not t_node and card.name == "a":
+                        t_node = card
+                        
+                    if not t_node or not u_node:
+                        t_node = card.select_one("a.product-card__title") or t_node
+                        u_node = card.select_one("a.product-card__title") or u_node
+                        if not t_node or not u_node: continue
+                    
+                    if not p_node:
+                        p_node = card.select_one(".v-pb__cur .sum") or card.select_one(".price-box__cur")
+                        if not p_node and u_node == card:
+                            parent = card.parent
+                            for _ in range(3):
+                                if parent and parent.name != 'body':
+                                    p_node = parent.select_one(".v-pb__cur .sum") or parent.select_one(".price-box__cur")
+                                    if p_node: break
+                                    parent = parent.parent
+
+                    price_text = p_node.get_text() if p_node else ""
+                    price = self.parse_price(price_text) or 0.0
+
+                    # Stock Detection (User Markers)
+                    buy_btn = card.select_one(".v-btn--cart")
+                    out_stock_btn = card.select_one(".v-btn--out-stock")
+                    out_stock_span = card.select_one(".out-stock")
+                    
+                    availability = "InStock"
+                    if out_stock_btn or out_stock_span or (buy_btn and "наявності" in (buy_btn.get("title") or "")):
+                        availability = "OutOfStock"
+                    
+                    if skip_out_of_stock and availability == "OutOfStock":
+                        logger.info(f"[Allo HTTPX] Hit Out of Stock at '{t_node.get_text(strip=True)}'. Stopping pagination.")
+                        has_reached_out_of_stock = True
+                        break
+
+                    products.append(
+                        RawProduct(
+                            title=t_node.get_text(strip=True),
+                            price=price,
+                            currency="UAH",
+                            url=urljoin(base_url, u_node.get("href")),
+                            marketplace="allo",
+                            brand=None,
+                            model=None,
+                            raw_specs={},
+                            description=None,
+                            image_url=None,
+                            availability=availability,
+                            rating=None,
+                            reviews_count=None,
+                            category_path=None,
+                            scraped_at=datetime.now(timezone.utc)
+                        )
+                    )
+                    page_count += 1
                 
                 logger.info(f"[Allo] Page {_ + 1}: Found {page_count} products.")
                 

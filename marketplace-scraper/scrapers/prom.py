@@ -15,13 +15,13 @@ class PromScraper(BaseScraper):
         super().__init__(marketplace_name="prom", config_path=config_path, captcha_callback=captcha_callback)
         self.db = db
 
-    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None) -> list[RawProduct]:
+    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         method = self.config.get("method_preference", "Auto")
         if method == "Browser":
-            return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event)
-        return await self._search_httpx(query, pages, skip_urls, stop_event=stop_event)
+            return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
+        return await self._search_httpx(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
 
-    async def _search_playwright(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None) -> list[RawProduct]:
+    async def _search_playwright(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         try:
             from playwright.async_api import async_playwright
         except ImportError:
@@ -44,31 +44,87 @@ class PromScraper(BaseScraper):
             await self.anti_bot.apply_stealth_async(context)
             page = await context.new_page()
             
+            has_reached_out_of_stock = False
             for p_idx in range(int(pages)):
                 if stop_event and stop_event.is_set(): break
+                if has_reached_out_of_stock: break
                 try:
                     await page.goto(current_url, wait_until="networkidle")
                     await self.wait_for_captcha(page)
+                    await self.auto_scroll_async(page)
                     await page.wait_for_timeout(2000)
 
                     cards = await page.query_selector_all(selectors.get("product_card"))
+                    if not cards:
+                        for fb in ["[data-qaid='product_gallery'] > div", ".js-productad", "[data-qaid='product_block']", "a[href*='/p']"]:
+                            cards = await page.query_selector_all(fb)
+                            if cards:
+                                logger.info(f"[Prom] Found {len(cards)} cards using fallback '{fb}'")
+                                break
+
                     for card in cards:
                         if stop_event and stop_event.is_set(): break
                         try:
-                            title_node = await card.query_selector(selectors.get("title"))
-                            price_node = await card.query_selector(selectors.get("price"))
-                            url_node = await card.query_selector(selectors.get("product_url"))
-                            if not all([title_node, price_node, url_node]): continue
+                            # Extract data using JS for precision
+                            data = await card.evaluate("""(node) => {
+                                const find = (sel) => node.querySelector(sel);
+                                
+                                // 1. Link & URL
+                                const a = find('[data-qaid="product_link"]') || find('a[href*="/p"]') || (node.tagName === 'A' ? node : null);
+                                const href = a ? a.getAttribute('href') : null;
+                                
+                                // 2. Title
+                                const titleEl = find('[data-qaid="product_link"]') || find('.M3v0L') || find('a[title]') || a;
+                                const title = titleEl ? titleEl.innerText.trim() : '';
+                                
+                                // 3. Price
+                                const priceEl = find('[data-qaid="product_price"]') || find('.js-product-price');
+                                const priceText = priceEl ? priceEl.innerText : "";
+                                
+                                // 4. Stock Detection (User Markers)
+                                const buyBtn = find('[data-qaid="buy-button"]');
+                                const seeBtn = find('[data-qaid="see_button"]');
+                                const presence = find('[data-qaid="product_presence"]');
+                                
+                                let availability = 'InStock';
+                                const presenceText = presence ? presence.innerText.toLowerCase() : '';
+                                
+                                if (seeBtn || presenceText.includes('недоступний') || presenceText.includes('немає')) {
+                                    availability = 'OutOfStock';
+                                } else if (buyBtn || presenceText.includes('наявності') || presenceText.includes('готовий')) {
+                                    availability = 'InStock';
+                                }
+                                
+                                return { href, title, priceText, availability };
+                            }""")
                             
-                            title = (await title_node.inner_text()).strip()
-                            price = self.parse_price(await price_node.inner_text())
-                            href = await url_node.get_attribute("href")
-                            if not href or price is None: continue
+                            if not data['href'] or not data['title']: continue
                             
-                            products.append(self._create_raw(title, price, urljoin(base_url, href), self.marketplace_name))
+                            if skip_out_of_stock and data['availability'] == "OutOfStock":
+                                logger.info(f"[Prom] Hit Out of Stock at '{data['title']}'. Stopping pagination.")
+                                has_reached_out_of_stock = True
+                                break
+
+                            price = self.parse_price(data['priceText'])
+                            if price is None: continue
+                            
+                            products.append(
+                                RawProduct(
+                                    title=data['title'],
+                                    price=price,
+                                    currency="UAH",
+                                    url=urljoin(base_url, data['href']),
+                                    marketplace="prom",
+                                    brand=None, model=None, raw_specs={}, description=None,
+                                    image_url=None, availability=data['availability'],
+                                    rating=None, reviews_count=None, category_path=None,
+                                    scraped_at=datetime.now(timezone.utc)
+                                )
+                            )
                         except Exception:
                             continue
                     
+                    if has_reached_out_of_stock: break
                     if stop_event and stop_event.is_set(): break
                     next_btn = await page.query_selector(selectors.get("next_page"))
                     if not next_btn: break
@@ -84,7 +140,7 @@ class PromScraper(BaseScraper):
                 pass
         return products
 
-    async def _search_httpx(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None) -> list[RawProduct]:
+    async def _search_httpx(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         import httpx
         from bs4 import BeautifulSoup
         
@@ -108,33 +164,59 @@ class PromScraper(BaseScraper):
         max_pages = int(cfg.get("pages_limit", requested_pages))
         total_pages = min(requested_pages, max_pages)
 
-        current_url = search_template.format(query=quote_plus(query))
+        if query.startswith("http"):
+            current_url = query
+        else:
+            current_url = search_template.format(query=quote_plus(query))
         headers = {"User-Agent": self.get_random_user_agent()}
         products: list[RawProduct] = []
 
+        has_reached_out_of_stock = False
         async with httpx.AsyncClient(timeout=30.0, follow_redirects=True, headers=headers) as client:
             for page_num in range(1, total_pages + 1):
                 if stop_event and stop_event.is_set():
                     logger.info("[Prom] Stop requested in HTTPX loop.")
                     break
+                if has_reached_out_of_stock: break
                 
                 response = await client.get(current_url)
                 response.raise_for_status()
                 soup = BeautifulSoup(response.text, "html.parser")
 
                 cards = soup.select(card_sel)
+                if not cards:
+                    for fb in ["[data-qaid='product_gallery'] > div", ".js-productad", "[data-qaid='product_block']", "a[href*='/p']"]:
+                        cards = soup.select(fb)
+                        if cards:
+                            logger.info(f"[Prom] Found {len(cards)} cards using fallback '{fb}'")
+                            break
+
                 page_found = 0
                 for card in cards:
-                    title_node = card.select_one(title_sel)
-                    url_node = card.select_one(url_sel)
-                    price_node = card.select_one(price_sel)
+                    title_node = card.select_one(title_sel) or card.select_one("[data-qaid='product_link']") or card.select_one(".M3v0L") or card.select_one("a[title]")
+                    url_node = card.select_one(url_sel) or card.select_one("[data-qaid='product_link']") or card.select_one("a[href*='/p']")
+                    price_node = card.select_one(price_sel) or card.select_one("[data-qaid='product_price']") or card.select_one(".js-product-price")
 
-                    if title_node is None or url_node is None or price_node is None:
+                    if not url_node and card.name == "a":
+                        url_node = card
+                    if not title_node and card.name == "a":
+                        title_node = card
+
+                    if title_node is None or url_node is None:
                         continue
 
                     href = url_node.get("href")
                     if not href:
                         continue
+                    
+                    if price_node is None:
+                        # try parent fallback to find price if it's just an <a> tag
+                        parent = card.parent
+                        for _ in range(3):
+                            if parent and parent.name != 'body':
+                                price_node = parent.select_one(price_sel) or parent.select_one("[data-qaid='product_price']") or parent.select_one(".js-product-price")
+                                if price_node: break
+                                parent = parent.parent
                     product_url = urljoin(base_url, href)
                     if product_url in skip_urls:
                         continue
@@ -160,6 +242,23 @@ class PromScraper(BaseScraper):
                             if image_url:
                                 image_url = urljoin(base_url, image_url)
 
+                    # Stock Detection (User Markers)
+                    buy_btn = card.select_one("[data-qaid='buy-button']")
+                    see_btn = card.select_one("[data-qaid='see_button']")
+                    presence = card.select_one("[data-qaid='product_presence']")
+                    
+                    availability = "InStock"
+                    presence_text = presence.get_text().lower() if presence else ""
+                    if see_btn or "недоступний" in presence_text or "немає" in presence_text:
+                        availability = "OutOfStock"
+                    elif buy_btn or "наявності" in presence_text:
+                        availability = "InStock"
+                    
+                    if skip_out_of_stock and availability == "OutOfStock":
+                        logger.info(f"[Prom HTTPX] Hit Out of Stock at '{title}'. Stopping pagination.")
+                        has_reached_out_of_stock = True
+                        break
+
                     products.append(
                         RawProduct(
                             title=title,
@@ -172,7 +271,7 @@ class PromScraper(BaseScraper):
                             raw_specs={},
                             description=None,
                             image_url=image_url,
-                            availability=None,
+                            availability=availability,
                             rating=None,
                             reviews_count=None,
                             category_path=None,

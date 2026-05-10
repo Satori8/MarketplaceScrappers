@@ -137,7 +137,6 @@ class ProductRepository:
 
     def _save_raw_specs(self, product_id: int, specs: dict) -> None:
         conn = self.db.get_connection()
-        # B23 fix: removed redundant double-serialization of same data
         specs_str = json.dumps(specs, ensure_ascii=False)
         conn.execute(
             """
@@ -158,15 +157,12 @@ class ProductRepository:
         conn.execute(
             """
             UPDATE products
-            SET norm_brand = ?, norm_model = ?, norm_voltage = ?, 
-                norm_capacity = ?, norm_category = ?, is_relevant = ?
+            SET norm_brand = ?, norm_model = ?, norm_category = ?, is_relevant = ?
             WHERE id = ?
             """,
             (
                 specs.get("Brand"),
                 specs.get("Model"),
-                specs.get("Voltage"),
-                specs.get("Capacity"),
                 specs.get("Category"),
                 1 if specs.get("is_relevant", True) else 0,
                 product_id
@@ -229,3 +225,73 @@ class ProductRepository:
         placeholders = ",".join("?" for _ in urls)
         conn.execute(f"UPDATE products SET is_active = 0 WHERE url IN ({placeholders})", urls)
         conn.commit()
+
+    def remove_duplicates(self) -> int:
+        """Remove duplicate product URLs, keeping the row with the lowest id."""
+        conn = self.db.get_connection()
+        result = conn.execute(
+            "DELETE FROM products WHERE id NOT IN (SELECT MIN(id) FROM products GROUP BY url)"
+        )
+        conn.commit()
+        return result.rowcount
+
+    def delete_products_by_ids(self, ids: list[int]) -> int:
+        """Hard-delete product rows by id list (also cascades price_history via FK)."""
+        if not ids:
+            return 0
+        conn = self.db.get_connection()
+        ph = ",".join("?" for _ in ids)
+        conn.execute(f"DELETE FROM price_history WHERE product_id IN ({ph})", ids)
+        conn.execute(f"DELETE FROM product_specs   WHERE product_id IN ({ph})", ids)
+        r = conn.execute(f"DELETE FROM products WHERE id IN ({ph})", ids)
+        conn.commit()
+        return r.rowcount
+
+    def clear_table(self, table_name: str) -> int:
+        """Delete all rows from a named table.  Only whitelisted tables are allowed."""
+        allowed = {
+            "products", "price_history", "product_specs", "scrape_sessions",
+            "projects", "project_products", "competitors",
+            "monitored_products", "price_observations", "report_runs",
+            "content_templates",
+        }
+        if table_name not in allowed:
+            raise ValueError(f"Table '{table_name}' is not in the clearable whitelist.")
+        
+        conn = self.db.get_connection()
+        
+        # Manually handle legacy dependencies if clearing products
+        if table_name == "products":
+            conn.execute("DELETE FROM price_history")
+            conn.execute("DELETE FROM product_specs")
+            
+        r = conn.execute(f"DELETE FROM {table_name}")
+        conn.commit()
+        return r.rowcount
+
+    def delete_rows(self, table_name: str, pk_col: str, ids: list) -> int:
+        """Generic row deletion for any whitelisted table.
+        Manually handles legacy tables (products) that lack ON DELETE CASCADE.
+        """
+        allowed = {
+            "products", "price_history", "product_specs", "scrape_sessions",
+            "projects", "project_products", "competitors",
+            "monitored_products", "price_observations", "report_runs",
+            "content_templates",
+        }
+        if table_name not in allowed:
+            raise ValueError(f"Table '{table_name}' is not in the deletable whitelist.")
+        if not ids:
+            return 0
+        
+        conn = self.db.get_connection()
+        ph = ",".join("?" for _ in ids)
+        
+        # Manually handle legacy dependencies if deleting from products
+        if table_name == "products" and pk_col == "id":
+            conn.execute(f"DELETE FROM price_history WHERE product_id IN ({ph})", ids)
+            conn.execute(f"DELETE FROM product_specs   WHERE product_id IN ({ph})", ids)
+            
+        r = conn.execute(f"DELETE FROM {table_name} WHERE {pk_col} IN ({ph})", ids)
+        conn.commit()
+        return r.rowcount

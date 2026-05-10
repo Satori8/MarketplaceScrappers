@@ -15,13 +15,13 @@ class RozetkaScraper(BaseScraper):
         super().__init__(marketplace_name="rozetka", config_path=config_path, captcha_callback=captcha_callback)
         self.db = db
 
-    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None) -> list[RawProduct]:
+    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         method = self.config.get("method_preference", "Auto")
         if method == "Browser":
-            return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event)
-        return await self._search_httpx(query, pages, skip_urls, stop_event=stop_event)
+            return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
+        return await self._search_httpx(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
 
-    async def _search_playwright(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None) -> list[RawProduct]:
+    async def _search_playwright(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         try:
             from playwright.async_api import async_playwright
         except ImportError:
@@ -44,6 +44,7 @@ class RozetkaScraper(BaseScraper):
         else:
             current_url = search_template.format(query=quote_plus(query))
         total_pages = int(pages)
+        has_reached_out_of_stock = False
 
         async with async_playwright() as p:
             # Use a local directory for persistent profile data
@@ -94,24 +95,49 @@ class RozetkaScraper(BaseScraper):
             timeout = 60000 
             page_index = 0
             while page_index < total_pages:
+                if has_reached_out_of_stock: break
                 logger.info(f"[Rozetka] Navigating to page {page_index+1}: {current_url}")
                 await page.goto(current_url, wait_until="networkidle", timeout=timeout)
                 
                 # Active Captcha/Spinner Wait
                 await self.wait_for_captcha(page)
+                await self.auto_scroll_async(page)
                 
                 # Check for "Skeleton" (Lazy-loading placeholders)
                 for attempt in range(2):
                     if stop_event and stop_event.is_set(): break
                     try:
-                        content = await page.content()
-                        if "skeleton" in content.lower() or "placeholder" in content.lower():
-                             logger.info(f"[Rozetka] Skeletons persist. Auto-reloading page (Attempt {attempt+1}/2)...")
+                        # Success condition: product cards or anything looking like a product block (price + link)
+                        results = await page.evaluate("""() => {
+                            const has_tile = document.querySelectorAll('li.catalog-grid__cell, div.goods-tile, .goods-tile, .catalog-grid .catalog-grid__cell, .tile').length > 0;
+                            if (has_tile) return { present: true, skeleton: false };
+                            
+                            // Heuristic: any block with a currency symbol and a product link
+                            const suspects = document.querySelectorAll('li, div, article');
+                            for (let s of suspects) {
+                                if (s.innerText.includes('₴') && s.querySelector('a[href*="/p/"]')) {
+                                    return { present: true, skeleton: false };
+                                }
+                            }
+                            
+                            const s = document.querySelector('.goods-tile--skeleton, .skeleton, [class*="skeleton"]');
+                            const has_skeleton = !!(s && s.offsetParent !== null && s.innerText.length < 50);
+                            return { present: false, skeleton: has_skeleton };
+                        }""")
+                        
+                        if results['present']: 
+                            break
+
+                        if results['skeleton']:
+                             logger.info(f"[Rozetka] Skeletons visible. Auto-reloading page (Attempt {attempt+1}/2)...")
                              await page.reload(wait_until="networkidle")
                              await self.wait_for_captcha(page)
-                             await page.wait_for_timeout(3000)
+                             await page.wait_for_timeout(4000)
                         else:
-                            break
+                             # No cards and no skeletons? Might be a very slow load or different layout
+                             await page.evaluate("window.scrollTo(0, 400)")
+                             await page.wait_for_timeout(1500)
+                             break
                     except Exception as e:
                         if "closed" in str(e).lower(): break
                         raise e
@@ -121,60 +147,180 @@ class RozetkaScraper(BaseScraper):
                     logger.warning(f"[Rozetka] No results for '{query}'")
                     break
 
-                # Ensure cards are loaded
+                # Ensure cards are loaded with broader selectors for subdomains
                 try:
-                    await page.wait_for_selector("li.catalog-grid__cell, div.goods-tile, .goods-tile", timeout=15000)
+                    await page.wait_for_selector("li.catalog-grid__cell, div.goods-tile, .goods-tile, rz-product-tile, rz-catalog-tile, .item, .catalog-grid__cell, a[href*='/p/']", timeout=10000)
                 except:
-                    logger.warning("[Rozetka] Timeout waiting for cards.")
+                    pass
 
-                selectors_to_try = [
-                    "li.catalog-grid__cell", 
-                    "div.goods-tile", 
-                    "rz-grid-list li", 
-                    ".catalog-grid__cell",
-                    "a.goods-tile__heading"
-                ]
+                # Deep Heuristic Discovery: Find everything that looks like a product
+                # We find links to products and walk up to the container that has a price.
                 cards = []
-                for sel in selectors_to_try:
-                    cards = await page.query_selector_all(sel)
+                try:
+                    js_discovery = """() => {
+                        // Check for specific web components first
+                        const components = document.querySelectorAll('rz-product-tile, rz-catalog-tile, .goods-tile, .item');
+                        if (components.length > 2) {
+                            return Array.from(components).map(c => {
+                                if (!c.id) c.id = 'rz-detected-' + Math.random().toString(36).substr(2, 9);
+                                return '#' + c.id;
+                            });
+                        }
+
+                        const productLinks = document.querySelectorAll('a[href*="/p"]');
+                        const containers = new Set();
+                        for (let a of productLinks) {
+                            const hr = a.getAttribute('href') || '';
+                            if (!hr.includes('/p')) continue;
+                            
+                            let curr = a.parentElement;
+                            let depth = 0;
+                            while (curr && curr.tagName !== 'BODY' && depth < 8) {
+                                const text = curr.innerText;
+                                const tagName = curr.tagName.toLowerCase();
+                                if (tagName === 'footer' || tagName === 'header' || tagName === 'nav') break;
+                                
+                                if ((text.includes('₴') || text.includes('грн')) && curr.offsetHeight > 150 && text.length > 50) {
+                                    containers.add(curr);
+                                    break;
+                                }
+                                curr = curr.parentElement;
+                                depth++;
+                            }
+                        }
+                        return Array.from(containers).map(c => {
+                             if (!c.id) c.id = 'rz-discovered-' + Math.random().toString(36).substr(2, 9);
+                             return '#' + c.id;
+                        });
+                    }"""
+                    card_selectors = await page.evaluate(js_discovery)
+                    for sel in card_selectors:
+                        node = await page.query_selector(sel)
+                        if node: cards.append(node)
+                    
                     if cards:
-                        logger.info(f"[Rozetka] Found {len(cards)} cards with {sel}")
-                        break
-                
+                        logger.info(f"[Rozetka] Discovered {len(cards)} products (Heuristic).")
+                except Exception as e:
+                    logger.error(f"[Rozetka] Deep Discovery failed: {e}")
+
                 if not cards:
-                    cards = await page.query_selector_all(card_sel)
+                    # Final fallback to existing selectors
+                    selectors_to_try = [
+                        "li.catalog-grid__cell", 
+                        "rz-product-tile",
+                        "rz-catalog-tile",
+                        "div.goods-tile", 
+                        ".item",
+                        ".catalog-grid__cell",
+                        ".catalog-grid .catalog-grid__cell",
+                        ".tile",
+                        "a[href*='/p/']"
+                    ]
+                    for sel in selectors_to_try:
+                        try:
+                            found = await page.query_selector_all(sel)
+                            if found and len(found) >= 1:
+                                cards = found
+                                break
+                        except: continue
 
                 added_on_page = 0
                 for card in cards:
                     if stop_event and stop_event.is_set(): break
                     try:
-                        title_node = await card.query_selector(title_sel) or await card.query_selector(".goods-tile__title")
-                        price_node = await card.query_selector(price_sel) or await card.query_selector(".goods-tile__price-value")
-                        url_node = await card.query_selector(url_sel) or await card.query_selector("a.goods-tile__heading")
+                        # Extract data using JS to handle nesting and Shadow DOM properly
+                        data = await card.evaluate("""(node) => {
+                            const find = (sel) => {
+                                try {
+                                    return node.querySelector(sel) || 
+                                           (node.shadowRoot ? node.shadowRoot.querySelector(sel) : null);
+                                } catch (e) { return null; }
+                            };
+                            
+                            const text = (node.innerText || node.textContent || '').toLowerCase();
+                            const html = (node.innerHTML || '').toLowerCase();
+                            
+                            // 1. Link & URL
+                            const a = find('a[href*="/p"]') || find('a');
+                            const href = a ? a.getAttribute('href') : (node.getAttribute('data-url') || node.getAttribute('data-href'));
+                            
+                            // 2. Title
+                            const titleEl = find('.tile-title') || find('.goods-tile__title') || find('[class*="title"]') || find('a[title]') || a;
+                            const title = titleEl ? titleEl.innerText.trim() : '';
+                            
+                            // 3. Price
+                            const priceEl = find('.tile-price') || find('.price') || find('[class*="price"]') || find('.product-price__big');
+                            const priceText = priceEl ? priceEl.innerText.trim() : "";
+                            
+                            // 4. High-Precision Ad Detection (User Markers)
+                            const sponsoredLink = find('a[rel*="sponsored"]');
+                            const adSpan = find('span.color-black-60');
+                            const isAd = !!sponsoredLink || 
+                                         (adSpan && adSpan.innerText.includes('Реклама')) || 
+                                         text.includes('реклама');
+                            
+                            // 5. High-Precision Stock Detection (User Markers)
+                            const sellStatus = find('rz-tile-sell-status') || find('.status-label');
+                            let availability = 'InStock';
+                            
+                            const isTileDisabled = node.classList.contains('tile-disabled') || !!find('.tile-disabled');
+                            const statusText = sellStatus ? sellStatus.innerText.toLowerCase() : '';
+                            const isGrayStatus = sellStatus && sellStatus.classList.contains('gray');
+                            
+                            if (isTileDisabled || isGrayStatus || statusText.includes('немає') || statusText.includes('закінчився')) {
+                                availability = 'OutOfStock';
+                            } else if (text.includes('під замовлення') || html.includes('toorder')) {
+                                availability = 'ToOrder';
+                            }
+                            
+                            return { 
+                                href, 
+                                title: title || node.innerText.split('\\n')[0].substring(0, 100), 
+                                priceText: priceText || node.innerText,
+                                isAd: !!isAd,
+                                availability,
+                                tag: node.tagName
+                            };
+                        }""")
                         
-                        if not title_node or not url_node:
+                        if data.get('isAd'):
+                            logger.info(f"[Rozetka] Skipping Ad Product: {data.get('title')}")
+                            continue
+
+                        availability = data.get('availability') or "InStock"
+                        
+                        if skip_out_of_stock and availability == "OutOfStock":
+                            logger.info(f"[Rozetka] Hit Out of Stock at '{data.get('title')}'. Stopping pagination.")
+                            has_reached_out_of_stock = True
+                            break
+
+                        href = data.get('href')
+                        title_text = data.get('title')
+                        price_text = data.get('priceText')
+
+                        if not href or '/p' not in href: 
+                            # logger.debug(f"[Rozetka] Card skipped: No product link found in {data.get('tag')}")
+                            continue
+
+                        if not title_text or len(title_text) < 3:
+                            logger.warning(f"[Rozetka] Card skipped: Title too short")
                             continue
                             
-                        title_text = (await title_node.inner_text()).strip()
-                        href = await url_node.get_attribute("href")
-                        
-                        price_text = ""
-                        if price_node:
-                            price_text = await price_node.inner_text()
-                        else:
-                            alt_price = await card.query_selector(".goods-tile__price")
-                            if alt_price: price_text = await alt_price.inner_text()
-                            
-                        price_val = self.parse_price(price_text)
-                        
-                        if not href or price_val is None:
-                            continue
+                        price_val = self.parse_price(price_text) or 0
                             
                         clean_url = self._clean_url(urljoin(base_url, href))
-                        products.append(self._create_raw(title_text, price_val, clean_url, "rozetka"))
+                        products.append(self._create_raw(title_text, price_val, clean_url, availability))
                         added_on_page += 1
-                    except Exception:
+                    except Exception as e:
+                        logger.warning(f"[Rozetka] Extraction error on card: {e}")
                         continue
+                
+                if not products and cards:
+                    try:
+                        # Final log for debugging if everything failed
+                        text_sample = await page.evaluate("document.body.innerText.substring(0, 500)")
+                        logger.info(f"[Rozetka] Final extraction fail. Body text: {text_sample.replace('\\n', ' ')}")
+                    except: pass
 
                 logger.info(f"[Rozetka] Successfully extracted {added_on_page} products from page {page_index+1}")
 
@@ -184,25 +330,41 @@ class RozetkaScraper(BaseScraper):
                     break
                     
                 try:
-                    next_btn = await page.query_selector(".pagination__direction--forward")
+                    # Rozetka has multiple pagination styles, try targeted and generic
+                    next_btn = await page.query_selector("a[data-testid='pagination_to_next_page'], .pagination__direction--forward, a.arrow-right:not(.disabled)")
                     if not next_btn:
                         break
                     
+                    # Check if button is visually/functionally disabled
+                    is_disabled = await next_btn.evaluate("el => el.classList.contains('disabled') || el.getAttribute('aria-disabled') === 'true'")
+                    if is_disabled:
+                        logger.info("[Rozetka] Reached last page (Next button disabled).")
+                        break
+
                     current_url = urljoin(base_url, await next_btn.get_attribute("href"))
                     await page.wait_for_timeout(2000)
                 except Exception as e:
                     if "closed" in str(e).lower(): break
-                    raise e
+                    logger.error(f"[Rozetka] Pagination error: {e}")
+                    break
 
             try:
                 await browser_context.close()
             except:
                 pass
-        return products
+        
+        # Deduplicate by URL
+        seen_urls = set()
+        final_products = []
+        for p in products:
+            if p.url not in seen_urls:
+                seen_urls.add(p.url)
+                final_products.append(p)
+        
+        return final_products
 
-    async def _search_httpx(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None) -> list[RawProduct]:
-        """B19 fix: was missing — caused AttributeError when method_preference != 'Browser'.
-        Uses Rozetka's internal JSON search API (same endpoint as their Angular frontend).
+    async def _search_httpx(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
+        """Uses Rozetka's internal JSON search API (same endpoint as their Angular frontend).
         """
         import httpx
 
@@ -233,12 +395,23 @@ class RozetkaScraper(BaseScraper):
                     items = data.get("data", {}).get("goods", []) or []
                     if not items:
                         break
+                        
+                    has_reached_out_of_stock = False
                     for item in items:
                         title = item.get("title", "").strip()
                         price_raw = item.get("price") or item.get("sell_price") or 0
                         url = item.get("href") or item.get("url") or ""
                         if not title or not url:
                             continue
+                        
+                        # Stock Check
+                        sell_status = item.get("sell_status", "available")
+                        availability = "OutOfStock" if sell_status == "unavailable" else "InStock"
+                        if skip_out_of_stock and availability == "OutOfStock":
+                             logger.info(f"[Rozetka HTTPX] Hit Out of Stock at '{title}'. Stopping pagination.")
+                             has_reached_out_of_stock = True
+                             break
+
                         price_val = self.parse_price(str(price_raw))
                         if price_val is None:
                             continue
@@ -249,12 +422,14 @@ class RozetkaScraper(BaseScraper):
                             url=clean_url, marketplace="rozetka",
                             brand=item.get("brand"), model=None, raw_specs={},
                             description=None, image_url=item.get("image_url"),
-                            availability=None, rating=item.get("rating"),
+                            availability=availability, rating=item.get("rating"),
                             reviews_count=item.get("comments_amount"),
                             category_path=None,
                             scraped_at=datetime.now(timezone.utc)
                         ))
-                    logger.info("[Rozetka] httpx page %d: %d products", page_idx, len(items))
+                    
+                    if has_reached_out_of_stock: break
+                    logger.info(f"[Rozetka] httpx page {page_idx}: Found {len(items)} products")
                 except Exception as e:
                     logger.error("[Rozetka] httpx error on page %d: %s", page_idx, e)
                     break
@@ -336,3 +511,22 @@ class RozetkaScraper(BaseScraper):
         if not url.endswith("/"):
             url += "/"
         return url
+    
+    def _create_raw(self, title: str, price: float, url: str, availability: str = "InStock") -> RawProduct:
+        return RawProduct(
+            title=title,
+            price=price,
+            currency="UAH",
+            url=url,
+            marketplace="rozetka",
+            brand=None,
+            model=None,
+            raw_specs={},
+            description=None,
+            image_url=None,
+            availability=availability,
+            rating=None,
+            reviews_count=None,
+            category_path=None,
+            scraped_at=datetime.now(timezone.utc)
+        )

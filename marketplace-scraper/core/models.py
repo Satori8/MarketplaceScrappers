@@ -63,6 +63,7 @@ class ScrapeTask:
     use_category_urls: bool
     category_urls: dict
     skip_known_urls: bool
+    skip_out_of_stock: bool = True
     direct_urls: list[str] = None
     method_preference: str = "Auto"
 

@@ -17,13 +17,13 @@ class HotlineScraper(BaseScraper):
         super().__init__(marketplace_name="hotline", config_path=config_path, captcha_callback=captcha_callback)
         self.db = db
 
-    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event: asyncio.Event = None) -> list[RawProduct]:
+    async def search_products(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event: asyncio.Event = None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         method = self.config.get("method_preference", "Auto")
         if method == "Browser":
-             return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event)
-        return await self._search_httpx(query, pages, skip_urls)
+             return await self._search_playwright(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
+        return await self._search_httpx(query, pages, skip_urls, stop_event=stop_event, skip_out_of_stock=skip_out_of_stock)
 
-    async def _search_playwright(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event: asyncio.Event = None) -> list[RawProduct]:
+    async def _search_playwright(self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event: asyncio.Event = None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         try:
             from playwright.async_api import async_playwright
         except ImportError:
@@ -57,6 +57,7 @@ class HotlineScraper(BaseScraper):
             logger.info(f"[Hotline] Processing: {current_url}")
             await page.goto(current_url, wait_until="networkidle")
             await self.wait_for_captcha(page)
+            await self.auto_scroll_async(page)
             
             # Find product items with multiple selector fallbacks
             selectors_to_try = [".product-item", "li.list-item", ".list-item", "div[data-id='product-item']"]
@@ -199,7 +200,7 @@ class HotlineScraper(BaseScraper):
             await browser_context.close()
         return products
 
-    async def _search_httpx(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None) -> list[RawProduct]:
+    async def _search_httpx(self, query: str, pages: int, skip_urls: set | None = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         import httpx
         from bs4 import BeautifulSoup
         cfg = self.config.get("marketplaces", {}).get("hotline", {})

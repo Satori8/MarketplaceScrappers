@@ -46,10 +46,8 @@ class Database:
                 model           TEXT,
                 norm_brand      TEXT,
                 norm_model      TEXT,
-                norm_voltage    TEXT,
-                norm_capacity   TEXT,
-                norm_category   TEXT,
                 is_relevant     INTEGER DEFAULT 1,
+                norm_category   TEXT,
                 category_path   TEXT,
                 product_type    TEXT,
                 image_url       TEXT,
@@ -107,9 +105,7 @@ class Database:
         conn.commit()
         
         # Simple migration for existing DB
-        for col in ["norm_brand", "norm_model", "norm_voltage", "norm_capacity", "norm_category"]:
+        for col in ["norm_brand", "norm_model", "norm_category", "is_relevant"]:
             try: conn.execute(f"ALTER TABLE products ADD COLUMN {col} TEXT")
             except: pass
-        try: conn.execute("ALTER TABLE products ADD COLUMN is_relevant INTEGER DEFAULT 1")
-        except: pass
         conn.commit()

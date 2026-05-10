@@ -54,7 +54,9 @@ class BaseScraper(ABC):
 
     @abstractmethod
     async def search_products(
-        self, query: str, pages: int = 1, skip_urls: set[str] = None, stop_event: Optional[asyncio.Event] = None
+        self, query: str, pages: int = 1, skip_urls: set[str] = None, 
+        stop_event: Optional[asyncio.Event] = None,
+        skip_out_of_stock: bool = True
     ) -> list:
         """Search by query. Skip URLs in skip_urls if provided."""
 
@@ -89,34 +91,44 @@ class BaseScraper(ABC):
         consecutive_clean_checks = 0
         
         while True:
-            content = await page.content()
-            title = await page.title()
+            # Targeted JS check is 10-50x faster than string-searching the entire page.content()
+            try:
+                results = await page.evaluate("""() => {
+                    const html = document.documentElement.innerHTML.toLowerCase();
+                    const title = document.title.toLowerCase();
+                    
+                    const text_len = document.body.innerText.length;
+                    const has_success = html.includes('rz-header') || 
+                                       html.includes('common-header') || 
+                                       html.includes('catalog-grid') || 
+                                       html.includes('search-result') ||
+                                       text_len > 2500 ||
+                                       !!document.querySelector('li.catalog-grid__cell, div.goods-tile, .goods-tile, rz-product-tile, rz-catalog-tile, .item, [class*="tile"], a[href*="/p/"]');
+                    
+                    // Priority 2: Evidence of WAF challenge (Exclude common words)
+                    const is_cf = !has_success && (
+                                   html.includes('challenges.cloudflare.com') || 
+                                   html.includes('one more step') || 
+                                   html.includes('checking your browser') ||
+                                   html.includes('verify you are human')
+                    );
+                    
+                    return { has_success, is_cf, length: html.length, title };
+                }""")
+            except Exception:
+                # Page might be navigating or crashing, wait a bit
+                await page.wait_for_timeout(1000)
+                continue
             
-            # Detect Success Markers (Strong priority)
-            has_success_marker = ("rz-header" in content or 
-                                 "common-header" in content or
-                                 "catalog-grid" in content or
-                                 "search-result" in content.lower())
-            
-            # Detect Challenge Markers
-            # Success overrides soft CF markers (stale iframes)
-            if has_success_marker:
-                is_cf = False
-            else:
-                is_cf = ("challenges.cloudflare.com" in content or 
-                         "One more step" in content or 
-                         "Один момент" in title or 
-                         "Checking your browser" in content or
-                         "Verify you are human" in content or
-                         "cf-browser-verification" in content or
-                         "cf-spinner" in content)
+            has_success_marker = results['has_success']
+            is_cf = results['is_cf']
             
             if is_cf:
                 if not detected:
                     logger.info(f"[{self.marketplace_name.upper()}] Cloudflare/WAF Challenge detected. Please solve it in the browser.")
                     detected = True
                 consecutive_clean_checks = 0
-                await page.wait_for_timeout(3000)
+                await page.wait_for_timeout(2000)
             else:
                 if has_success_marker:
                     consecutive_clean_checks += 1
@@ -124,12 +136,12 @@ class BaseScraper(ABC):
                         logger.info(f"[{self.marketplace_name.upper()}] Success markers detected. Verifying stability...")
                 else:
                     consecutive_clean_checks = 0
-                    await page.wait_for_timeout(2000)
                     # If it's a blank page or something else, but not CF
-                    if not content or len(content) < 500:
+                    if results['length'] < 500:
+                        await page.wait_for_timeout(1000)
                         continue
                     else:
-                        # Assume okay if no CF and non-empty
+                        # Non-empty page with no CF and no success marker? Might be a simple layout.
                         consecutive_clean_checks = 2
 
                 if consecutive_clean_checks >= 2:
@@ -137,9 +149,32 @@ class BaseScraper(ABC):
                         logger.info(f"[{self.marketplace_name.upper()}] Challenge resolved.")
                     break
                 else:
-                    await page.wait_for_timeout(1500)
+                    # Very short wait between checks
+                    await page.wait_for_timeout(500)
                     
         return detected
+
+    async def auto_scroll_async(self, page) -> None:
+        """
+        Slowly scroll to bottom to trigger lazy loading (infinite scroll).
+        """
+        await page.evaluate("""async () => {
+            await new Promise((resolve) => {
+                let totalHeight = 0;
+                let distance = 500;
+                let timer = setInterval(() => {
+                    let scrollHeight = document.body.scrollHeight;
+                    window.scrollBy(0, distance);
+                    totalHeight += distance;
+
+                    if (totalHeight >= scrollHeight) {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 50);
+            });
+        }""")
+        await page.wait_for_timeout(1000)
 
     def random_delay(self) -> None:
         self.anti_bot.random_delay()

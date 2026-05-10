@@ -168,7 +168,7 @@ class TaskScheduler:
         self._update_session(task.session_id, final_status, [], 0)
         logger.info(f"--- Scrape Task {final_status.upper()} (ID: {task.session_id}) ---")
 
-    def run_individual_discovery(self, mp: str, method: str, query: str, pages: int, session_id: str):
+    def run_individual_discovery(self, mp: str, method: str, query: str, pages: int, session_id: str, skip_stock: bool = True):
         """Standalone discovery for a single (marketplace, query) job.
 
         Called concurrently by the GUI ThreadPoolExecutor — one call per job.
@@ -176,11 +176,12 @@ class TaskScheduler:
         (silently no-ops if the batch session row was not pre-created).
         """
         # B1 fix: removed premature `return asyncio.run(...)` that made all session
-        # finalization code unreachable (dead code). Now runs scraper then updates count.
+        # finalization code unreachable (dead code). Now runs scraper then
         task = ScrapeTask(
             query=query, session_id=session_id, product_type=None,
             marketplaces={mp: method}, pages_limit=pages,
-            use_category_urls=False, category_urls={}, skip_known_urls=False
+            use_category_urls=False, category_urls={}, skip_known_urls=False,
+            skip_out_of_stock=skip_stock
         )
         try:
             products = asyncio.run(self._run_scraper_async(mp, method, task))
@@ -275,7 +276,13 @@ class TaskScheduler:
             # If there's a real query, also run the search
             if task.query and task.query != "Direct URLs Scan":
                 logger.info(f"Scraper '{marketplace}' searching for: {task.query}")
-                search_prods = await scraper.search_products(task.query, pages=pages, skip_urls=set(), stop_event=self._stop_event)
+                search_prods = await scraper.search_products(
+                    task.query, 
+                    pages=pages, 
+                    skip_urls=set(), 
+                    stop_event=self._stop_event,
+                    skip_out_of_stock=task.skip_out_of_stock
+                )
                 products.extend(search_prods)
             
             for prod in products:
@@ -285,6 +292,11 @@ class TaskScheduler:
                 
                 prod.scraped_at = datetime.now(timezone.utc)
                 prod.marketplace = marketplace  # ensure sync
+                
+                # Filter by stock if requested
+                if task.skip_out_of_stock and prod.availability and "Out" in prod.availability:
+                    logger.info(f"Skipping '{prod.title}' - Out of Stock")
+                    continue
                 
                 pid, is_new, delta = self.repo.upsert_product(prod, task.session_id)
                 

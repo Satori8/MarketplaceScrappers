@@ -64,7 +64,7 @@ class CustomScraper(BaseScraper):
             return detected
         return {}
 
-    async def search_products(self, query: str, pages: int = 1, skip_urls: set | None = None, stop_event=None) -> list[RawProduct]:
+    async def search_products(self, query: str, pages: int = 1, skip_urls: set | None = None, stop_event=None, skip_out_of_stock: bool = True) -> list[RawProduct]:
         from bs4 import BeautifulSoup
         try:
             from playwright.async_api import async_playwright
@@ -83,7 +83,10 @@ class CustomScraper(BaseScraper):
         pages_limit = int(cfg.get("pages_limit", requested_pages))
         total_pages = min(requested_pages, pages_limit)
 
-        current_url = search_template.format(query=quote_plus(query))
+        if query.startswith("http"):
+            current_url = query
+        else:
+            current_url = search_template.format(query=quote_plus(query))
         products: list[RawProduct] = []
 
         if not hasattr(self, "_instance_selectors"):
@@ -100,7 +103,7 @@ class CustomScraper(BaseScraper):
                     logger.info("[Custom] Stop requested.")
                     break
                 await page.goto(current_url, wait_until="domcontentloaded", timeout=45000)
-                await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+                await self.auto_scroll_async(page)
                 self.random_delay()
                 
                 html = await page.content()

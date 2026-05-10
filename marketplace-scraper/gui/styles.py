@@ -21,6 +21,30 @@ FONTS = {
 }
 
 def apply_styles():
-    """Initializes CustomTkinter global settings."""
+    """Initializes CustomTkinter global settings and Treeview Styles."""
     ctk.set_appearance_mode("dark")
     ctk.set_default_color_theme("blue")
+
+    from tkinter import ttk
+    style = ttk.Style()
+    style.theme_use("default")
+    
+    # Configure Treeview colors
+    style.configure("Treeview", 
+        background=COLORS["table_bg"],
+        foreground=COLORS["fg"],
+        fieldbackground=COLORS["table_bg"],
+        rowheight=26,
+        borderwidth=0,
+        font=FONTS["small"]
+    )
+    style.map("Treeview", background=[("selected", COLORS["accent"])])
+    
+    # Header style
+    style.configure("Treeview.Heading",
+        background="#353535",
+        foreground=COLORS["fg"],
+        relief="flat",
+        font=FONTS["small"]
+    )
+    style.map("Treeview.Heading", background=[("active", "#404040")])

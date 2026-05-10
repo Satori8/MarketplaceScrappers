@@ -62,7 +62,11 @@ class DataNormalizer:
                 "description": (p.description or "")[:500]
             })
         
-        prompt = (
+        # Load prompt overrides from config (editable via DB Control Panel → Edit AI Prompt)
+        cfg = self.gemini._load_config()
+        gemini_cfg = cfg.get("gemini", {})
+
+        default_prompt = (
             f"Original Search Query: '{query}'\n\n"
             "Analyze the following products and extract structured data. Check if they match the search query intent.\n"
             "IMPORTANT: Use the 'url' if the title is insufficient, as it often contains brand, voltage, and capacity in the slug.\n"
@@ -75,9 +79,20 @@ class DataNormalizer:
             "Return JSON. Format: { \"products\": [ { \"id\": 0, \"is_relevant\": ..., \"brand\": ..., \"model\": ..., \"voltage\": ..., \"capacity\": ..., \"category\": ... }, ... ] }\n"
             f"Input Data: {json.dumps(data_with_id, ensure_ascii=False)}"
         )
-        
+
+        # Use custom prompt template if saved in config
+        prompt_template = gemini_cfg.get("norm_prompt", "")
+        if prompt_template:
+            prompt = prompt_template.format(
+                query=query,
+                data_json=json.dumps(data_with_id, ensure_ascii=False)
+            )
+        else:
+            prompt = default_prompt
+
+        system_prompt = gemini_cfg.get("norm_system_prompt", "You are a product data specialist. Return ONLY valid JSON.")
+
         try:
-            system_prompt = "You are a product data specialist. Return ONLY valid JSON."
             extracted_data = self.gemini.generate_json(prompt, system=system_prompt)
             
             # B10 robustness: check common keys or raw list

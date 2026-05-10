@@ -1,0 +1,4 @@
+- Always use .venv for python commands
+- Always use powershell or cmd for windows commands (not bash)
+- This is windows machine
+- Do not delete any code before asking me

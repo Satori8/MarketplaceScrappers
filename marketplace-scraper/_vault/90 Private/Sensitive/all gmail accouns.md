@@ -1,0 +1,32 @@
+- manager.psychologic@gmail.com
+- s.tocheny@gmail.com
+- peeeton@gmail.com
+- peeeton1@gmail.com
+- peeeton2@gmail.com
+- peeeton3@gmail.com
+- peeeton5@gmail.com
+- peeeton6@gmail.com
+- dota4fake@gmail.com
+- sldevacc1@gmail.com
+- sldevacc2@gmail.com
+- sldevacc3@gmail.com
+- daryadrozdova3@gmail.com+
+- lenchik.kotova2013@gmail.com +
+- creedursarkar@gmail.com +
+- fgordeev90@gmail.com + 
+- aspiridonov698@gmail.com
+- olegbas167@gmail.com
+- igorklenov222@gmail.com
+- itelvanova@gmail.com
+- nikolaikozhedubov@gmail.com
+- yuskops@gmail.com
+- pavelpoceluev88@gmail.com
+- lipshits.grigoriy@gmail.com
+- zhorakornev15@gmail.com
+- valantionk@gmail.com
+- dmirtiymuradov@gmail.com
+- ggrishin690@gmail.com
+- konstantinvolkov667@gmail.com
+- nikolaimagometov@gmail.com
+- vgroznova8@gmail.com
+- naimova.albina777@gmail.com
