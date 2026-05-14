@@ -103,9 +103,11 @@ class Database:
             """
         )
         conn.commit()
-        
+
         # Simple migration for existing DB
         for col in ["norm_brand", "norm_model", "norm_category", "is_relevant"]:
-            try: conn.execute(f"ALTER TABLE products ADD COLUMN {col} TEXT")
-            except: pass
+            try:
+                conn.execute(f"ALTER TABLE products ADD COLUMN {col} TEXT")
+            except:
+                pass
         conn.commit()

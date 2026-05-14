@@ -1,0 +1,871 @@
+{
+  "url": "https://prom.ua/ua/Kukly",
+  "meta": {
+    "url": "https://prom.ua/graphql",
+    "status": 200,
+    "elapsed_ms": 676,
+    "bytes": 17942
+  },
+  "raw_data": {
+    "data": {
+      "listing": {
+        "__typename": "CategoryListing",
+        "category": {
+          "id": 2605,
+          "alias": "Kukly",
+          "caption": "Ляльки, пупси",
+          "url": "https://prom.ua/ua/Kukly",
+          "numProducts": 133926,
+          "__typename": "Category"
+        },
+        "page": {
+          "total": 8398,
+          "__typename": "ListingPage",
+          "products": [
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2510399147,
+                "name": "Ляльки реборн пупси для дівчаток вінілові, реборни реалістичні з нарядами та аксесуарами малюк як жива",
+                "price": "3599",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukly-reborn-pupsy",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6507647137_w200_h200_kukly-reborn-pupsy.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3982198,
+                  "name": "uk_military",
+                  "slug": "ukmilitary",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2167330952,
+                "name": "Пупс м'яконабивний музичний 50 см озвучений українською мовою Чудо малюк м'яка лялька помаранчевого кольору",
+                "price": "1050",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "pups-myagkonabivnoj-muzykalnyj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6274278555_w200_h200_pups-myagkonabivnoj-muzykalnyj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3772239,
+                  "name": "The Toy",
+                  "slug": "the-toy",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2555372131,
+                "name": "Реалістична лялька Реборн як жива дівчинка рухлива вініл-силіконова можна купати ручного розпису м'яка",
+                "price": "3649",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "realistichnaya-kukla-reborn",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6511124620_w200_h200_realistichnaya-kukla-reborn.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3889692,
+                  "name": "Глобальні Покупки",
+                  "slug": "greatshopping",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2594148647,
+                "name": "Лялька Реборн 50 см новонароджена хлопчик можна купати силіконова деталізована в наборі з соскою та одягом",
+                "price": "2998",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-reborn-malchik",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6629744109_w200_h200_kukla-reborn-50.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4019996,
+                  "name": "Online_shopping",
+                  "slug": "onlineshopping",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2972434846,
+                "name": "Лялька Monster High Skullector Frankie Stein Barbie JHK28 Монстр Хай Барбі",
+                "price": "3100",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-high",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/7180564665_w200_h200_kukla-monster-high.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3282414,
+                  "name": "BezPereplat",
+                  "slug": "bezpereplat",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2591045005,
+                "name": "Силіконова Колекційна оригінал Лялька Реборн Reborn Дівчинка Бетті з набором аксесуарів та відкритими очима",
+                "price": "3499",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "silikonovaya-kollektsionnaya-original",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6626935640_w200_h200_silikonovaya-kollektsionnaya-original.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3992999,
+                  "name": "fashion_watches",
+                  "slug": "fashionwatches",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2234545777,
+                "name": "Реборн лялька дівчинка 55см з довгим волоссям з ведмедиком вінілова лялька reborn можна купати",
+                "price": "3500",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "reborn-kukla-devochka",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6892640263_w200_h200_reborn-kukla-devochka.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3764536,
+                  "name": "Mikc Makc",
+                  "slug": "mikc-makc",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2224489578,
+                "name": "Лялька Монстер Хай Дракулаура з вихованцем Monster High Draculaura with Pet Bat-Cat Count Fabulous HRP64",
+                "price": "1595",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-haj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/5865235256_w200_h200_kukla-monster-haj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2316022,
+                  "name": "_КОРОЛІВСТВО_®_ІГРАШОК_",
+                  "slug": "korolevstvoigrushek",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2789066773,
+                "name": "Колекційна шарнірна лялька Джейн 30 см з рухомими частинами тіла лялька на шарнірах з довгим волоссям",
+                "price": "900",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kollektsionnaya-sharnirnaya-kukla",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/7291456155_w200_h200_kollektsionnaya-sharnirnaya-kukla.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3764536,
+                  "name": "Mikc Makc",
+                  "slug": "mikc-makc",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2511971017,
+                "name": "Ляльки реборн пупси для вінілових дівчаток, реборни реалістичні з нарядами аксесуарами і м'яким тілом дівчинка",
+                "price": "3649",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukly-reborn-pupsy",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6509607144_w200_h200_kukly-reborn-pupsy.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3889692,
+                  "name": "Глобальні Покупки",
+                  "slug": "greatshopping",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2851403770,
+                "name": "Лялька Монстер Хай Дракулаура Monster High Draculaura Fabulous Fashion Doll",
+                "price": "2990",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-haj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6980173144_w200_h200_kukla-monster-haj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3765256,
+                  "name": "merry_toys_shop",
+                  "slug": "merrytoysshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2742581322,
+                "name": "Реборн Лялька Силіконова Дівчинка Реалістична Reborn Maggie Original Doll 55 см можна купати (MG-0091)",
+                "price": "3500",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "reborn-kukla-silikonovaya",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/7324464883_w200_h200_reborn-kukla-silikonovaya.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3967732,
+                  "name": "Joon🟠Ukraine",
+                  "slug": "joonukraine",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2596234624,
+                "name": "Лялька Монстер Хай Торалей Monster High Toralei Boo-riginal Creeproduction HYV91 Mattel",
+                "price": "3450",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-haj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6633460889_w200_h200_kukla-monster-haj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 1972116,
+                  "name": "Інтернет-магазин \"My Hit Toys\"",
+                  "slug": "internet-magazin-hit",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2831116918,
+                "name": "Лялька Монстер Хай Джинафайр Monster High Jinafire Long Gore-geous Oasis",
+                "price": "2990",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-haj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6946248970_w200_h200_kukla-monster-haj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3765256,
+                  "name": "merry_toys_shop",
+                  "slug": "merrytoysshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2449453621,
+                "name": "Лялька реборн силіконова 50см водонепроникна Reborn можна купати реалістичні ляльки",
+                "price": "3000",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-reborn-silikonovaya",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6635809729_w200_h200_kukla-reborn-silikonovaya.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3986837,
+                  "name": "Intershop",
+                  "slug": "intershop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2512884039,
+                "name": "Реборн Лялька пупс дівчинка Reborn baby см з одягом вініл силікон можна купати з гнучкими кінцівками дівчинка",
+                "price": "3349",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "reborn-kukla-pups",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6503480915_w200_h200_reborn-kukla-pups.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3982198,
+                  "name": "uk_military",
+                  "slug": "ukmilitary",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2618237354,
+                "name": "Набір ляльок Монстер Хай Мяулодія та Пурсефона Репродукція Monster High Meowlody Purrsephone Creeproduction HYV88",
+                "price": "7750",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "nabor-kukol-monster",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6660263199_w200_h200_nabor-kukol-monster.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 1972116,
+                  "name": "Інтернет-магазин \"My Hit Toys\"",
+                  "slug": "internet-magazin-hit",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2499006315,
+                "name": "Лялька Монстер Хай Венера МакФлайтрап Monster high",
+                "price": "4599",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-haj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6491735840_w200_h200_kukla-monster-haj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3920704,
+                  "name": "Melanie Barbie Toys",
+                  "slug": "melanie-barbie-toys",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2507891474,
+                "name": "Набір фігурок 8в1 LOL, лялечки ЛОЛ з аксесуарами, 8 см",
+                "price": "499",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "nabor-figurok-8v1",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6504840250_w200_h200_nabor-figurok-8v1.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3847567,
+                  "name": "Mr. Toy інтернет-магазин",
+                  "slug": "toy-internet-magazin",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2864781612,
+                "name": "Лялька reborn дівчинка 60 см вінілсиліконова маленька леді реалістична лялька реборн можна купати з аксесуарами",
+                "price": "3300",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-reborn-devochka",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6795838889_w200_h200_kukla-reborn-devochka.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3764536,
+                  "name": "Mikc Makc",
+                  "slug": "mikc-makc",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2797543163,
+                "name": "Пупс музичний інтерактивний 40 см Диво Маля YL2540F-A-DM-UA",
+                "price": "945",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "pups-muzykalnyj-interaktivnyj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6892265101_w200_h200_pups-muzykalnyj-interaktivnyj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2362611,
+                  "name": "Левеня",
+                  "slug": "levenya",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2590886169,
+                "name": "Лялька реборн силіконова 50см водонепроникна Reborn можна купати реалістичні ляльки з набором одягу",
+                "price": "3499",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-reborn-silikonovaya",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6626734448_w200_h200_kukla-reborn-silikonovaya.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4019965,
+                  "name": "best_watch",
+                  "slug": "bestwatch",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2834184487,
+                "name": "Лялька Монстер Хай Венздей Б'янка Monster High Wednesday Bianca Sinclair Collectible",
+                "price": "3590",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-haj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6949971013_w200_h200_kukla-monster-haj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3765256,
+                  "name": "merry_toys_shop",
+                  "slug": "merrytoysshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2357772969,
+                "name": "Лялька пупс Baby Born Чарівна Емма 43 см 834800",
+                "price": "3296",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-pups-baby",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6280679569_w200_h200_kukla-pups-baby.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2633532,
+                  "name": "\"ТІТО\" Інтернет-магазин",
+                  "slug": "tito-internet-magazin",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2668258141,
+                "name": "Лялька кулька шарик ЛОЛ Хеллоу Кітті LOL Surprise Hello Kitty 50th Anniversary",
+                "price": "950",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-sharik-lol",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6733458455_w200_h200_kukla-sharik-lol.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3840914,
+                  "name": "АбраКадабра",
+                  "slug": "abracadabratoys",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2417636883,
+                "name": "Лялька Монстер Хай Лагуна Блю з вихованцем Monster High Lagoona Blue with Pet Fish Neptuna HXH75",
+                "price": "1895",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-monster-haj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6372084597_w200_h200_kukla-monster-haj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2316022,
+                  "name": "_КОРОЛІВСТВО_®_ІГРАШОК_",
+                  "slug": "korolevstvoigrushek",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2139123860,
+                "name": "Лялька Барбі Русалка зі Світловими ефектами Barbie Dreamtopia Light-Up",
+                "price": "1400",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukla-barbi-rusalka",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/5564073941_w200_h200_kukla-barbi-rusalka.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3840914,
+                  "name": "АбраКадабра",
+                  "slug": "abracadabratoys",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2662664385,
+                "name": "Ляльки реборн з вініловим тілом Reborn reborn м'які, Реборни силіконові ляльки реборн",
+                "price": "3895",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kukly-reborn-vinilovym",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/6724337034_w200_h200_kukly-reborn-s.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4107617,
+                  "name": "PRO_Store🌻",
+                  "slug": "prostore",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2237425414,
+                "name": "Модна лялька LOL Surprise OMG Ace - лол омг Айс з 15 сюрпризами: Пориньте у Світ Моди та Ігор SKU# 510383",
+                "price": "1980",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "modnaya-kukla-lol",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2605
+                ],
+                "image": "https://images.prom.ua/5915552428_w200_h200_modnaya-kukla-lol.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3796541,
+                  "name": "Стартойс",
+                  "slug": "startojs",
+                  "__typename": "Company"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

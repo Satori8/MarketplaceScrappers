@@ -1,0 +1,22 @@
+{
+  "url": "https://prom.ua/ua/c4041439-online-shop-easy;2.html",
+  "meta": {
+    "url": "https://prom.ua/graphql",
+    "status": 200,
+    "elapsed_ms": 121,
+    "bytes": 129
+  },
+  "raw_data": {
+    "data": {
+      "listing": {
+        "__typename": "CategoryListing",
+        "category": null,
+        "page": {
+          "total": 0,
+          "__typename": "ListingPage",
+          "products": []
+        }
+      }
+    }
+  }
+}

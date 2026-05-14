@@ -1,0 +1,3089 @@
+{
+  "url": "https://catalog-api.rozetka.com.ua/v0.1/api/category/seller/catalog?country=UA&lang=ua&id=126453",
+  "meta": {
+    "url": "https://catalog-api.rozetka.com.ua/v0.1/api/category/seller/catalog?country=UA&lang=ua&id=126453",
+    "status": 200,
+    "elapsed_ms": 100,
+    "bytes": 27287,
+    "raw_response": {
+      "data": {
+        "filters": {
+          "chosen": {},
+          "options": {
+            "98900": {
+              "option_id": "98900",
+              "option_name": "strana-proizvoditelj-tovara-90098",
+              "option_title": "Країна-виробник товару",
+              "option_type": "ListValues",
+              "comparable": "main",
+              "mode": "expand",
+              "hide_block": false,
+              "order": 1000,
+              "total_filtered": 14,
+              "config": null,
+              "option_values": [
+                {
+                  "option_value_id": "634603",
+                  "option_value_name": "634603",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Бельгія",
+                  "products_quantity": 4,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "622640",
+                  "option_value_name": "622640",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Велика Британія",
+                  "products_quantity": 3,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "656678",
+                  "option_value_name": "656678",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Греція",
+                  "products_quantity": 1,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "544331",
+                  "option_value_name": "544331",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Китай",
+                  "products_quantity": 1,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "619924",
+                  "option_value_name": "619924",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Німеччина",
+                  "products_quantity": 97,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "622416",
+                  "option_value_name": "622416",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Польща",
+                  "products_quantity": 3,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "619903",
+                  "option_value_name": "619903",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "США",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "621338",
+                  "option_value_name": "621338",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Туреччина",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "621324",
+                  "option_value_name": "621324",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Угорщина",
+                  "products_quantity": 1,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "544338",
+                  "option_value_name": "544338",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Україна",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "619938",
+                  "option_value_name": "619938",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Франція",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "620638",
+                  "option_value_name": "620638",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Чехія",
+                  "products_quantity": 19,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "2522624",
+                  "option_value_name": "evrosoyuz",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Євросоюз",
+                  "products_quantity": 776,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "620540",
+                  "option_value_name": "620540",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Італія",
+                  "products_quantity": 41,
+                  "order": 16777215
+                }
+              ],
+              "short_list": [
+                {
+                  "option_value_id": "634603",
+                  "option_value_name": "634603",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Бельгія",
+                  "products_quantity": 4,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "622640",
+                  "option_value_name": "622640",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Велика Британія",
+                  "products_quantity": 3,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "656678",
+                  "option_value_name": "656678",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Греція",
+                  "products_quantity": 1,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "544331",
+                  "option_value_name": "544331",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Китай",
+                  "products_quantity": 1,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "619924",
+                  "option_value_name": "619924",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Німеччина",
+                  "products_quantity": 97,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "622416",
+                  "option_value_name": "622416",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Польща",
+                  "products_quantity": 3,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "619903",
+                  "option_value_name": "619903",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "США",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "621338",
+                  "option_value_name": "621338",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Туреччина",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "621324",
+                  "option_value_name": "621324",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Угорщина",
+                  "products_quantity": 1,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "544338",
+                  "option_value_name": "544338",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Україна",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "619938",
+                  "option_value_name": "619938",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Франція",
+                  "products_quantity": 2,
+                  "order": 16777215
+                },
+                {
+                  "option_value_id": "620638",
+                  "option_value_name": "620638",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Чехія",
+                  "products_quantity": 19,
+                  "order": 16777215
+                }
+              ],
+              "special_combobox_view": "list"
+            },
+            "254406": {
+              "option_id": "254406",
+              "option_name": "delivery",
+              "option_title": "Доставка",
+              "option_type": "List",
+              "comparable": "main",
+              "mode": "expand",
+              "hide_block": false,
+              "order": -50,
+              "total_filtered": 1,
+              "config": null,
+              "option_values": [
+                {
+                  "option_value_id": "4401414",
+                  "option_value_name": "free-shipping-to-the-store",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Доставка в магазини ROZETKA",
+                  "products_quantity": 204,
+                  "order": 2
+                }
+              ],
+              "short_list": [
+                {
+                  "option_value_id": "4401414",
+                  "option_value_name": "free-shipping-to-the-store",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Доставка в магазини ROZETKA",
+                  "products_quantity": 204,
+                  "order": 2
+                }
+              ],
+              "special_combobox_view": "list"
+            },
+            "259609": {
+              "option_id": "259609",
+              "option_name": "premium",
+              "option_title": "Єдина підписка Smart",
+              "option_type": "List",
+              "comparable": "main",
+              "mode": "expand",
+              "hide_block": false,
+              "order": 16777215,
+              "total_filtered": 1,
+              "config": null,
+              "option_values": [
+                {
+                  "option_value_id": "5136974",
+                  "option_value_name": "tovari-s-besplatnoy-dostavkoy",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Товари з підпискою Smart",
+                  "products_quantity": 327,
+                  "order": 16777215
+                }
+              ],
+              "short_list": [
+                {
+                  "option_value_id": "5136974",
+                  "option_value_name": "tovari-s-besplatnoy-dostavkoy",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Товари з підпискою Smart",
+                  "products_quantity": 327,
+                  "order": 16777215
+                }
+              ],
+              "special_combobox_view": "list"
+            },
+            "section_id": {
+              "option_id": "section_id",
+              "option_name": "section_id",
+              "option_title": "Всі товари",
+              "option_type": "List",
+              "comparable": "main",
+              "mode": "simple",
+              "hide_block": false,
+              "order": -140,
+              "total_filtered": null,
+              "config": null,
+              "visible_tree": [
+                {
+                  "id": 88468,
+                  "title": "Товари для дітей",
+                  "name": "kids",
+                  "status": "active",
+                  "mpath": ".",
+                  "parent_id": 0,
+                  "level": 1,
+                  "hide_cat": false,
+                  "count": 777,
+                  "children": []
+                },
+                {
+                  "id": 2394287,
+                  "title": "Товари для дому",
+                  "name": "tovary-dlya-doma",
+                  "status": "active",
+                  "mpath": ".",
+                  "parent_id": 0,
+                  "level": 1,
+                  "hide_cat": false,
+                  "count": 98,
+                  "children": []
+                },
+                {
+                  "id": 4629305,
+                  "title": "Краса та здоров'я",
+                  "name": "krasota-i-zdorovje",
+                  "status": "active",
+                  "mpath": ".",
+                  "parent_id": 0,
+                  "level": 1,
+                  "hide_cat": false,
+                  "count": 82,
+                  "children": []
+                }
+              ],
+              "total_quantity": 957,
+              "special_combobox_view": "tree"
+            },
+            "producer": {
+              "option_id": "producer",
+              "option_name": "producer",
+              "option_title": "Бренд",
+              "option_type": "List",
+              "comparable": "main",
+              "mode": "expand",
+              "hide_block": false,
+              "order": -80,
+              "total_filtered": 106,
+              "config": null,
+              "option_values": [
+                {
+                  "option_value_id": "667923",
+                  "option_value_name": "bevola",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Bevola",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "249534",
+                  "option_value_name": "bimbo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Bimbo",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "228056",
+                  "option_value_name": "bon-bebe",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Bon Bebe",
+                  "products_quantity": 8,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "314488",
+                  "option_value_name": "boni_",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Boni",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "222512",
+                  "option_value_name": "carrefour",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Carrefour",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "538231",
+                  "option_value_name": "carryboo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Carryboo",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "594733",
+                  "option_value_name": "casino",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Casino",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "320786",
+                  "option_value_name": "change",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Change",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "119962",
+                  "option_value_name": "chanteclair",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "ChanteClair",
+                  "products_quantity": 16,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "646855",
+                  "option_value_name": "cherubin",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Cherubin",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "1497",
+                  "option_value_name": "chicco",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Chicco",
+                  "products_quantity": 13,
+                  "order": 0,
+                  "option_value_image": "https://content1.rozetka.com.ua/producers/images/original/187345647.jpg"
+                },
+                {
+                  "option_value_id": "168030",
+                  "option_value_name": "cien",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Cien",
+                  "products_quantity": 10,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "168006",
+                  "option_value_name": "coccolino",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Coccolino",
+                  "products_quantity": 8,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "389695",
+                  "option_value_name": "coop",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Coop",
+                  "products_quantity": 5,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "594728",
+                  "option_value_name": "coop-365-minirisk",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Coop 365 Minirisk",
+                  "products_quantity": 3,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "601693",
+                  "option_value_name": "coop-anglamark",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Coop Anglamark",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "545071",
+                  "option_value_name": "crescendo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Crescendo",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "19612",
+                  "option_value_name": "dada",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dada",
+                  "products_quantity": 17,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "336711",
+                  "option_value_name": "dailee",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dailee",
+                  "products_quantity": 7,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "315887",
+                  "option_value_name": "dalli",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dalli",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "181985",
+                  "option_value_name": "dash",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dash",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "689325",
+                  "option_value_name": "delhaize",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Delhaize",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "167958",
+                  "option_value_name": "denkmit",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "DenkMit",
+                  "products_quantity": 8,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "468987",
+                  "option_value_name": "dentalux",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dentalux",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "167976",
+                  "option_value_name": "dontodent",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dontodent",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "315893",
+                  "option_value_name": "doussy",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Doussy",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "235704",
+                  "option_value_name": "dr.junior",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dr.Junior",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "543931",
+                  "option_value_name": "dunnes-stores",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Dunnes Stores",
+                  "products_quantity": 10,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "617573",
+                  "option_value_name": "elcurina",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Elcurina",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "170156",
+                  "option_value_name": "elkos",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Elkos",
+                  "products_quantity": 14,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "505604",
+                  "option_value_name": "emaldent",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Emaldent",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "601698",
+                  "option_value_name": "etos",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Etos",
+                  "products_quantity": 26,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "351735",
+                  "option_value_name": "floralys",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Floralys",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "456583",
+                  "option_value_name": "forea",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Forea",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "315899",
+                  "option_value_name": "formil",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Formil",
+                  "products_quantity": 8,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "594743",
+                  "option_value_name": "fred--flo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Fred & Flo",
+                  "products_quantity": 9,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "545077",
+                  "option_value_name": "freelife",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "FreeLife",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "678813",
+                  "option_value_name": "hallo-welt",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Hallo Welt",
+                  "products_quantity": 5,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "710565",
+                  "option_value_name": "happy-little-camper",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Happy Little Camper",
+                  "products_quantity": 6,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "750079",
+                  "option_value_name": "healthybaby",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "HealthyBaby",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "12152",
+                  "option_value_name": "helen-harper",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Helen Harper",
+                  "products_quantity": 6,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "140191",
+                  "option_value_name": "jumbo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Jumbo",
+                  "products_quantity": 10,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "596558",
+                  "option_value_name": "kindii",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Kindii",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "696609",
+                  "option_value_name": "kindoh",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Kindoh",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "449535",
+                  "option_value_name": "kit--kin",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Kit & Kin",
+                  "products_quantity": 15,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "2043",
+                  "option_value_name": "kolibri",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Kolibri",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "475413",
+                  "option_value_name": "kuniboo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Kuniboo",
+                  "products_quantity": 7,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "112623",
+                  "option_value_name": "lenor",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Lenor",
+                  "products_quantity": 8,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "640450",
+                  "option_value_name": "les-tilapins-de-casino",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Les Tilapins de Casino",
+                  "products_quantity": 3,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "759739",
+                  "option_value_name": "life-babys",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Life Baby's",
+                  "products_quantity": 5,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "530707",
+                  "option_value_name": "lillydoo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Lillydoo",
+                  "products_quantity": 71,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "760539",
+                  "option_value_name": "little-big-change",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Little Big Change",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "666690",
+                  "option_value_name": "luba-cosmetics",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Luba",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "182873",
+                  "option_value_name": "lupilu",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Lupilu",
+                  "products_quantity": 163,
+                  "order": 0,
+                  "option_value_image": "https://content2.rozetka.com.ua/producers/images/original/399331044.jpg"
+                },
+                {
+                  "option_value_id": "18799",
+                  "option_value_name": "magics",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Magics",
+                  "products_quantity": 14,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "545083",
+                  "option_value_name": "mamia",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Mamia",
+                  "products_quantity": 26,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "557917",
+                  "option_value_name": "maxi-trat",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Maxi Trat",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "678816",
+                  "option_value_name": "milette",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Milette",
+                  "products_quantity": 10,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "484296",
+                  "option_value_name": "monoprix",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Monoprix",
+                  "products_quantity": 5,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "594748",
+                  "option_value_name": "monoprix-bebe",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Monoprix Bebe",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "545089",
+                  "option_value_name": "mots-denfants",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Mots d’enfants",
+                  "products_quantity": 5,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "845257",
+                  "option_value_name": "mumyou",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Mum&You",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "377690",
+                  "option_value_name": "nabaiji",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Nabaiji",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "578916",
+                  "option_value_name": "nature-box",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Nature Box",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "681534",
+                  "option_value_name": "natures-promise",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Nature's Promise",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "610738",
+                  "option_value_name": "neo-blanc",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Neo Blanc",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "2696",
+                  "option_value_name": "nuk",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Nuk",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "373244",
+                  "option_value_name": "nutmeg",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Nutmeg",
+                  "products_quantity": 3,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "372920",
+                  "option_value_name": "ombia",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Ombia",
+                  "products_quantity": 3,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "689844",
+                  "option_value_name": "papela",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Papela",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "652903",
+                  "option_value_name": "parents-choice",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Parent's Choice",
+                  "products_quantity": 25,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "251886",
+                  "option_value_name": "penaten",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Penaten",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "655765",
+                  "option_value_name": "people-and-baby",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "People and Baby",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "336723",
+                  "option_value_name": "perfex",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Perfex",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "759734",
+                  "option_value_name": "planeta-junior",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Planeta Junior",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "759744",
+                  "option_value_name": "pura",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Pura",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "613853",
+                  "option_value_name": "sainsburys",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Sainsbury’s",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "357777",
+                  "option_value_name": "santex",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Santex",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "135304",
+                  "option_value_name": "saponello",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "SapoNello",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "176993",
+                  "option_value_name": "savo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Savo",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "540469",
+                  "option_value_name": "siempre-es-viernes",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Siempre es Viernes",
+                  "products_quantity": 9,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "446105",
+                  "option_value_name": "soft",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Soft",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "205976",
+                  "option_value_name": "sophie",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Sophie",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "655621",
+                  "option_value_name": "sweet-home-collection",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Sweet Home Collection",
+                  "products_quantity": 17,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "629943",
+                  "option_value_name": "tamboor",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Tamboor",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "315911",
+                  "option_value_name": "tandil",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Tandil",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "13397",
+                  "option_value_name": "tena",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Tena",
+                  "products_quantity": 7,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "398202",
+                  "option_value_name": "tesco",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Tesco",
+                  "products_quantity": 13,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "811548",
+                  "option_value_name": "tippy-toes",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Tippy Toes",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "1069",
+                  "option_value_name": "trudi",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Trudi",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "594723",
+                  "option_value_name": "u-tout-petits",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "U tout petits",
+                  "products_quantity": 18,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "530119",
+                  "option_value_name": "viakal",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Viakal",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "315917",
+                  "option_value_name": "w5",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "W5",
+                  "products_quantity": 10,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "593003",
+                  "option_value_name": "shosha",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Шоша",
+                  "products_quantity": 8,
+                  "order": 0
+                }
+              ],
+              "short_list": [
+                {
+                  "option_value_id": "184825",
+                  "option_value_name": "albert-heijn",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Albert Heijn",
+                  "products_quantity": 23,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "315881",
+                  "option_value_name": "almat",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Almat",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "483862",
+                  "option_value_name": "asda",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Asda",
+                  "products_quantity": 34,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "10047",
+                  "option_value_name": "astonish",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Astonish",
+                  "products_quantity": 1,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "456247",
+                  "option_value_name": "auchan",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Auchan",
+                  "products_quantity": 3,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "751119",
+                  "option_value_name": "baby-well",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Baby Well",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "520393",
+                  "option_value_name": "babydream",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Babydream",
+                  "products_quantity": 56,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "170422",
+                  "option_value_name": "balea",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Balea",
+                  "products_quantity": 5,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "688857",
+                  "option_value_name": "bambiboo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Bambiboo",
+                  "products_quantity": 2,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "586841",
+                  "option_value_name": "beauty-baby",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Beauty Baby",
+                  "products_quantity": 26,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "757749",
+                  "option_value_name": "bebe-googoo",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Bebe GooGoo",
+                  "products_quantity": 4,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "251790",
+                  "option_value_name": "benefit",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Benefit",
+                  "products_quantity": 1,
+                  "order": 0
+                }
+              ],
+              "special_combobox_view": "section_list_autocomplete"
+            },
+            "price": {
+              "option_id": "price",
+              "option_name": "price",
+              "option_title": "Ціна",
+              "option_type": "Slider",
+              "comparable": "main",
+              "mode": "expand",
+              "hide_block": false,
+              "order": -60,
+              "total_filtered": null,
+              "config": {
+                "valuesPattern": "",
+                "unit": "грн"
+              },
+              "chosen_values": {
+                "min": 25,
+                "max": 3480
+              },
+              "range_values": {
+                "min": 25,
+                "max": 3480
+              },
+              "special_combobox_view": "slider"
+            },
+            "comments": {
+              "option_id": "comments",
+              "option_name": "comments",
+              "option_title": "Відгуки та рейтинг",
+              "option_type": "List",
+              "comparable": "main",
+              "mode": "expand",
+              "hide_block": false,
+              "order": 999999990,
+              "total_filtered": 3,
+              "config": null,
+              "option_values": [
+                {
+                  "option_value_id": "rating",
+                  "option_value_name": "rating",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Оцінка ⭐⭐⭐⭐ і вище",
+                  "products_quantity": 182,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "with_comments",
+                  "option_value_name": "with_comments",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "З відгуками",
+                  "products_quantity": 202,
+                  "order": 1
+                },
+                {
+                  "option_value_id": "photo_video",
+                  "option_value_name": "photo_video",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Відгуки з фото/відео",
+                  "products_quantity": 75,
+                  "order": 2
+                }
+              ],
+              "short_list": [
+                {
+                  "option_value_id": "rating",
+                  "option_value_name": "rating",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Оцінка ⭐⭐⭐⭐ і вище",
+                  "products_quantity": 182,
+                  "order": 0
+                },
+                {
+                  "option_value_id": "with_comments",
+                  "option_value_name": "with_comments",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "З відгуками",
+                  "products_quantity": 202,
+                  "order": 1
+                },
+                {
+                  "option_value_id": "photo_video",
+                  "option_value_name": "photo_video",
+                  "is_chosen": false,
+                  "disabled": false,
+                  "option_value_title": "Відгуки з фото/відео",
+                  "products_quantity": 75,
+                  "order": 2
+                }
+              ],
+              "special_combobox_view": "list"
+            }
+          }
+        },
+        "goods": {
+          "ids": [
+            343005856,
+            343005871,
+            471338949,
+            471338939,
+            438857387,
+            470363129,
+            471338974,
+            426798308,
+            341896552,
+            497168159,
+            556565055,
+            444777359,
+            376989036,
+            489417864,
+            484257784,
+            341670166,
+            470363139,
+            557458947,
+            592335409,
+            471338989,
+            470363204,
+            502882884,
+            497168164,
+            438857393,
+            444777341,
+            307841933,
+            470363069,
+            497168139,
+            500261654,
+            556565064,
+            497168154,
+            556565034,
+            557458926,
+            277383223,
+            500261709,
+            370063236,
+            594025231,
+            556565043,
+            430450721,
+            320049049,
+            277383268,
+            471338959,
+            289543758,
+            376989123,
+            558700173,
+            484257844,
+            594025258,
+            430450724,
+            471338889,
+            345222511,
+            556565040,
+            444777338,
+            500261644,
+            558700182,
+            323532067,
+            556565019,
+            470363164,
+            471339014,
+            471338919,
+            470363169
+          ],
+          "ids_count": 894,
+          "goods_in_category": 957,
+          "shown_page": 1,
+          "goods_limit": 60,
+          "total_pages": 15
+        },
+        "sort": {
+          "selected": "rank",
+          "list": [
+            {
+              "name": "rank",
+              "title": "За рейтингом",
+              "is_default": true
+            },
+            {
+              "name": "cheap",
+              "title": "Від дешевих до дорогих",
+              "is_default": false
+            },
+            {
+              "name": "expensive",
+              "title": "Від дорогих до дешевих",
+              "is_default": false
+            }
+          ]
+        }
+      },
+      "errors": []
+    }
+  },
+  "raw_data": {
+    "data": {
+      "filters": {
+        "chosen": {},
+        "options": {
+          "98900": {
+            "option_id": "98900",
+            "option_name": "strana-proizvoditelj-tovara-90098",
+            "option_title": "Країна-виробник товару",
+            "option_type": "ListValues",
+            "comparable": "main",
+            "mode": "expand",
+            "hide_block": false,
+            "order": 1000,
+            "total_filtered": 14,
+            "config": null,
+            "option_values": [
+              {
+                "option_value_id": "634603",
+                "option_value_name": "634603",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Бельгія",
+                "products_quantity": 4,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "622640",
+                "option_value_name": "622640",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Велика Британія",
+                "products_quantity": 3,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "656678",
+                "option_value_name": "656678",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Греція",
+                "products_quantity": 1,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "544331",
+                "option_value_name": "544331",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Китай",
+                "products_quantity": 1,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "619924",
+                "option_value_name": "619924",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Німеччина",
+                "products_quantity": 97,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "622416",
+                "option_value_name": "622416",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Польща",
+                "products_quantity": 3,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "619903",
+                "option_value_name": "619903",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "США",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "621338",
+                "option_value_name": "621338",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Туреччина",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "621324",
+                "option_value_name": "621324",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Угорщина",
+                "products_quantity": 1,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "544338",
+                "option_value_name": "544338",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Україна",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "619938",
+                "option_value_name": "619938",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Франція",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "620638",
+                "option_value_name": "620638",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Чехія",
+                "products_quantity": 19,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "2522624",
+                "option_value_name": "evrosoyuz",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Євросоюз",
+                "products_quantity": 776,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "620540",
+                "option_value_name": "620540",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Італія",
+                "products_quantity": 41,
+                "order": 16777215
+              }
+            ],
+            "short_list": [
+              {
+                "option_value_id": "634603",
+                "option_value_name": "634603",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Бельгія",
+                "products_quantity": 4,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "622640",
+                "option_value_name": "622640",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Велика Британія",
+                "products_quantity": 3,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "656678",
+                "option_value_name": "656678",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Греція",
+                "products_quantity": 1,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "544331",
+                "option_value_name": "544331",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Китай",
+                "products_quantity": 1,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "619924",
+                "option_value_name": "619924",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Німеччина",
+                "products_quantity": 97,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "622416",
+                "option_value_name": "622416",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Польща",
+                "products_quantity": 3,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "619903",
+                "option_value_name": "619903",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "США",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "621338",
+                "option_value_name": "621338",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Туреччина",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "621324",
+                "option_value_name": "621324",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Угорщина",
+                "products_quantity": 1,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "544338",
+                "option_value_name": "544338",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Україна",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "619938",
+                "option_value_name": "619938",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Франція",
+                "products_quantity": 2,
+                "order": 16777215
+              },
+              {
+                "option_value_id": "620638",
+                "option_value_name": "620638",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Чехія",
+                "products_quantity": 19,
+                "order": 16777215
+              }
+            ],
+            "special_combobox_view": "list"
+          },
+          "254406": {
+            "option_id": "254406",
+            "option_name": "delivery",
+            "option_title": "Доставка",
+            "option_type": "List",
+            "comparable": "main",
+            "mode": "expand",
+            "hide_block": false,
+            "order": -50,
+            "total_filtered": 1,
+            "config": null,
+            "option_values": [
+              {
+                "option_value_id": "4401414",
+                "option_value_name": "free-shipping-to-the-store",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Доставка в магазини ROZETKA",
+                "products_quantity": 204,
+                "order": 2
+              }
+            ],
+            "short_list": [
+              {
+                "option_value_id": "4401414",
+                "option_value_name": "free-shipping-to-the-store",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Доставка в магазини ROZETKA",
+                "products_quantity": 204,
+                "order": 2
+              }
+            ],
+            "special_combobox_view": "list"
+          },
+          "259609": {
+            "option_id": "259609",
+            "option_name": "premium",
+            "option_title": "Єдина підписка Smart",
+            "option_type": "List",
+            "comparable": "main",
+            "mode": "expand",
+            "hide_block": false,
+            "order": 16777215,
+            "total_filtered": 1,
+            "config": null,
+            "option_values": [
+              {
+                "option_value_id": "5136974",
+                "option_value_name": "tovari-s-besplatnoy-dostavkoy",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Товари з підпискою Smart",
+                "products_quantity": 327,
+                "order": 16777215
+              }
+            ],
+            "short_list": [
+              {
+                "option_value_id": "5136974",
+                "option_value_name": "tovari-s-besplatnoy-dostavkoy",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Товари з підпискою Smart",
+                "products_quantity": 327,
+                "order": 16777215
+              }
+            ],
+            "special_combobox_view": "list"
+          },
+          "section_id": {
+            "option_id": "section_id",
+            "option_name": "section_id",
+            "option_title": "Всі товари",
+            "option_type": "List",
+            "comparable": "main",
+            "mode": "simple",
+            "hide_block": false,
+            "order": -140,
+            "total_filtered": null,
+            "config": null,
+            "visible_tree": [
+              {
+                "id": 88468,
+                "title": "Товари для дітей",
+                "name": "kids",
+                "status": "active",
+                "mpath": ".",
+                "parent_id": 0,
+                "level": 1,
+                "hide_cat": false,
+                "count": 777,
+                "children": []
+              },
+              {
+                "id": 2394287,
+                "title": "Товари для дому",
+                "name": "tovary-dlya-doma",
+                "status": "active",
+                "mpath": ".",
+                "parent_id": 0,
+                "level": 1,
+                "hide_cat": false,
+                "count": 98,
+                "children": []
+              },
+              {
+                "id": 4629305,
+                "title": "Краса та здоров'я",
+                "name": "krasota-i-zdorovje",
+                "status": "active",
+                "mpath": ".",
+                "parent_id": 0,
+                "level": 1,
+                "hide_cat": false,
+                "count": 82,
+                "children": []
+              }
+            ],
+            "total_quantity": 957,
+            "special_combobox_view": "tree"
+          },
+          "producer": {
+            "option_id": "producer",
+            "option_name": "producer",
+            "option_title": "Бренд",
+            "option_type": "List",
+            "comparable": "main",
+            "mode": "expand",
+            "hide_block": false,
+            "order": -80,
+            "total_filtered": 106,
+            "config": null,
+            "option_values": [
+              {
+                "option_value_id": "667923",
+                "option_value_name": "bevola",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Bevola",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "249534",
+                "option_value_name": "bimbo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Bimbo",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "228056",
+                "option_value_name": "bon-bebe",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Bon Bebe",
+                "products_quantity": 8,
+                "order": 0
+              },
+              {
+                "option_value_id": "314488",
+                "option_value_name": "boni_",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Boni",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "222512",
+                "option_value_name": "carrefour",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Carrefour",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "538231",
+                "option_value_name": "carryboo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Carryboo",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "594733",
+                "option_value_name": "casino",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Casino",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "320786",
+                "option_value_name": "change",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Change",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "119962",
+                "option_value_name": "chanteclair",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "ChanteClair",
+                "products_quantity": 16,
+                "order": 0
+              },
+              {
+                "option_value_id": "646855",
+                "option_value_name": "cherubin",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Cherubin",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "1497",
+                "option_value_name": "chicco",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Chicco",
+                "products_quantity": 13,
+                "order": 0,
+                "option_value_image": "https://content1.rozetka.com.ua/producers/images/original/187345647.jpg"
+              },
+              {
+                "option_value_id": "168030",
+                "option_value_name": "cien",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Cien",
+                "products_quantity": 10,
+                "order": 0
+              },
+              {
+                "option_value_id": "168006",
+                "option_value_name": "coccolino",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Coccolino",
+                "products_quantity": 8,
+                "order": 0
+              },
+              {
+                "option_value_id": "389695",
+                "option_value_name": "coop",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Coop",
+                "products_quantity": 5,
+                "order": 0
+              },
+              {
+                "option_value_id": "594728",
+                "option_value_name": "coop-365-minirisk",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Coop 365 Minirisk",
+                "products_quantity": 3,
+                "order": 0
+              },
+              {
+                "option_value_id": "601693",
+                "option_value_name": "coop-anglamark",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Coop Anglamark",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "545071",
+                "option_value_name": "crescendo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Crescendo",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "19612",
+                "option_value_name": "dada",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dada",
+                "products_quantity": 17,
+                "order": 0
+              },
+              {
+                "option_value_id": "336711",
+                "option_value_name": "dailee",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dailee",
+                "products_quantity": 7,
+                "order": 0
+              },
+              {
+                "option_value_id": "315887",
+                "option_value_name": "dalli",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dalli",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "181985",
+                "option_value_name": "dash",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dash",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "689325",
+                "option_value_name": "delhaize",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Delhaize",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "167958",
+                "option_value_name": "denkmit",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "DenkMit",
+                "products_quantity": 8,
+                "order": 0
+              },
+              {
+                "option_value_id": "468987",
+                "option_value_name": "dentalux",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dentalux",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "167976",
+                "option_value_name": "dontodent",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dontodent",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "315893",
+                "option_value_name": "doussy",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Doussy",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "235704",
+                "option_value_name": "dr.junior",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dr.Junior",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "543931",
+                "option_value_name": "dunnes-stores",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Dunnes Stores",
+                "products_quantity": 10,
+                "order": 0
+              },
+              {
+                "option_value_id": "617573",
+                "option_value_name": "elcurina",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Elcurina",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "170156",
+                "option_value_name": "elkos",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Elkos",
+                "products_quantity": 14,
+                "order": 0
+              },
+              {
+                "option_value_id": "505604",
+                "option_value_name": "emaldent",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Emaldent",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "601698",
+                "option_value_name": "etos",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Etos",
+                "products_quantity": 26,
+                "order": 0
+              },
+              {
+                "option_value_id": "351735",
+                "option_value_name": "floralys",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Floralys",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "456583",
+                "option_value_name": "forea",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Forea",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "315899",
+                "option_value_name": "formil",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Formil",
+                "products_quantity": 8,
+                "order": 0
+              },
+              {
+                "option_value_id": "594743",
+                "option_value_name": "fred--flo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Fred & Flo",
+                "products_quantity": 9,
+                "order": 0
+              },
+              {
+                "option_value_id": "545077",
+                "option_value_name": "freelife",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "FreeLife",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "678813",
+                "option_value_name": "hallo-welt",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Hallo Welt",
+                "products_quantity": 5,
+                "order": 0
+              },
+              {
+                "option_value_id": "710565",
+                "option_value_name": "happy-little-camper",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Happy Little Camper",
+                "products_quantity": 6,
+                "order": 0
+              },
+              {
+                "option_value_id": "750079",
+                "option_value_name": "healthybaby",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "HealthyBaby",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "12152",
+                "option_value_name": "helen-harper",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Helen Harper",
+                "products_quantity": 6,
+                "order": 0
+              },
+              {
+                "option_value_id": "140191",
+                "option_value_name": "jumbo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Jumbo",
+                "products_quantity": 10,
+                "order": 0
+              },
+              {
+                "option_value_id": "596558",
+                "option_value_name": "kindii",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Kindii",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "696609",
+                "option_value_name": "kindoh",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Kindoh",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "449535",
+                "option_value_name": "kit--kin",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Kit & Kin",
+                "products_quantity": 15,
+                "order": 0
+              },
+              {
+                "option_value_id": "2043",
+                "option_value_name": "kolibri",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Kolibri",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "475413",
+                "option_value_name": "kuniboo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Kuniboo",
+                "products_quantity": 7,
+                "order": 0
+              },
+              {
+                "option_value_id": "112623",
+                "option_value_name": "lenor",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Lenor",
+                "products_quantity": 8,
+                "order": 0
+              },
+              {
+                "option_value_id": "640450",
+                "option_value_name": "les-tilapins-de-casino",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Les Tilapins de Casino",
+                "products_quantity": 3,
+                "order": 0
+              },
+              {
+                "option_value_id": "759739",
+                "option_value_name": "life-babys",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Life Baby's",
+                "products_quantity": 5,
+                "order": 0
+              },
+              {
+                "option_value_id": "530707",
+                "option_value_name": "lillydoo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Lillydoo",
+                "products_quantity": 71,
+                "order": 0
+              },
+              {
+                "option_value_id": "760539",
+                "option_value_name": "little-big-change",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Little Big Change",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "666690",
+                "option_value_name": "luba-cosmetics",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Luba",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "182873",
+                "option_value_name": "lupilu",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Lupilu",
+                "products_quantity": 163,
+                "order": 0,
+                "option_value_image": "https://content2.rozetka.com.ua/producers/images/original/399331044.jpg"
+              },
+              {
+                "option_value_id": "18799",
+                "option_value_name": "magics",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Magics",
+                "products_quantity": 14,
+                "order": 0
+              },
+              {
+                "option_value_id": "545083",
+                "option_value_name": "mamia",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Mamia",
+                "products_quantity": 26,
+                "order": 0
+              },
+              {
+                "option_value_id": "557917",
+                "option_value_name": "maxi-trat",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Maxi Trat",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "678816",
+                "option_value_name": "milette",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Milette",
+                "products_quantity": 10,
+                "order": 0
+              },
+              {
+                "option_value_id": "484296",
+                "option_value_name": "monoprix",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Monoprix",
+                "products_quantity": 5,
+                "order": 0
+              },
+              {
+                "option_value_id": "594748",
+                "option_value_name": "monoprix-bebe",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Monoprix Bebe",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "545089",
+                "option_value_name": "mots-denfants",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Mots d’enfants",
+                "products_quantity": 5,
+                "order": 0
+              },
+              {
+                "option_value_id": "845257",
+                "option_value_name": "mumyou",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Mum&You",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "377690",
+                "option_value_name": "nabaiji",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Nabaiji",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "578916",
+                "option_value_name": "nature-box",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Nature Box",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "681534",
+                "option_value_name": "natures-promise",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Nature's Promise",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "610738",
+                "option_value_name": "neo-blanc",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Neo Blanc",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "2696",
+                "option_value_name": "nuk",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Nuk",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "373244",
+                "option_value_name": "nutmeg",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Nutmeg",
+                "products_quantity": 3,
+                "order": 0
+              },
+              {
+                "option_value_id": "372920",
+                "option_value_name": "ombia",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Ombia",
+                "products_quantity": 3,
+                "order": 0
+              },
+              {
+                "option_value_id": "689844",
+                "option_value_name": "papela",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Papela",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "652903",
+                "option_value_name": "parents-choice",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Parent's Choice",
+                "products_quantity": 25,
+                "order": 0
+              },
+              {
+                "option_value_id": "251886",
+                "option_value_name": "penaten",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Penaten",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "655765",
+                "option_value_name": "people-and-baby",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "People and Baby",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "336723",
+                "option_value_name": "perfex",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Perfex",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "759734",
+                "option_value_name": "planeta-junior",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Planeta Junior",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "759744",
+                "option_value_name": "pura",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Pura",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "613853",
+                "option_value_name": "sainsburys",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Sainsbury’s",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "357777",
+                "option_value_name": "santex",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Santex",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "135304",
+                "option_value_name": "saponello",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "SapoNello",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "176993",
+                "option_value_name": "savo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Savo",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "540469",
+                "option_value_name": "siempre-es-viernes",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Siempre es Viernes",
+                "products_quantity": 9,
+                "order": 0
+              },
+              {
+                "option_value_id": "446105",
+                "option_value_name": "soft",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Soft",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "205976",
+                "option_value_name": "sophie",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Sophie",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "655621",
+                "option_value_name": "sweet-home-collection",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Sweet Home Collection",
+                "products_quantity": 17,
+                "order": 0
+              },
+              {
+                "option_value_id": "629943",
+                "option_value_name": "tamboor",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Tamboor",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "315911",
+                "option_value_name": "tandil",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Tandil",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "13397",
+                "option_value_name": "tena",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Tena",
+                "products_quantity": 7,
+                "order": 0
+              },
+              {
+                "option_value_id": "398202",
+                "option_value_name": "tesco",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Tesco",
+                "products_quantity": 13,
+                "order": 0
+              },
+              {
+                "option_value_id": "811548",
+                "option_value_name": "tippy-toes",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Tippy Toes",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "1069",
+                "option_value_name": "trudi",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Trudi",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "594723",
+                "option_value_name": "u-tout-petits",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "U tout petits",
+                "products_quantity": 18,
+                "order": 0
+              },
+              {
+                "option_value_id": "530119",
+                "option_value_name": "viakal",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Viakal",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "315917",
+                "option_value_name": "w5",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "W5",
+                "products_quantity": 10,
+                "order": 0
+              },
+              {
+                "option_value_id": "593003",
+                "option_value_name": "shosha",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Шоша",
+                "products_quantity": 8,
+                "order": 0
+              }
+            ],
+            "short_list": [
+              {
+                "option_value_id": "184825",
+                "option_value_name": "albert-heijn",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Albert Heijn",
+                "products_quantity": 23,
+                "order": 0
+              },
+              {
+                "option_value_id": "315881",
+                "option_value_name": "almat",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Almat",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "483862",
+                "option_value_name": "asda",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Asda",
+                "products_quantity": 34,
+                "order": 0
+              },
+              {
+                "option_value_id": "10047",
+                "option_value_name": "astonish",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Astonish",
+                "products_quantity": 1,
+                "order": 0
+              },
+              {
+                "option_value_id": "456247",
+                "option_value_name": "auchan",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Auchan",
+                "products_quantity": 3,
+                "order": 0
+              },
+              {
+                "option_value_id": "751119",
+                "option_value_name": "baby-well",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Baby Well",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "520393",
+                "option_value_name": "babydream",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Babydream",
+                "products_quantity": 56,
+                "order": 0
+              },
+              {
+                "option_value_id": "170422",
+                "option_value_name": "balea",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Balea",
+                "products_quantity": 5,
+                "order": 0
+              },
+              {
+                "option_value_id": "688857",
+                "option_value_name": "bambiboo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Bambiboo",
+                "products_quantity": 2,
+                "order": 0
+              },
+              {
+                "option_value_id": "586841",
+                "option_value_name": "beauty-baby",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Beauty Baby",
+                "products_quantity": 26,
+                "order": 0
+              },
+              {
+                "option_value_id": "757749",
+                "option_value_name": "bebe-googoo",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Bebe GooGoo",
+                "products_quantity": 4,
+                "order": 0
+              },
+              {
+                "option_value_id": "251790",
+                "option_value_name": "benefit",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Benefit",
+                "products_quantity": 1,
+                "order": 0
+              }
+            ],
+            "special_combobox_view": "section_list_autocomplete"
+          },
+          "price": {
+            "option_id": "price",
+            "option_name": "price",
+            "option_title": "Ціна",
+            "option_type": "Slider",
+            "comparable": "main",
+            "mode": "expand",
+            "hide_block": false,
+            "order": -60,
+            "total_filtered": null,
+            "config": {
+              "valuesPattern": "",
+              "unit": "грн"
+            },
+            "chosen_values": {
+              "min": 25,
+              "max": 3480
+            },
+            "range_values": {
+              "min": 25,
+              "max": 3480
+            },
+            "special_combobox_view": "slider"
+          },
+          "comments": {
+            "option_id": "comments",
+            "option_name": "comments",
+            "option_title": "Відгуки та рейтинг",
+            "option_type": "List",
+            "comparable": "main",
+            "mode": "expand",
+            "hide_block": false,
+            "order": 999999990,
+            "total_filtered": 3,
+            "config": null,
+            "option_values": [
+              {
+                "option_value_id": "rating",
+                "option_value_name": "rating",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Оцінка ⭐⭐⭐⭐ і вище",
+                "products_quantity": 182,
+                "order": 0
+              },
+              {
+                "option_value_id": "with_comments",
+                "option_value_name": "with_comments",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "З відгуками",
+                "products_quantity": 202,
+                "order": 1
+              },
+              {
+                "option_value_id": "photo_video",
+                "option_value_name": "photo_video",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Відгуки з фото/відео",
+                "products_quantity": 75,
+                "order": 2
+              }
+            ],
+            "short_list": [
+              {
+                "option_value_id": "rating",
+                "option_value_name": "rating",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Оцінка ⭐⭐⭐⭐ і вище",
+                "products_quantity": 182,
+                "order": 0
+              },
+              {
+                "option_value_id": "with_comments",
+                "option_value_name": "with_comments",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "З відгуками",
+                "products_quantity": 202,
+                "order": 1
+              },
+              {
+                "option_value_id": "photo_video",
+                "option_value_name": "photo_video",
+                "is_chosen": false,
+                "disabled": false,
+                "option_value_title": "Відгуки з фото/відео",
+                "products_quantity": 75,
+                "order": 2
+              }
+            ],
+            "special_combobox_view": "list"
+          }
+        }
+      },
+      "goods": {
+        "ids": [
+          343005856,
+          343005871,
+          471338949,
+          471338939,
+          438857387,
+          470363129,
+          471338974,
+          426798308,
+          341896552,
+          497168159,
+          556565055,
+          444777359,
+          376989036,
+          489417864,
+          484257784,
+          341670166,
+          470363139,
+          557458947,
+          592335409,
+          471338989,
+          470363204,
+          502882884,
+          497168164,
+          438857393,
+          444777341,
+          307841933,
+          470363069,
+          497168139,
+          500261654,
+          556565064,
+          497168154,
+          556565034,
+          557458926,
+          277383223,
+          500261709,
+          370063236,
+          594025231,
+          556565043,
+          430450721,
+          320049049,
+          277383268,
+          471338959,
+          289543758,
+          376989123,
+          558700173,
+          484257844,
+          594025258,
+          430450724,
+          471338889,
+          345222511,
+          556565040,
+          444777338,
+          500261644,
+          558700182,
+          323532067,
+          556565019,
+          470363164,
+          471339014,
+          471338919,
+          470363169
+        ],
+        "ids_count": 894,
+        "goods_in_category": 957,
+        "shown_page": 1,
+        "goods_limit": 60,
+        "total_pages": 15
+      },
+      "sort": {
+        "selected": "rank",
+        "list": [
+          {
+            "name": "rank",
+            "title": "За рейтингом",
+            "is_default": true
+          },
+          {
+            "name": "cheap",
+            "title": "Від дешевих до дорогих",
+            "is_default": false
+          },
+          {
+            "name": "expensive",
+            "title": "Від дорогих до дешевих",
+            "is_default": false
+          }
+        ]
+      }
+    },
+    "errors": []
+  }
+}

@@ -8,10 +8,11 @@
 
 - Phase 0 (стабилизация) ✅
 - Phase 1 (business layer + project-rooted workflows) ✅
+- Phase 1.5 (Fast Scraper API: curl_cffi, bypass CF, normalization & ExecJS) ✅
 
 ## Дальше
 
-### Phase 2 — Каталог клиента (`project_products`)
+### Phase 2 — Каталог клиента (`project_products`) (В работе)
 
 - импорт из Excel
 - валидация + отчет импорта
@@ -19,13 +20,13 @@
 
 ### Phase 3 — Мониторинг (`competitors`, `monitored_products`)
 
-- быстрый флоу добавления конкурентов/URL
+- быстрый флоу добавления конкурентов/URL из результатов Discovery
 - статус/последняя проверка
 
-### Phase 4 — Price Update (`price_observations`)
+### Phase 4 — High-Speed API Integration (Частично)
 
-- массовое обновление watchlist
-- корректная обработка фейлов без потери связей
+- заменить медленные Selenium/Playwright скраперы в основном GUI на интегрированный `fast_api`.
+- массовое независимое параллельное обновление watchlist (`price_observations`).
 
 ### Phase 5 — Price Audit (первый продаваемый)
 

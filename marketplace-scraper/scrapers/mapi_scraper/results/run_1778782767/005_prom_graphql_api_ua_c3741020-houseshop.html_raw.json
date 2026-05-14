@@ -1,0 +1,890 @@
+{
+  "url": "https://prom.ua/ua/c3741020-houseshop.html",
+  "meta": {
+    "url": "https://prom.ua/graphql",
+    "status": 200,
+    "elapsed_ms": 251,
+    "bytes": 17963
+  },
+  "raw_data": {
+    "data": {
+      "listing": {
+        "__typename": "CompanyListing",
+        "page": {
+          "total": 231,
+          "__typename": "ListingPage",
+          "products": [
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1761496729,
+                "name": "Повербанк 36600мАг 4+1 сонячні панелі, бездротовою зарядкою QI, прикурювачем та ручним генератором",
+                "price": "2195",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "poverbank-36600mach-solnechnye",
+                "categoryIds": [
+                  0,
+                  50,
+                  5009,
+                  71109
+                ],
+                "image": "https://images.prom.ua/6277728210_w200_h200_poverbank-36600mach-41.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1712877583,
+                "name": "Харчовий сухий водорозчинний китайський барвник розпилювач KaiBei",
+                "price": "140",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "pischevoj-suhoj-vodorastvorimyj",
+                "categoryIds": [
+                  0,
+                  2,
+                  235,
+                  819,
+                  81906
+                ],
+                "image": "https://images.prom.ua/6683286210_w200_h200_pischevoj-suhoj-vodorastvorimyj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2239118529,
+                "name": "Золото сусальне харчове у пластівцях поталь для декору 2г",
+                "price": "195",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "zoloto-susalnoe-pischevoe",
+                "categoryIds": [
+                  0,
+                  2,
+                  235,
+                  819,
+                  81906
+                ],
+                "image": "https://images.prom.ua/6459172441_w200_h200_zoloto-susalnoe-pischevoe.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2742100820,
+                "name": "Мухобойка 220V Weidasi WD-243, електрична пастка для комах з УФ- підсвіткою 40см",
+                "price": "955",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "elektricheskaya-220v-muhobojka",
+                "categoryIds": [
+                  0,
+                  15,
+                  821,
+                  1518,
+                  151801
+                ],
+                "image": "https://images.prom.ua/6816467257_w200_h200_elektricheskaya-220v-muhobojka.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1838381976,
+                "name": "Акумуляторна електрична мухобойка, вбивця комарів, комах, молі Weidasi WD-991 з УФ лампою",
+                "price": "749",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "akkumulyatornaya-elektricheskaya-muhobojka",
+                "categoryIds": [
+                  0,
+                  15,
+                  821,
+                  1518,
+                  151801
+                ],
+                "image": "https://images.prom.ua/6635023853_w200_h200_akkumulyatornaya-elektricheskaya-muhobojka.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2864768984,
+                "name": "Професійний акумуляторний аерограф Airbrush Kit Т600К з вбудованим компресором та цифровим дисплеєм",
+                "price": "2889",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "aerograf-akkumulyatornyj-professionalnyj",
+                "categoryIds": [
+                  0,
+                  1420,
+                  142005,
+                  14200515,
+                  14200525
+                ],
+                "image": "https://images.prom.ua/6994494380_w200_h200_aerograf-akkumulyatornyj-professionalnyj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3013569098,
+                "name": "Акумуляторний аерограф ProCord X1 з дисплеєм, 35 PSI, 7.4V, 800 мА/год, USB-C",
+                "price": "2600",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "akkumulyatornyj-aerograf-procord",
+                "categoryIds": [
+                  0,
+                  1420,
+                  142005,
+                  14200515,
+                  14200525
+                ],
+                "image": "https://images.prom.ua/7296197747_w200_h200_akkumulyatornyj-aerograf-procord.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2790172532,
+                "name": "Аерограф Airbrush Kit професійний із мінікомпресором 10 л/хв 20 - 30 PSI",
+                "price": "2499",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "aerograf-airbrush-kit",
+                "categoryIds": [
+                  0,
+                  1420,
+                  142005,
+                  14200515,
+                  14200525
+                ],
+                "image": "https://images.prom.ua/6880840663_w200_h200_aerograf-airbrush-kit.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3020566432,
+                "name": "Портативний 4 в 1 пуско - зарядний пристрій бустер з кейсом, повербанк 8400 мА/г компресор ліхтарик",
+                "price": "2695",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "portativnoe-pusko-zaryadnoe",
+                "categoryIds": [
+                  0,
+                  55,
+                  1212,
+                  121259,
+                  410202
+                ],
+                "image": "https://images.prom.ua/7313776533_w200_h200_portativnoe-4-v.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2815860730,
+                "name": "Стабілізатор для телефону TOKQI M06 з петличним мікрофоном AI-відстеженням штативом і підсвіткою",
+                "price": "3799",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "osevoj-stabilizator-tokqi",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  6372001,
+                  63714
+                ],
+                "image": "https://images.prom.ua/7262005312_w200_h200_osevoj-stabilizator-tokqi.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2243501477,
+                "name": "Штатив - монопод, палка - селфі 3 в 1 Yunteng VCT-1688L 1,95м",
+                "price": "839",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "shtativ-monopod-palka",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  6372001,
+                  63714
+                ],
+                "image": "https://images.prom.ua/5938740028_w200_h200_shtativ-monopod.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2240331996,
+                "name": "Настільний дзеркальний електронний годинник з підсвічуванням, бездротова зарядка QI 4 в 1",
+                "price": "995",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "nastolnye-zerkalnye-elektronnye",
+                "categoryIds": [
+                  0,
+                  15,
+                  3710,
+                  1539,
+                  152805
+                ],
+                "image": "https://images.prom.ua/5926710878_w200_h200_nastolnye-zerkalnye-elektronnye.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2497624889,
+                "name": "Фотоапарат дитячий 48Мп з функцією миттєвого друку, дитячий фотопрінтер з миттєвим друком Рожевий",
+                "price": "1649",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "fotoapparat-detskij-48mp",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  500403,
+                  500414
+                ],
+                "image": "https://images.prom.ua/6490070842_w200_h200_fotoapparat-detskij-48mp.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2993147480,
+                "name": "Дитячий фотоапарат 3.0\" з миттєвим друком 48MP + селфі 12MP Фіолетовий",
+                "price": "2199",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "detskij-fotoapparat-mgnovennoj",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  500403,
+                  500414
+                ],
+                "image": "https://images.prom.ua/7246548682_w200_h200_detskij-fotoapparat-30.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2742751027,
+                "name": "Робот дитячий голосовий інтерактивний, навчальна акумуляторна іграшка для малювання, 100 карток в комплекті",
+                "price": "2299",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "robot-detskij-golosovoj",
+                "categoryIds": [
+                  0,
+                  1501,
+                  26,
+                  2602
+                ],
+                "image": "https://images.prom.ua/6820372169_w200_h200_robot-detskij-golosovoj.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1744310702,
+                "name": "Потужний та яскравий ліхтар Повербанк Weidasi WD576 20W 6000мАч T8 3режима",
+                "price": "599",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "moschnyj-yarkij-fonar",
+                "categoryIds": [
+                  0,
+                  18,
+                  2404,
+                  240425,
+                  150410
+                ],
+                "image": "https://images.prom.ua/5298060733_w200_h200_moschnyj-i-yarkij.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1876810087,
+                "name": "Кругла Тіара, металева корона Діадема повне коло для прикраси торта, а також для фотосесій",
+                "price": "549",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kruglaya-tiara-metallicheskaya",
+                "categoryIds": [
+                  0,
+                  3810,
+                  339,
+                  33901,
+                  3390112
+                ],
+                "image": "https://images.prom.ua/5819974834_w200_h200_kruglaya-tiara-metallicheskaya.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2477005920,
+                "name": "Кругла Тіара, металева корона Діадема повне коло для прикраси торта, а також для фотосесій",
+                "price": "699",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kruglaya-tiara-metallicheskaya",
+                "categoryIds": [
+                  0,
+                  3810,
+                  339,
+                  33901,
+                  3390112
+                ],
+                "image": "https://images.prom.ua/6460004078_w200_h200_kruglaya-tiara-metallicheskaya.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2633854181,
+                "name": "Портативний акумуляторний вентилятор 12\" Weidasi - 247, LED-лампа, 3 швидкості, автоматичне обертання, 6 Вт 4000 мАг",
+                "price": "2100",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "portativnyj-akkumulyatornyj-ventilyator",
+                "categoryIds": [
+                  0,
+                  50,
+                  6,
+                  616,
+                  618
+                ],
+                "image": "https://images.prom.ua/6683802136_w200_h200_portativnyj-akkumulyatornyj-ventilyator.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1914260280,
+                "name": "Мішки кондитерські одноразові \"XL\"щільні MASTER (100шт)",
+                "price": "140",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "meshki-konditerskie-odnorazovye",
+                "categoryIds": [
+                  0,
+                  15,
+                  1502,
+                  152304,
+                  15230431
+                ],
+                "image": "https://images.prom.ua/6878992220_w200_h200_meshki-konditerskie-odnorazovye.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2240661045,
+                "name": "Перфорований силіконовий килимок для випічки, макарон, тіста, антипригарний, термостійкий 40x30",
+                "price": "195",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "perforirovannyj-silikonovyj-kovrik",
+                "categoryIds": [
+                  0,
+                  15,
+                  1502,
+                  152304,
+                  15230414
+                ],
+                "image": "https://images.prom.ua/7328012274_w200_h200_perforirovannyj-silikonovyj-kovrik.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2458889903,
+                "name": "Компактна плитка BAGUS 12 В 400 Вт з однією конфоркою для автомобіля та кемпінгу",
+                "price": "1199",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "odnokonforochnaya-kompaktnaya-plita",
+                "categoryIds": [
+                  0,
+                  18,
+                  2404,
+                  240440,
+                  13240602
+                ],
+                "image": "https://images.prom.ua/6434968324_w200_h200_odnokonforochnaya-kompaktnaya-plita.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2243472889,
+                "name": "Професійний оригінальний штатив - тринога для фото - відео fluid head Yunteng VCT-998",
+                "price": "2849",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "professionalnyj-originalnyj-shtativ",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  6372001,
+                  63714
+                ],
+                "image": "https://images.prom.ua/5938576793_w200_h200_professionalnyj-originalnyj-shtativ.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2497656407,
+                "name": "Фотоапарат дитячий 48Мп з функцією миттєвого друку, дитячий фотопрінтер з миттєвим друком Фіолетовий",
+                "price": "1649",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "fotoapparat-detskij-48mp",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  500403,
+                  500414
+                ],
+                "image": "https://images.prom.ua/6490086537_w200_h200_fotoapparat-detskij-48mp.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2993176092,
+                "name": "Дитячий фотоапарат 3.0\" з миттєвим друком 48MP + селфі 12MP Блакитний",
+                "price": "2199",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "detskij-fotoapparat-mgnovennoj",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  500403,
+                  500414
+                ],
+                "image": "https://images.prom.ua/7246573647_w200_h200_detskij-fotoapparat-30.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2993185343,
+                "name": "Дитячий фотоапарат 3.0\" з миттєвим друком 48MP + селфі 12MP Коричневий",
+                "price": "2199",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "detskij-fotoapparat-mgnovennoj",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  500403,
+                  500414
+                ],
+                "image": "https://images.prom.ua/7246599783_w200_h200_detskij-fotoapparat-30.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2369906877,
+                "name": "Професійний поворотний стіл 30см з нержавіючої сталі 3кг, для вирівнювання та декорування торта",
+                "price": "2590",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "professionalnyj-povorotnyj-stol",
+                "categoryIds": [
+                  0,
+                  15,
+                  1502,
+                  1522,
+                  152301
+                ],
+                "image": "https://images.prom.ua/6298097216_w200_h200_professionalnyj-povorotnyj-stol.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2379812545,
+                "name": "Професійний штатив Yunteng VCT - 696 для фото - відео камер та смартфонів 180 см",
+                "price": "1585",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "professionalnyj-shtativ-yunteng",
+                "categoryIds": [
+                  0,
+                  50,
+                  5004,
+                  6372001,
+                  63714
+                ],
+                "image": "https://images.prom.ua/6313763506_w200_h200_professionalnyj-shtativ-yunteng.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2863833856,
+                "name": "Аерограф Airbrush Kit професійний із компресором 10 л/хв 20 - 30 PSI",
+                "price": "2499",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "aerograf-airbrush-kit",
+                "categoryIds": [
+                  0,
+                  1420,
+                  142005,
+                  14200515,
+                  14200525
+                ],
+                "image": "https://images.prom.ua/6992745234_w200_h200_aerograf-airbrush-kit.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3741020,
+                  "name": "HouseShop",
+                  "slug": "houseshop",
+                  "__typename": "Company"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

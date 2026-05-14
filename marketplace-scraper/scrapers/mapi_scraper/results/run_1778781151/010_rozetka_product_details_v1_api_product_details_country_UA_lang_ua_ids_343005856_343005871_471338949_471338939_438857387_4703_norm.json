@@ -1,0 +1,1196 @@
+[
+  {
+    "id": "343005856",
+    "sku": "343005856",
+    "name": "Chante Clair Sgrassatore Universale - універсальний миючий засіб Марсельське мило 600 мл",
+    "brand": "ChanteClair",
+    "price": 170.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4650351",
+    "category_name_ua": "Засоби для кухні",
+    "category_name_ru": "Засоби для кухні",
+    "properties": [
+      {
+        "name": "Призначення",
+        "value": "Універсальний"
+      },
+      {
+        "name": "Об'єм 1 шт",
+        "value": "600 мл; 625 мл; 5 л"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/343005856/p343005856/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/187396383.jpg"
+  },
+  {
+    "id": "343005871",
+    "sku": "343005871",
+    "name": "Chante Clair Sgrassatore Universale - універсальний миючий засіб Лаванда 600 мл",
+    "brand": "ChanteClair",
+    "price": 170.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4650351",
+    "category_name_ua": "Засоби для кухні",
+    "category_name_ru": "Засоби для кухні",
+    "properties": [
+      {
+        "name": "Призначення",
+        "value": "Універсальний"
+      },
+      {
+        "name": "Об'єм 1 шт",
+        "value": "600 мл; 5 л"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/343005871/p343005871/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/187396351.jpg"
+  },
+  {
+    "id": "471338949",
+    "sku": "471338949",
+    "name": "Кондиціонер-ополіскувач в гранулах для білизни Lenor Fresh, 210 г",
+    "brand": "Lenor",
+    "price": 225.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4632012",
+    "category_name_ua": "Кондиціонери для білизни",
+    "category_name_ru": "Кондиціонери для білизни",
+    "properties": [
+      {
+        "name": "Вага",
+        "value": "160 г; 176 г; 195 г; 210 г; 260 г; 495 г"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471338949/p471338949/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/503092456.jpg"
+  },
+  {
+    "id": "471338939",
+    "sku": "471338939",
+    "name": "Гель для прання чорних та темних тканин Denkmit Black Sensation 1 літр, 40 прань",
+    "brand": "DenkMit",
+    "price": 245.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4632103",
+    "category_name_ua": "Пральні засоби",
+    "category_name_ru": "Пральні засоби",
+    "properties": [
+      {
+        "name": "Кількість упаковок, шт",
+        "value": "1"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471338939/p471338939/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/503090862.jpg"
+  },
+  {
+    "id": "438857387",
+    "sku": "438857387",
+    "name": "Підгузники Lupilu Premium Maxi Розмір 4, Вага 8-16 кг, 46 шт",
+    "brand": "Lupilu",
+    "price": 385.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "46; 92; 138; 184"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/438857387/p438857387/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/447253002.jpg"
+  },
+  {
+    "id": "470363129",
+    "sku": "470363129",
+    "name": "Нічні підгузки-трусики для великих діток та підлітків Planeta Junior на вік 8-15 років 35-50 кг 12 шт",
+    "brand": "Planeta Junior",
+    "price": 240.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "12"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/470363129/p470363129/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/501396108.jpg"
+  },
+  {
+    "id": "471338974",
+    "sku": "471338974",
+    "name": "Екологічні підгузки-трусики преміум Lillydoo 7 розміру, 17+ кг, 17 шт",
+    "brand": "Lillydoo",
+    "price": 240.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "17"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471338974/p471338974/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/503092203.jpg"
+  },
+  {
+    "id": "426798308",
+    "sku": "426798308",
+    "name": "BOX 84 штук підгузків 6 розміру Chicco Airy, 15-30 кг",
+    "brand": "Chicco",
+    "price": 650.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "14; 28; 84"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/426798308/p426798308/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/424336233.jpg"
+  },
+  {
+    "id": "341896552",
+    "sku": "341896552",
+    "name": "Підгузники-трусики Parent’s Choice дизайн Щенячий патруль 4 розміру, 8-15 кг. 94 шт",
+    "brand": "Parent's Choice",
+    "price": 700.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "94"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/341896552/p341896552/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/266590431.jpg"
+  },
+  {
+    "id": "497168159",
+    "sku": "497168159",
+    "name": "Підгузки-трусики еко Lillydoo pants 4 розміру, 9-15 кг, 25 штук",
+    "brand": "Lillydoo",
+    "price": 250.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/497168159/p497168159/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/533117587.jpg"
+  },
+  {
+    "id": "556565055",
+    "sku": "556565055",
+    "name": "Підгузки Babydream Premium Windeln розмір 8, 17+кг BOX 88 шт",
+    "brand": "Babydream",
+    "price": 1260.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-babydream-154821250/p556565055/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/616965382.jpg"
+  },
+  {
+    "id": "444777359",
+    "sku": "444777359",
+    "name": "Підгузки-трусики Parent’s Choice дизайн Щенячий патруль 7 розміру, ,блакитні 21+кг. 56 шт",
+    "brand": "Parent's Choice",
+    "price": 800.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "56"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/444777359/p444777359/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/460148642.jpg"
+  },
+  {
+    "id": "376989036",
+    "sku": "376989036",
+    "name": "Підгузники-трусики 4 розміру Lupilu premium pants gold 44 шт. 8-15кг.",
+    "brand": "Lupilu",
+    "price": 420.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/376989036/p376989036/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/331257075.jpg"
+  },
+  {
+    "id": "489417864",
+    "sku": "489417864",
+    "name": "Екологічні підгузки 7 розміру Lillydoo 15+ кг 21 шт",
+    "brand": "Lillydoo",
+    "price": 220.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/489417864/p489417864/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/523945501.jpg"
+  },
+  {
+    "id": "484257784",
+    "sku": "484257784",
+    "name": "Підгузки 1 розміру Lupilu Soft Premium , 2-5 кг 24 шт",
+    "brand": "Lupilu",
+    "price": 160.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/484257784/p484257784/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/518024917.jpg"
+  },
+  {
+    "id": "341670166",
+    "sku": "341670166",
+    "name": "Підгузки-трусики Parent’s Choice дизайн Щенячий патруль 6 розміру ,рожеві 18+ кг. 70 шт",
+    "brand": "Parent's Choice",
+    "price": 760.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "70"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/341670166/p341670166/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/619570823.jpg"
+  },
+  {
+    "id": "470363139",
+    "sku": "470363139",
+    "name": "Нічні підгузки-трусики для великих діток та підлітків Planeta Junior на вік 4-7 років 15-35 кг 14 шт",
+    "brand": "Planeta Junior",
+    "price": 240.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "14"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/470363139/p470363139/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/501396179.jpg"
+  },
+  {
+    "id": "557458947",
+    "sku": "557458947",
+    "name": "Екологічні підгузки Etos maxi 4 розміру 7-18 кг, 56 шт",
+    "brand": "Etos",
+    "price": 520.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-etos-155247251/p557458947/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/618861930.jpg"
+  },
+  {
+    "id": "592335409",
+    "sku": "592335409",
+    "name": "Екологічні підгузки-трусики 9 розміру Pura , 22+ кг BOX 45 шт",
+    "brand": "Pura",
+    "price": 1000.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/592335409/p592335409/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/662563738.jpg"
+  },
+  {
+    "id": "471338989",
+    "sku": "471338989",
+    "name": "BOX екологічних підгузків-трусиків преміум Lillydoo 5 розміру, 12-17 кг, 126 шт",
+    "brand": "Lillydoo",
+    "price": 1250.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "21"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471338989/p471338989/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/503091526.jpg"
+  },
+  {
+    "id": "470363204",
+    "sku": "470363204",
+    "name": "Підгузки 5 розміру Bebe goo goo 11-25 кг, 44 шт",
+    "brand": "Bebe GooGoo",
+    "price": 295.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "44"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/470363204/p470363204/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/501396243.jpg"
+  },
+  {
+    "id": "502882884",
+    "sku": "502882884",
+    "name": "Підгузки-трусикиFred&Flo (Tesco) 8 розмір 18+кг BOX 138 штук",
+    "brand": "Tesco",
+    "price": 2030.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/502882884/p502882884/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/540381325.jpg"
+  },
+  {
+    "id": "497168164",
+    "sku": "497168164",
+    "name": "Підгузки-трусики еко Lillydoo pants 5 розмір, 12-17 кг, 21 шт",
+    "brand": "Lillydoo",
+    "price": 235.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/497168164/p497168164/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/533116805.jpg"
+  },
+  {
+    "id": "438857393",
+    "sku": "438857393",
+    "name": "Підгузки дитячі Lupilu soft&dry 6 розмір, 13-18 кг, 30 штук",
+    "brand": "Lupilu",
+    "price": 300.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "30"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/438857393/p438857393/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/447253696.jpg"
+  },
+  {
+    "id": "444777341",
+    "sku": "444777341",
+    "name": "Кондиціонер для прання Coccolino Sensitive 1,7 літри 68 прання",
+    "brand": "Coccolino",
+    "price": 270.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4632012",
+    "category_name_ua": "Кондиціонери для білизни",
+    "category_name_ru": "Кондиціонери для білизни",
+    "properties": [
+      {
+        "name": "Об'єм 1 шт",
+        "value": "870 мл; 975 мл; 1.7 л; 1.75 л; 2 л"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/444777341/p444777341/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/460148240.jpg"
+  },
+  {
+    "id": "307841933",
+    "sku": "307841933",
+    "name": "Підгузки 365 Minirisk 4 розміру 7-14 кг,50 штук",
+    "brand": "Coop 365 Minirisk",
+    "price": 495.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/307841933/p307841933/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/619969543.jpg"
+  },
+  {
+    "id": "470363069",
+    "sku": "470363069",
+    "name": "Екологічні підгузки-трусики Kit & Kin 6 розмір (15+ кг), 18шт",
+    "brand": "Kit & Kin",
+    "price": 220.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "18"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/470363069/p470363069/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/501396110.jpg"
+  },
+  {
+    "id": "497168139",
+    "sku": "497168139",
+    "name": "Підгузки-трусики 5 розміру Beauty Baby premium pants , 12-17 кг, BOX 80 шт",
+    "brand": "Beauty Baby",
+    "price": 850.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/497168139/p497168139/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/533117586.jpg"
+  },
+  {
+    "id": "500261654",
+    "sku": "500261654",
+    "name": "Екологічні підгузки 1 розміру Albert Heijn luiers extra droog&zacht 2-5 кг. 20 шт",
+    "brand": "Albert Heijn",
+    "price": 150.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/500261654/p500261654/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/537363569.jpg"
+  },
+  {
+    "id": "556565064",
+    "sku": "556565064",
+    "name": "Підгузки Little Angels by ASDA 2 розмір, 4-8 кг, 58 шт",
+    "brand": "Asda",
+    "price": 400.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-asda-154822199/p556565064/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/616965385.jpg"
+  },
+  {
+    "id": "497168154",
+    "sku": "497168154",
+    "name": "Підгузки-трусики еко Lillydoo pants 6 розмір, 15+кг, BOX 114 шт",
+    "brand": "Lillydoo",
+    "price": 1250.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/497168154/p497168154/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/533114320.jpg"
+  },
+  {
+    "id": "556565034",
+    "sku": "556565034",
+    "name": "Підгузки-трусики 6 розміру XL Babydream Premium Pants Spar-Pack ,15+кг, BOX 108 шт",
+    "brand": "Babydream",
+    "price": 1420.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-babydream-154775547/p556565034/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/616964496.jpg"
+  },
+  {
+    "id": "557458926",
+    "sku": "557458926",
+    "name": "Нічні підгузки-трусики Beauty Baby 4-7 років вага 17-30 кг. BOX 40 шт",
+    "brand": "Beauty Baby",
+    "price": 820.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-beauty-baby-155247255/p557458926/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/618863307.jpg"
+  },
+  {
+    "id": "277383223",
+    "sku": "277383223",
+    "name": "Трусики-підгузники Lillydoo 6 розмір, 15+ кг, 19 штук",
+    "brand": "Lillydoo",
+    "price": 200.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "19"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/277383223/p277383223/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/187396515.jpg"
+  },
+  {
+    "id": "500261709",
+    "sku": "500261709",
+    "name": "Екологічні підгузки преміум класу Happy Little Camper 5 розміру, 13+ кг. 25 шт",
+    "brand": "Happy Little Camper",
+    "price": 315.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/500261709/p500261709/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/537363902.jpg"
+  },
+  {
+    "id": "370063236",
+    "sku": "370063236",
+    "name": "Екологічні підгузки-трусики Etos 5 розміру ,12-18 кг, 22 шт",
+    "brand": "Etos",
+    "price": 210.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "22; 66"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/370063236/p370063236/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/318463369.jpg"
+  },
+  {
+    "id": "594025231",
+    "sku": "594025231",
+    "name": "Підгузки 4 розміру Lillydoo 9-14 кг ,BOX 100 шт",
+    "brand": "Lillydoo",
+    "price": 1050.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/594025231/p594025231/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/663721205.jpg"
+  },
+  {
+    "id": "556565043",
+    "sku": "556565043",
+    "name": "Підгузки-трусики 6 розміру XL Babydream Premium Pants Spar-Pack ,15+кг, 36 шт",
+    "brand": "Babydream",
+    "price": 500.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-babydream-154775552/p556565043/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/616965356.jpg"
+  },
+  {
+    "id": "430450721",
+    "sku": "430450721",
+    "name": "Підгузки-трусики Mamia ultra-dry air system 5 розмір (12-18 кг) 20 шт",
+    "brand": "Mamia",
+    "price": 200.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "20"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/430450721/p430450721/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/431084533.jpg"
+  },
+  {
+    "id": "320049049",
+    "sku": "320049049",
+    "name": "Ароматизатор для дому Sweet Home WHITE MUSK 100мл.",
+    "brand": "Sweet Home Collection",
+    "price": 180.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4639416",
+    "category_name_ua": "Аромадифузори",
+    "category_name_ru": "Аромадифузори",
+    "properties": [
+      {
+        "name": "Об'єм, мл",
+        "value": "30; 100"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/320049049/p320049049/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/224782800.jpg"
+  },
+  {
+    "id": "277383268",
+    "sku": "277383268",
+    "name": "Підгузки дитячі Lupilu soft&dry 6 розмір, 15+ кг, 30 штуки",
+    "brand": "Lupilu",
+    "price": 285.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "30"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/277383268/p277383268/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/187396536.jpg"
+  },
+  {
+    "id": "471338959",
+    "sku": "471338959",
+    "name": "Кондиціонер-ополіскувач в гранулах для білизни Lenor Gelsomino Scarlatto, 210 г",
+    "brand": "Lenor",
+    "price": 230.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4632012",
+    "category_name_ua": "Кондиціонери для білизни",
+    "category_name_ru": "Кондиціонери для білизни",
+    "properties": [
+      {
+        "name": "Вага",
+        "value": "195 г; 210 г"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471338959/p471338959/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/503092185.jpg"
+  },
+  {
+    "id": "289543758",
+    "sku": "289543758",
+    "name": "Зубна паста освіжаюча Dontodent clear fresh 125 мл.",
+    "brand": "Dontodent",
+    "price": 75.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4658138",
+    "category_name_ua": "Зубна паста",
+    "category_name_ru": "Зубна паста",
+    "properties": [
+      {
+        "name": "Країна реєстрації бренду",
+        "value": "Німеччина"
+      },
+      {
+        "name": "Об'єм",
+        "value": "125 мл"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/289543758/p289543758/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/187396489.jpg"
+  },
+  {
+    "id": "376989123",
+    "sku": "376989123",
+    "name": "Набір з 3 уп по 33 шт (разом 99 штук) екологічних підгузків-трусиків Etos 5 розміру ,12-18 кг",
+    "brand": "Etos",
+    "price": 950.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/376989123/p376989123/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/331257434.jpg"
+  },
+  {
+    "id": "558700173",
+    "sku": "558700173",
+    "name": "Підгузки-трусики Albert Heijn luiers axtra droog&zacht розмір 6, 15-19 кг, 19 шт",
+    "brand": "Albert Heijn",
+    "price": 235.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-albert-heijn-155485115/p558700173/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/620974273.jpg"
+  },
+  {
+    "id": "484257844",
+    "sku": "484257844",
+    "name": "Підгузки-трусики для плавання Lillydoo L (14+ кг) 10 шт",
+    "brand": "Lillydoo",
+    "price": 140.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/484257844/p484257844/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/518023882.jpg"
+  },
+  {
+    "id": "594025258",
+    "sku": "594025258",
+    "name": "Підгузки 2 розміру Lillydoo 4-8 кг ,BOX 100 шт",
+    "brand": "Lillydoo",
+    "price": 800.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/594025258/p594025258/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/663721227.jpg"
+  },
+  {
+    "id": "430450724",
+    "sku": "430450724",
+    "name": "Підгузки-трусики Kindoh Premium 6 розміру (+14 кг) 34 штуки",
+    "brand": "Kindoh",
+    "price": 320.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "34"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/430450724/p430450724/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/431084094.jpg"
+  },
+  {
+    "id": "471338889",
+    "sku": "471338889",
+    "name": "BOX гігієнічних нічних прокладок Siempre 6 крапель, 100 штук",
+    "brand": "Siempre es Viernes",
+    "price": 450.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4657209",
+    "category_name_ua": "Прокладки",
+    "category_name_ru": "Прокладки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471338889/p471338889/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/503092461.jpg"
+  },
+  {
+    "id": "345222511",
+    "sku": "345222511",
+    "name": "Підгузники-трусики Magics для плавання в басейні та на морі 6-11кг. розмір S (12 штук).",
+    "brand": "Magics",
+    "price": 150.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "12"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/345222511/p345222511/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/272464376.jpg"
+  },
+  {
+    "id": "556565040",
+    "sku": "556565040",
+    "name": "Підгузки-трусики 4 розміру Babydream Premium Pants ,9-15 кг, 22 шт",
+    "brand": "Babydream",
+    "price": 250.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-babydream-154774231/p556565040/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/616965355.jpg"
+  },
+  {
+    "id": "444777338",
+    "sku": "444777338",
+    "name": "Гель для прання кольорових речей Dash Color Frische 1,1 літр, 20 прань",
+    "brand": "Dash",
+    "price": 250.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4632103",
+    "category_name_ua": "Пральні засоби",
+    "category_name_ru": "Пральні засоби",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/444777338/p444777338/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/460149686.jpg"
+  },
+  {
+    "id": "500261644",
+    "sku": "500261644",
+    "name": "Екологічні біорозкладні підгузки Kit & Kin 1 розміру 2-5 кг, 38шт",
+    "brand": "Kit & Kin",
+    "price": 450.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/500261644/p500261644/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/537363883.jpg"
+  },
+  {
+    "id": "558700182",
+    "sku": "558700182",
+    "name": "Підгузки-трусики Kuniboo premium pants XXL 7 розмір 17+ кг 16 шт",
+    "brand": "Kuniboo",
+    "price": 220.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-kuniboo-155620724/p558700182/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/620974286.jpg"
+  },
+  {
+    "id": "323532067",
+    "sku": "323532067",
+    "name": "Вологі дитячі серветки Lupilu Sensetive 80шт.",
+    "brand": "Lupilu",
+    "price": 75.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103310",
+    "category_name_ua": "Дитячі серветки, хусточки та рушники",
+    "category_name_ru": "Дитячі серветки, хусточки та рушники",
+    "properties": [
+      {
+        "name": "Кількість в упаковці",
+        "value": "80 шт"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/323532067/p323532067/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/231259786.jpg"
+  },
+  {
+    "id": "556565019",
+    "sku": "556565019",
+    "name": "Підгузки-трусики 7 розміру XXL Babydream Premium Pants ,17+кг, 16 шт",
+    "brand": "Babydream",
+    "price": 250.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/diapers-babydream-154775545/p556565019/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/616963602.jpg"
+  },
+  {
+    "id": "470363164",
+    "sku": "470363164",
+    "name": "Підгузки-трусики для плавання в басейні та на морі Mamia 12+ кг розмір L 12 штук",
+    "brand": "Mamia",
+    "price": 150.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "12"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/470363164/p470363164/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/501396197.jpg"
+  },
+  {
+    "id": "471339014",
+    "sku": "471339014",
+    "name": "Кондиціонер-ополіскувач в гранулах для білизни Lenor Ametista & Bouquet Fiorito, 210 г",
+    "brand": "Lenor",
+    "price": 235.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4632012",
+    "category_name_ua": "Кондиціонери для білизни",
+    "category_name_ru": "Кондиціонери для білизни",
+    "properties": [],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471339014/p471339014/",
+    "image": "https://content2.rozetka.com.ua/goods/images/original/503091463.jpg"
+  },
+  {
+    "id": "471338919",
+    "sku": "471338919",
+    "name": "Еко-засіб для чищення ванни W5 Nature 1Л",
+    "brand": "W5",
+    "price": 70.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "4646000",
+    "category_name_ua": "Засоби для чищення ванн",
+    "category_name_ru": "Засоби для чищення ванн",
+    "properties": [
+      {
+        "name": "Призначення",
+        "value": "Для ванної"
+      },
+      {
+        "name": "Поверхня",
+        "value": "Кахель, керамічна плитка"
+      },
+      {
+        "name": "Забруднення",
+        "value": "Водяні плями"
+      },
+      {
+        "name": "Об'єм 1 шт",
+        "value": "750 мл; 1 л"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/471338919/p471338919/",
+    "image": "https://content1.rozetka.com.ua/goods/images/original/503085087.jpg"
+  },
+  {
+    "id": "470363169",
+    "sku": "470363169",
+    "name": "Набір з 3 упаковок екологічних підгузків-трусиків 8 розміру Pura , 19+ кг 45 шт",
+    "brand": "Pura",
+    "price": 760.0,
+    "avail_code": "available",
+    "merchant_id": "126453",
+    "merchant_name": "БУБОНЕЦЬ",
+    "category_id": "103306",
+    "category_name_ua": "Підгузки",
+    "category_name_ru": "Підгузки",
+    "properties": [
+      {
+        "name": "Кількість в упаковці, шт",
+        "value": "15; 45"
+      }
+    ],
+    "description": "",
+    "url": "https://rozetka.com.ua/ua/470363169/p470363169/",
+    "image": "https://content.rozetka.com.ua/goods/images/original/501396192.jpg"
+  }
+]

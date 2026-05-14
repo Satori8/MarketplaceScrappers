@@ -1,0 +1,2058 @@
+[
+  {
+    "id": "24010114",
+    "sku": "1159675",
+    "name": "Телевізор Hisense 50E8Q",
+    "brand": "Hisense",
+    "price": "29999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "50\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-50e8q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e8q_50_55_65_75_.webp"
+  },
+  {
+    "id": "24010040",
+    "sku": "1159681",
+    "name": "Телевізор Hisense 100E7Q PRO",
+    "brand": "Hisense",
+    "price": "109999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "100\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-100e7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e7q_pro_100_1.webp"
+  },
+  {
+    "id": "24011644",
+    "sku": "1159661",
+    "name": "Телевізор Hisense 85U7Q PRO",
+    "brand": "Hisense",
+    "price": "109999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "85\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-85u7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_u7q_pro_85_.webp"
+  },
+  {
+    "id": "20316319",
+    "sku": "1109117",
+    "name": "Телевізор Hisense 65E7NQ",
+    "brand": "Hisense",
+    "price": "28999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65e7nq.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/e/7/e7n.webp"
+  },
+  {
+    "id": "24005553",
+    "sku": "1159698",
+    "name": "Телевізор Hisense 32A5Q",
+    "brand": "Hisense",
+    "price": "10299",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "32\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "Full HD (1920x1080)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-32a5q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_a5q_32-40__result.webp"
+  },
+  {
+    "id": "24010000",
+    "sku": "1159696",
+    "name": "Телевізор Hisense 85A6Q",
+    "brand": "Hisense",
+    "price": "49999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "85\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-85a6q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_a6q_85_.webp"
+  },
+  {
+    "id": "24010005",
+    "sku": "1159692",
+    "name": "Телевізор Hisense 55A6Q",
+    "brand": "Hisense",
+    "price": "19999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55a6q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_a6q_43_50_55_58_65_75__1_1.webp"
+  },
+  {
+    "id": "24010006",
+    "sku": "1159691",
+    "name": "Телевізор Hisense 50A6Q",
+    "brand": "Hisense",
+    "price": "17999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "50\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-50a6q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_a6q_43_50_55_58_65_75__1_1_1.webp"
+  },
+  {
+    "id": "24010008",
+    "sku": "1159694",
+    "name": "Телевізор Hisense 65A6Q",
+    "brand": "Hisense",
+    "price": "28499",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65a6q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_a6q_43_50_55_58_65_75__1_1_1_1_1.webp"
+  },
+  {
+    "id": "24010011",
+    "sku": "1159690",
+    "name": "Телевізор Hisense 43A6Q",
+    "brand": "Hisense",
+    "price": "14599",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "43\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-43a6q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_a6q_43_50_55_58_65_75__1_1_1_1_2.webp"
+  },
+  {
+    "id": "24010024",
+    "sku": "1159686",
+    "name": "Телевізор Hisense 65E7Q",
+    "brand": "Hisense",
+    "price": "32999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65e7q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e7q_43_50_55_58_65_75_85__2_1.webp"
+  },
+  {
+    "id": "24010033",
+    "sku": "1159684",
+    "name": "Телевізор Hisense 55E7Q",
+    "brand": "Hisense",
+    "price": "24499",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e7q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e7q_43_50_55_58_65_75_85__2_1_1_1.webp"
+  },
+  {
+    "id": "24010111",
+    "sku": "1159680",
+    "name": "Телевізор Hisense 85E7Q PRO",
+    "brand": "Hisense",
+    "price": "77999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "85\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-85e7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e7q_pro_55-65-75-85_.webp"
+  },
+  {
+    "id": "24010112",
+    "sku": "1159678",
+    "name": "Телевізор Hisense 65E7Q PRO",
+    "brand": "Hisense",
+    "price": "38499",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65e7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e7q_pro_55-65-75-85__1.webp"
+  },
+  {
+    "id": "24010113",
+    "sku": "1159677",
+    "name": "Телевізор Hisense 55E7Q PRO",
+    "brand": "Hisense",
+    "price": "28999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e7q_pro_55-65-75-85__1_1.webp"
+  },
+  {
+    "id": "24010671",
+    "sku": "1159674",
+    "name": "Телевізор Hisense 55E8Q",
+    "brand": "Hisense",
+    "price": "33999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e8q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_e8q_50_55_65_75__1_1_1.webp"
+  },
+  {
+    "id": "24011641",
+    "sku": "1159662",
+    "name": "Телевізор Hisense 100U7Q PRO",
+    "brand": "Hisense",
+    "price": "149999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "100\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-100u7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_u7q_pro_100_.webp"
+  },
+  {
+    "id": "24011719",
+    "sku": "1159658",
+    "name": "Телевізор Hisense 55U7Q PRO",
+    "brand": "Hisense",
+    "price": "39999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_u7q_pro_55-65-75__1.webp"
+  },
+  {
+    "id": "24011726",
+    "sku": "1159659",
+    "name": "Телевізор Hisense 65U7Q PRO",
+    "brand": "Hisense",
+    "price": "55999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65u7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_u7q_pro_55-65-75__1_1_1.webp"
+  },
+  {
+    "id": "24012762",
+    "sku": "1159657",
+    "name": "Телевізор Hisense 55U8Q",
+    "brand": "Hisense",
+    "price": "49999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u8q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/_/1_u8q_55_65_75_85__2_1_1.webp"
+  },
+  {
+    "id": "28117428",
+    "sku": "1199106",
+    "name": "Телевізор Hisense 40A4S",
+    "brand": "Hisense",
+    "price": "11999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": null,
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "40\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "Full HD (1920x1080)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizory-hisense-40a4s.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/1/3/1321.04.2026_11-20-5721.04.2026_11-21-02.webp"
+  },
+  {
+    "id": "25804543",
+    "sku": "26575928-0782",
+    "name": "Телевізор HISENSE 55E7Q",
+    "brand": "Hisense",
+    "price": "22269",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e7q-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712086825804543.webp"
+  },
+  {
+    "id": "27476685",
+    "sku": "30506227-3355",
+    "name": "Телевізор Hisense A85Q 55\" OLED Ultra HD 4K (20016931) UA [155679]",
+    "brand": "Hisense",
+    "price": "47749",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "OLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "120 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-a85q-oled-ultra-hd-4k-20016931-ua-155679.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8274182127476685.webp"
+  },
+  {
+    "id": "27618500",
+    "sku": "31591147-3355",
+    "name": "Телевізор Hisense 50U7Q 50\" QLED 4K (20015613) EU [159480]",
+    "brand": "Hisense",
+    "price": "25949",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "50\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-u7q-50-qled-4k-20015613-eu-159480.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8326887927618500.webp"
+  },
+  {
+    "id": "25804425",
+    "sku": "26575930-0782",
+    "name": "Телевізор HISENSE 55U7Q PRO",
+    "brand": "Hisense",
+    "price": "36089",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u7q-pro-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712050425804425.webp"
+  },
+  {
+    "id": "26462872",
+    "sku": "25921958-0248",
+    "name": "Led-телевізор hisense 55e8q (7134215) (20016359)",
+    "brand": "Hisense",
+    "price": "26924",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Rasklad",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-55e8q-7134215-20016359-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895135126462872.webp"
+  },
+  {
+    "id": "24495412",
+    "sku": "25972285-4673",
+    "name": "LED-телевізор Hisense 55E8Q",
+    "brand": "Hisense",
+    "price": "36883",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "LMK KRAMAR",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-55e8q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7402703024495412.webp"
+  },
+  {
+    "id": "25804428",
+    "sku": "26575916-0782",
+    "name": "Телевізор HISENSE 50E7Q",
+    "brand": "Hisense",
+    "price": "19849",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "50\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-50e7q-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712051125804428.webp"
+  },
+  {
+    "id": "25804993",
+    "sku": "27840244-0782",
+    "name": "Телевізор HISENSE 32A5Q",
+    "brand": "Hisense",
+    "price": "10439",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "32\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-32a5q-1-25804993.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712219725804993.webp"
+  },
+  {
+    "id": "22688432",
+    "sku": "22844158-3355",
+    "name": "Телевізор Hisense 65E7NQ 65\" QLED 4K (20013279) EU [131612]",
+    "brand": "Hisense",
+    "price": "31149",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65e7nq-65-qled-4k-20013279-eu-131612.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/6794862322688432.webp"
+  },
+  {
+    "id": "25804804",
+    "sku": "27840232-0782",
+    "name": "Телевізор HISENSE 55U8Q",
+    "brand": "Hisense",
+    "price": "45689",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u8q-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712163125804804.webp"
+  },
+  {
+    "id": "26833453",
+    "sku": "29035696-0248",
+    "name": "Led-телевізор hisense 43e7q pro (7134217) (20016932)",
+    "brand": "Hisense",
+    "price": "20867",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Rasklad",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-43e7q-pro-7134217-20016932.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8021930526833453.webp"
+  },
+  {
+    "id": "26877198",
+    "sku": "29307361-3355",
+    "name": "ТБ Hisense 55U8Q 55\" QLED 4K (20016080) EU [149322]",
+    "brand": "Hisense",
+    "price": "36399",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u8q-55-qled-4k-20016080-eu-149322.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8036051426877198.webp"
+  },
+  {
+    "id": "24495382",
+    "sku": "25972161-4673",
+    "name": "LED-телевізор Hisense 55E7Q",
+    "brand": "Hisense",
+    "price": "26577",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "LMK KRAMAR",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-55e7q.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7402696924495382.webp"
+  },
+  {
+    "id": "24495388",
+    "sku": "25972137-4673",
+    "name": "LED-телевізор Hisense 85E7Q PRO",
+    "brand": "Hisense",
+    "price": "84617",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "LMK KRAMAR",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "85\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-85e7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7402698224495388.webp"
+  },
+  {
+    "id": "25804442",
+    "sku": "26575933-0782",
+    "name": "Телевізор HISENSE 55E8Q",
+    "brand": "Hisense",
+    "price": "28939",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e8q-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712054525804442.webp"
+  },
+  {
+    "id": "25804526",
+    "sku": "26575951-0782",
+    "name": "Телевізор HISENSE 65A6Q",
+    "brand": "Hisense",
+    "price": "26939",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65a6q-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712081325804526.webp"
+  },
+  {
+    "id": "26462739",
+    "sku": "27061307-4059",
+    "name": "Телевізор Hisense 55U7Q PRO",
+    "brand": "Hisense",
+    "price": "42929",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "EuroHit",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u7q-pro-2-26462739.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895059926462739.webp"
+  },
+  {
+    "id": "27476627",
+    "sku": "29441177-3355",
+    "name": "Телевізор Hisense 40A5Q 40\" QLED FHD (20016113) EU [150560]",
+    "brand": "Hisense",
+    "price": "13049",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "40\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "Full HD (1920x1080)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-40a5q-40-qled-fhd-20016113-eu-150560.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8274129627476627.webp"
+  },
+  {
+    "id": "27476649",
+    "sku": "29527768-3355",
+    "name": "Телевізор Hisense 55E7Q 55\" QLED 4K (20015899) EU [150951]",
+    "brand": "Hisense",
+    "price": "20649",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e7q-55-qled-4k-20015899-eu-150951.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8274151527476649.webp"
+  },
+  {
+    "id": "26462657",
+    "sku": "27061301-4059",
+    "name": "Телевізор Hisense 55U8Q",
+    "brand": "Hisense",
+    "price": "53499",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "EuroHit",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u8q-2-26462657.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895018026462657.webp"
+  },
+  {
+    "id": "26462729",
+    "sku": "27061308-4059",
+    "name": "Телевізор Hisense 50E7Q",
+    "brand": "Hisense",
+    "price": "23249",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "EuroHit",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "50\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-50e7q-2-26462729.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895054726462729.webp"
+  },
+  {
+    "id": "26463360",
+    "sku": "27572185-0248",
+    "name": "Led-телевізор hisense 75e8q (7134213) (20015989)",
+    "brand": "Hisense",
+    "price": "46546",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Rasklad",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-75e8q-7134213-20015989.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895444426463360.webp"
+  },
+  {
+    "id": "26464112",
+    "sku": "28733890-3355",
+    "name": "Телевізор Hisense 55E8Q 55\" Mini-LED 4К (20016359) UA [144176]",
+    "brand": "Hisense",
+    "price": "32499",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e8q-55-mini-led-4k-20016359-ua-144176.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895926026464112.webp"
+  },
+  {
+    "id": "26464121",
+    "sku": "28733892-3355",
+    "name": "Телевізор Hisense 50E8Q 50\" Mini-LED 4К (20016765) UA [144198]",
+    "brand": "Hisense",
+    "price": "29999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-50e8q-50-mini-led-4k-20016765-ua-144198.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895932126464121.webp"
+  },
+  {
+    "id": "26877252",
+    "sku": "29307413-3355",
+    "name": "ТБ Hisense 32A5Q 32\" QLED FHD (20016449) EU [149699]",
+    "brand": "Hisense",
+    "price": "10649",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-32a5q-32-qled-fhd-20016449-eu-149699.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8036081326877252.webp"
+  },
+  {
+    "id": "27476654",
+    "sku": "29527779-3355",
+    "name": "Телевізор Hisense 65E7Q Pro 65\" QLED 4K (20015451) EU [150992]",
+    "brand": "Hisense",
+    "price": "36999",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65e7q-pro-65-qled-4k-20015451-eu-150992.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8274155927476654.webp"
+  },
+  {
+    "id": "27476656",
+    "sku": "29527792-3355",
+    "name": "Телевізор Hisense 75E7Q Pro 75\" QLED 4K (20015894) EU [151012]",
+    "brand": "Hisense",
+    "price": "49149",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Robox",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "75\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "144 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-75e7q-pro-75-qled-4k-20015894-eu-151012.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/8274157727476656.webp"
+  },
+  {
+    "id": "26462312",
+    "sku": "25968348-1228",
+    "name": "Телевізор Hisense 55E7Q",
+    "brand": "Hisense",
+    "price": "25557",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "ЕЛЕКТРОН 24",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e7q-1-26462312.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7894809926462312.webp"
+  },
+  {
+    "id": "26462368",
+    "sku": "25692228-0248",
+    "name": "Led-телевізор hisense 55u8q (7111000) (20016080)",
+    "brand": "Hisense",
+    "price": "47864",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Rasklad",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-55u8q-7111000-20016080.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7894839726462368.webp"
+  },
+  {
+    "id": "26462698",
+    "sku": "27061305-4059",
+    "name": "Телевізор Hisense 55E7Q",
+    "brand": "Hisense",
+    "price": "27750",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "EuroHit",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55e7q-2-26462698.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895037726462698.webp"
+  },
+  {
+    "id": "26462708",
+    "sku": "27061304-4059",
+    "name": "Телевізор Hisense 55A6Q",
+    "brand": "Hisense",
+    "price": "21949",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "EuroHit",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "55\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "QLED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55a6q-2-26462708.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895042726462708.webp"
+  },
+  {
+    "id": "26463512",
+    "sku": "27833396-0248",
+    "name": "Led-телевізор hisense 50a6q (7134232) (20015998)",
+    "brand": "Hisense",
+    "price": "17973",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Rasklad",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-50a6q-7134232-20015998.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7895528926463512.webp"
+  },
+  {
+    "id": "25804806",
+    "sku": "27840258-0782",
+    "name": "Телевізор HISENSE 65U7Q PRO",
+    "brand": "Hisense",
+    "price": "50579",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "MIRUS Market",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65u7q-pro-1.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712164225804806.webp"
+  },
+  {
+    "id": "25805247",
+    "sku": "27512873-4673",
+    "name": "LED-телевізор Hisense 65U7Q PRO",
+    "brand": "Hisense",
+    "price": "60750",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "LMK KRAMAR",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Тип телевізора",
+        "values": "mini LED"
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "165 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-65u7q-pro.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7712281425805247.webp"
+  },
+  {
+    "id": "26454409",
+    "sku": "19662458-0548",
+    "name": "Телевізор Hisense 32A4N",
+    "brand": "Hisense",
+    "price": "8149",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Igoods+",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-32a4n-1-26454409.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7890873426454409.webp"
+  },
+  {
+    "id": "26462356",
+    "sku": "25968356-1228",
+    "name": "Телевізор Hisense 50E7Q",
+    "brand": "Hisense",
+    "price": "22539",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "ЕЛЕКТРОН 24",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-50e7q-1-26462356.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7894832926462356.webp"
+  },
+  {
+    "id": "26462417",
+    "sku": "25692234-0248",
+    "name": "Led-телевізор hisense 65e7q (7134227) (20016409)",
+    "brand": "Hisense",
+    "price": "32126",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "Rasklad",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/led-televizor-hisense-65e7q-7134227-20016409.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7894866926462417.webp"
+  },
+  {
+    "id": "26462494",
+    "sku": "25802685-1228",
+    "name": "Телевізор Hisense 55U8Q",
+    "brand": "Hisense",
+    "price": "52294",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "ЕЛЕКТРОН 24",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-55u8q-1-26462494.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7894915926462494.webp"
+  },
+  {
+    "id": "26462549",
+    "sku": "27061293-4059",
+    "name": "Телевізор Hisense 65A6Q",
+    "brand": "Hisense",
+    "price": "31339",
+    "avail_code": 1,
+    "merchant_id": null,
+    "merchant_name": "EuroHit",
+    "category_id": 97,
+    "category_name_ua": "Телевізори",
+    "category_name_ru": null,
+    "properties": [
+      {
+        "name": "Стан",
+        "values": "Новий"
+      },
+      {
+        "name": "Діагональ екрану",
+        "values": "65\""
+      },
+      {
+        "name": "Роздільна здатність",
+        "values": "4K (3840x2160)"
+      },
+      {
+        "name": "Частота оновлення екрану",
+        "values": "60 Гц"
+      },
+      {
+        "name": "Smart TV",
+        "values": "Є"
+      }
+    ],
+    "url": "https://allo.ua/ua/televizory/televizor-hisense-65a6q-2-26462549.html",
+    "image": "https://i.allo.ua/media/catalog/product/cache/3/small_image/212x184/9df78eab33525d08d6e5fb8d27136e95/import/7894954126462549.webp"
+  }
+]

@@ -10,10 +10,15 @@
 
 Источник правды: `marketplace-scraper/project.md`
 
-- Stage 15 — Business Intelligence Layer & Project-Rooted Workflows ✅ (Phase 1 Complete)
-- все операции привязаны к `active_project_id`
-- режимы парсинга: Search / Filter(Category) / Seller(Store) / Price Update (watchlist)
-- business layer: `projects`, `project_products`, `competitors`, `monitored_products`, `price_observations`, `report_runs`
+- **Phase 1.5 — Fast Scraper API & Normalization ✅ (Завершено, стабилизировано)**
+- Построен быстрый модуль `fast_api/fast_scraper.py` на базе `curl_cffi` (обход Cloudflare).
+- **Rozetka:** Внедрен 3-уровневый парсинг (Direct API → LD+JSON → rz-client-state), покрывающий поиск, категории и поддомены (auto/rztk).
+- **Prom.ua:** Успешно отреверсен неавторизованный GraphQL API (поиск, бренды, категории, продавцы) в обход сессий и WAF. Найдены корректные endpoint'ы и схема пагинации.
+- **Allo:** Извлечение SSR через `execjs`.
+- **Hotline:** Начата интеграция (структура и регистрация класса).
+- Реализована универсальная нормализация (`fast_api/normalizer.py`), сводящая любой результат в единую JSON-схему (цена, наличие, характеристики, id/sku).
+- **Stage 15 — Business Intelligence Layer & Project-Rooted Workflows ✅ (Завершено ранее).**
+- Все операции привязаны к `active_project_id`.
 
 ## Карточки проекта
 
@@ -23,11 +28,9 @@
 
 ## Ближайшие задачи
 
-- [ ] Импорт каталога из Excel в `project_products` (Phase 2)
-- [ ] Быстрый флоу: discovery `products` → `project_products` → `monitored_products`
+- [ ] rozetka - seller 3 fast api requests instead of parsing
 - [ ] Первый продаваемый отчет: Price Audit (Excel) + рекомендации
 - [ ] Weekly мониторинг (дельты/риски/action list)
-- [ ] Убрать реальные ключи из `config.yaml`, вынести в `.env`, сделать `.env.example`, ключи ротировать
 
 ## Контекст (коротко)
 
@@ -37,21 +40,21 @@
 
 ## Технические заметки
 
-- [ ] По возможности переходить на JSON-парсинг.
+- [x] Основной парсинг переведен на JSON API и SSR извлечение (curl_cffi), UI/Selenium остается как fallback.
 - [x] Фильтр «нет в наличии».
-- [ ] Протестировать Filter/Category страницы.
+- [ ] Интегрировать Fast Scraper API в основные GUI workflows "Category", "Search" и "Price Update".
 
 ## Риски
 
-- `config.yaml` содержит реальные API keys
-- профили браузера могут содержать cookies/localStorage
+- `config.yaml` содержит реальные API keys. Требует ближайшей миграции!
+- профили браузера/fallback могут накапливать мусор, нужны сбросы.
 
 ## Короткие AI-команды (планирование)
 
 ```text
-Прочитай marketplace-scraper/project.md и эту заметку. Сформируй 5 ближайших задач (Phase 2–5) с критериями готовности.
+Прочитай marketplace-scraper/project.md и эту заметку. Начни работу над Phase 2 (Каталог клиента): реализуй импорт каталога из Excel в таблицу project_products с валидацией колонок.
 ```
 
 ```text
-Проверь marketplace-scraper/config.yaml на секреты и предложи безопасную миграцию в .env + .env.example.
+Перенеси чувствительные данные из config.yaml в .env, обнови логику загрузки конфигурации в приложении и создай шаблон .env.example.
 ```

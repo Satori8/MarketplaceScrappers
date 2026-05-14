@@ -1,0 +1,863 @@
+{
+  "url": "https://prom.ua/ua/search?search_term=iphone&page=2",
+  "meta": {
+    "url": "https://prom.ua/graphql",
+    "status": 200,
+    "elapsed_ms": 823,
+    "bytes": 15629
+  },
+  "raw_data": {
+    "data": {
+      "listing": {
+        "__typename": "SearchListing",
+        "page": {
+          "total": 8157,
+          "__typename": "ListingPage",
+          "products": [
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1679130634,
+                "name": "Смартфон Apple iPhone 14 Pro 512GB Deep Purple (MQ293) [72486]",
+                "price": "57099",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6495753808_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "order",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2140052,
+                  "name": "«Touch» - інтернет-магазин електроніки та гаджетів",
+                  "slug": "touch-internet-magazin",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2838715760,
+                "name": "IPhone I15 PRO МАХ 7.3 \" ЭКРАН 2 SIM 5G, ПАМЯТЬ 12 + 256 ГБ , 10 ЯДЕР, 4 КАМЕРЫ Android 13",
+                "price": "7800",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "iphone-i15-pro",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6928902842_w200_h200_iphone-i15-pro.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4153243,
+                  "name": "ТЕХНОШОК",
+                  "slug": "tehnoshok",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2097377080,
+                "name": "IPhone 7 128 gb Black Neverlock",
+                "price": "5200",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "iphone-128-black",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/5395972969_w200_h200_iphone-7-128.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3748435,
+                  "name": "iPhone shop Ukraine",
+                  "slug": "iphone-shop-ukraine",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2930793653,
+                "name": "Apple Iphone X 256Gb гарний стан Silver",
+                "price": "5800",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "apple-iphone-256gb",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7086285313_w200_h200_apple-iphone-x.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 1084656,
+                  "name": "Test-Master",
+                  "slug": "test-master",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2898258796,
+                "name": "IPhone I15 PRO МАХ 7.6 \" ЕКРАН 2 SIM 5G, ПАМ'ЯТЬ 12/512 ГБ, 10 ЯДЕР, 4 КАМЕРИ Android 14 СІРИЙ (ТИТАН)",
+                "price": "8679",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "iphone-i15-pro",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7039029982_w200_h200_iphone-i15-pro.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4170433,
+                  "name": "ТЕХНОШОП",
+                  "slug": "tehnoshop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2885655366,
+                "name": "Китайський Iphone i17Pro Max Silver 7.3 дюйма, Android, 2 SIM-карт, 5G 8000 мА",
+                "price": "4700",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "kitajskij-iphone-i17pro",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7021293986_w200_h200_kitajskij-iphone-i17pro.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3955155,
+                  "name": "Digital Store GP",
+                  "slug": "digital-store",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1926276822,
+                "name": "Мобільний телефон Apple iPhone SE 64GB 2020 Black (MHGP3)",
+                "price": "12999",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "mobilnij-telefon-apple",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/4794421089_w200_h200_mobilnij-telefon-apple.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 646919,
+                  "name": "Хіт продажів ONC",
+                  "slug": "hit-prodazh-onc",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3019221536,
+                "name": "Мобільний телефон Apple iPhone 17 256GB Black MG6J4 garage",
+                "price": "65812",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "mobilnyj-telefon-apple",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7310080382_w200_h200_mobilnyj-telefon-apple.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4002126,
+                  "name": "ГАРАЖ",
+                  "slug": "garazh",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3019242565,
+                "name": "Мобільний телефон Apple iPhone Air 256GB Space Black MG2L4 garage",
+                "price": "71720",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "mobilnyj-telefon-apple",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7310057753_w200_h200_mobilnyj-telefon-apple.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4002126,
+                  "name": "ГАРАЖ",
+                  "slug": "garazh",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2835917677,
+                "name": "Смартфон Apple iPhone 13 Pro 256Gb Sierra Blue USED",
+                "price": "23999",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6952743669_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2202595,
+                  "name": "Tech24",
+                  "slug": "tech24",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1769573483,
+                "name": "3D Touch iphone XS",
+                "price": "520",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "touch-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/4269149861_w200_h200_3d-touch-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "order",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3779566,
+                  "name": "Smart",
+                  "slug": "smart",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1760622316,
+                "name": "Б\\У IPhone 14 Pro 128gb Deep Purple E-Sim | АКБ 76%",
+                "price": "21300",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "iphone-pro-128gb",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7234341098_w200_h200_bu-iphone-14.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3668997,
+                  "name": "Манія Центр",
+                  "slug": "maniacenter",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3018558785,
+                "name": "Смартфон Apple iPhone 12 Pro Max 256GB Gold Used",
+                "price": "31699",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7308840061_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4196188,
+                  "name": "ТЕХНОТОП",
+                  "slug": "tehnotop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3018558786,
+                "name": "Смартфон Apple iPhone 13 Pro 128GB Graphite Used",
+                "price": "23199",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7308840070_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4196188,
+                  "name": "ТЕХНОТОП",
+                  "slug": "tehnotop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3018558787,
+                "name": "Смартфон Apple iPhone 13 Pro 256GB Gold Used",
+                "price": "25399",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7308840084_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4196188,
+                  "name": "ТЕХНОТОП",
+                  "slug": "tehnotop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3018558788,
+                "name": "Смартфон Apple iPhone 13 Pro 256GB Graphite Used",
+                "price": "26599",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7308840089_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4196188,
+                  "name": "ТЕХНОТОП",
+                  "slug": "tehnotop",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2792937221,
+                "name": "Смартфон б/в Apple Iphone 11 Black 64GB акб 100%",
+                "price": "7500",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6884918876_w200_h200_smartfon-bu-apple.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2564619,
+                  "name": "ТechnoMAX",
+                  "slug": "technomax",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1599038830,
+                "name": "Б/У IPhone 12 128gb Red| АКБ 100%",
+                "price": "11200",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "iphone-128gb-red",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/4816387673_w200_h200_bu-iphone-12.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3668997,
+                  "name": "Манія Центр",
+                  "slug": "maniacenter",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1600307839,
+                "name": "Б/У IPhone SE 128gb White | АКБ 90+%",
+                "price": "6900",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "iphone-128gb-white",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/4785049338_w200_h200_bu-iphone-se.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3668997,
+                  "name": "Манія Центр",
+                  "slug": "maniacenter",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3009754463,
+                "name": "Мобільний телефон Apple iPhone 15 128GB Black MTP03 garage",
+                "price": "46140",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "mobilnyj-telefon-apple",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6263802545_w200_h200_mobilnyj-telefon-apple.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4002126,
+                  "name": "ГАРАЖ",
+                  "slug": "garazh",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3019015139,
+                "name": "Мобільний телефон Apple iPhone 17 Pro 256GB Cosmic Orange MG8H4 garage",
+                "price": "89324",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "mobilnyj-telefon-apple",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7309660852_w200_h200_mobilnyj-telefon-apple.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4002126,
+                  "name": "ГАРАЖ",
+                  "slug": "garazh",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2478230739,
+                "name": "Apple Iphone SE 128Gb (2020) Black Neverlock Оригінал!",
+                "price": "4999",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "apple-iphone-128gb",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6461773516_w200_h200_apple-iphone-se.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2660860,
+                  "name": "US Mobile",
+                  "slug": "mobile",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 3030338759,
+                "name": "Мобільний телефон Apple iPhone Air 256GB Cloud White MG2M4 sea",
+                "price": "71720",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "mobilnyj-telefon-apple",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7337585073_w200_h200_mobilnyj-telefon-apple.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 4006156,
+                  "name": "Море",
+                  "slug": "more",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2817538885,
+                "name": "Корпус Apple iPhone 16 Pro Max (золотистий, Desert Titanium EU)",
+                "price": "2249",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "korpus-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6926107326_w200_h200_korpus-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 1944138,
+                  "name": "PartsHUB - склад запчастин для мобільних телефонів та планшетів у Харкові",
+                  "slug": "partshub-sklad-zapchastej",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1767618771,
+                "name": "OCA iphone Xs Max",
+                "price": "62",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "oca-iphone-max",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6891021361_w200_h200_oca-iphone-xs.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "order",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3779566,
+                  "name": "Smart",
+                  "slug": "smart",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1791010673,
+                "name": "Connector for battery iPhone 5c",
+                "price": "76",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "connector-for-battery",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/4337468186_w200_h200_connector-for-battery.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "order",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3791957,
+                  "name": "MobiMarket",
+                  "slug": "mobimarket",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 2876170171,
+                "name": "Мобільний телефон смартфон б/у iPhone 6S 16Гб б.у Neverlock акумулятор 80% б/у повністю робочий гарний стан",
+                "price": "2000",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "mobilnyj-telefon-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/7011261289_w200_h200_mobilnyj-telefon-bu.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "avail",
+                  "isAvailable": true,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 3333739,
+                  "name": "Zevs",
+                  "slug": "zevs",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1689064552,
+                "name": "Смартфон Apple iPhone 14 Pro Max 128GB eSIM Gold (MQ8Q3) [73646]",
+                "price": "49099",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6945853819_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "order",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2140052,
+                  "name": "«Touch» - інтернет-магазин електроніки та гаджетів",
+                  "slug": "touch-internet-magazin",
+                  "__typename": "Company"
+                }
+              }
+            },
+            {
+              "__typename": "ProductItem",
+              "product": {
+                "id": 1689064558,
+                "name": "Смартфон Apple iPhone 14 Pro Max 1TB eSIM Space Black (MQ923) [73652]",
+                "price": "62699",
+                "priceCurrencyLocalized": "₴",
+                "urlText": "smartfon-apple-iphone",
+                "categoryIds": [
+                  0,
+                  50,
+                  50902,
+                  5090301
+                ],
+                "image": "https://images.prom.ua/6945852156_w200_h200_smartfon-apple-iphone.jpg",
+                "__typename": "Product",
+                "presence": {
+                  "presence": "order",
+                  "isAvailable": false,
+                  "__typename": "ProductPresence"
+                },
+                "company": {
+                  "id": 2140052,
+                  "name": "«Touch» - інтернет-магазин електроніки та гаджетів",
+                  "slug": "touch-internet-magazin",
+                  "__typename": "Company"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

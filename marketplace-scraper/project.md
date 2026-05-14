@@ -1,8 +1,9 @@
 # Marketplace Scraper — Project Documentation
 
-## Project status
-Current stage: 15 — Business Intelligence Layer & Project-Rooted Workflows ✅ (Phase 1 Complete)
-Last updated: 2026-05-09 21:10
+### Project status
+Current stage: Phase 2.5 — Modular MAPI Scraper Architecture ✅ (Stable)
+Next stage: Phase 3 — Global Intelligence Phase (Gemini Normalization)
+Last updated: 2026-05-14 (Refactored MAPI Scraper into modular package structure)
 
 ---
 
@@ -15,68 +16,57 @@ This is an **internal production tool** for generating **market intelligence rep
 
 **Workflow:**
 ```
-Select Project → Set Mode (Search/Category/Seller/Update) → Scrape → DB Control Panel → Export Report
+Select Project → Set Mode (Search/Category/Seller/Update) → Scrape (via Marketpalce API Scraper + Browser Fallbacks) → DB Control Panel → Export Report
 ```
 
 ---
 
-## Architecture Overview — Refactored
+## Tech Stack & Frameworks
 
-### Entry Point
-- `main.py` → `gui/main_window.py` (MainWindow)
-
-### Core Components
-- **Project Selection**: All operations are now rooted in an `active_project_id`.
-- **Parsing Modes**:
-  1. **Search**: Keyword discovery at scale.
-  2. **Filter/Category**: Deep parse of specific marketplace category URLs.
-  3. **Seller/Store**: Extraction of full product lists from specific sellers.
-  4. **Price Update**: High-priority re-scraping of `monitored_products` for the active project.
-- **Database Control Panel** (`gui/db_browser_window.py`):
-  - Sidebar-driven navigation (Projects vs Raw Data vs Business Layer).
-  - Advanced Treeview: Click-to-sort, multi-select delete, keyword + per-column filters.
-  - Modal form system for adding/editing business data.
+- **Core Language:** Python 3
+- **MAPI Extraction API (Current Standard):**
+  - `curl_cffi` (For TLS impersonation `chrome110` to bypass Cloudflare/WAF checks).
+  - `execjs` / Node.js (For evaluating SSR JS/Nuxt states, notably used for extracting state from `Allo`).
+- **Legacy/Fallback Scrapers:** Playwright / Selenium (used primarily when MAPI fails or as a stealth harvester).
+- **GUI Framework:** `Tkinter` (Python standard library using custom Treeviews and sidebars for the internal app).
+- **Database:** SQLite3 with `sqlite3` driver. Foreign keys (PRAGMA foreign_keys=ON) enabled, WAL mode active.
+- **Normalization Engine:** Modular `normalize` methods within site-specific modules and legacy `scrapers/mapi_scraper/normalizer.py`.
 
 ---
 
-## File Map (Updated Phase 1)
+## Architecture Overview & File Map (Agent Guide)
 
-| File | Status | Notes |
-|------|--------|-------|
-| `gui/main_window.py` | ✅ | Refactored with Project selector & 4 parsing modes. |
-| `gui/db_browser_window.py` | ✅ | Fully rewritten as a Database Control Panel. |
-| `db/product_repo.py` | ✅ | Added `delete_rows`, `clear_table`, and `remove_duplicates`. |
-| `db/migrations.py` | ✅ | Managed migration for 7 new business tables. |
-| `db/database.py` | ✅ | PRAGMA foreign_keys=ON; WAL mode enabled. |
-| `scrapers/rozetka.py` | ✅ | Stabilized subdomain parsing & high-precision stock detection. |
-| `scrapers/epicentrk.py` | ✅ | Modernized with high-precision Ad/Stock markers & early exit. |
-| `prom.md` | ✅ | Documentation for Prom.ua extraction logic & stock markers. |
+This section serves as a map for any coding AI agent entering the project to quickly bootstrap development.
 
----
+### 1. The Core GUI (Entry Point)
+- **`main.py`** -> Loads the Tkinter app.
+- **`gui/main_window.py` (MainWindow):**
+  Features Project Selector (`active_project_id`) and 4 parsing modes: Search, Filter/Category, Seller/Store, Price Update.
+- **`gui/db_browser_window.py`:**
+  Database Control Panel. Includes Treeview for exploring Business Database Layer (Projects, Competitors, Raw Data). Has modal form systems for modifying CRM data.
 
-## Bug Audit — 2026-05-09 (Post-Refactor)
+### 2. Marketplace API (MAPI) Layer (`scrapers/mapi_scraper/`)
+Refactored from a monolithic `mapi_scraper.py` into a modular package. 
+- **`__init__.py`**: Public API. Exposes `scrape(site, mode, **kw)` and `get_module_for_url(url)`. Registry of all site-specific modules.
+- **`base.py`**: Defines `MarketplaceModule` protocol and `BaseModule` mixin for standardization.
+- **`http.py`**: Shared HTTP layer using `curl_cffi`, common headers, and integrated structured logging.
+- **`extractors.py`**: Shared utility functions for HTML extraction (LD+JSON, JS assignments, scripts by ID).
+- **`paginator.py`**: Logic for URL-based pagination across different marketplaces.
+- **`sites/`**: Site-specific implementations:
+  - `rozetka.py`: Multi-source extraction (GraphQL, API, LD+JSON, client-state).
+  - `prom.py`: GraphQL-first extraction with Apollo Cache fallback.
+  - `allo.py`: ExecJS-based Nuxt state processing.
+  - `epicentr.py`: Stateless API interaction (v1/v2).
+  - `hotline.py`: BS4-based HTML parsing.
 
-### ✅ Fixed
+### 3. Normalization Engine
+All raw data from APIs/SSR maps into a strict common schema before database ingestion.
+- Site-specific modules implement a `normalize(raw_data)` method to map site-specific JSON to standard keys: `id`, `sku`, `price`, `name`, `avail_code`, `merchant_name`, `url`, and `properties[]`.
 
-| ID | Location | Fix summary |
-|----|----------|-------------|
-| B1–B23 | Various | See previous audit. All critical stabilization bugs resolved. |
-| B24 | `db_browser_window.py` | SQL Syntax error: Project filter now injected correctly before `ORDER BY`. |
-| B25 | `product_repo.py` | IntegrityError: Deletion and Clearing now manually handle legacy non-cascading dependencies. |
-| B26 | `rozetka.py` | Stabilized Subdomain Parsing: Discovered 32 products on `auto.rozetka.com.ua` using JS Deep Heuristic Discovery. |
-| B27 | `prom.py`, `rozetka.py`, `allo.py`, `epicentrk.py`| High-Precision Filtering: Implemented custom ad-blockers and stock detection (Реклама / Немає в наявності). |
-| B28 | `main_window.py` | Added "Skip Out of Stock" global filter checkbox (active by default). |
-| B29 | Core Scrapers | Early Exit Optimization: Scrapers now stop pagination immediately upon hitting the first OutOfStock item. |
-| B30 | `epicentrk.py`, `hotline.py`| Fixed `TypeError` by harmonizing `search_products` signatures to accept `skip_out_of_stock`. |
-| B31 | `main_window.py` | GUI Fix: "Pages" spinbox now visible and respected for Filter and Seller URL modes. |
-| B32 | `prom.py` | Fixed indentation error and missing `try` block in Playwright loop. |
-
-### ⚠️ Remaining / Low priority
-
-| ID | Location | Status |
-|----|----------|--------|
-| — | `scrapers/m_ua.py` | Empty stub — m.ua scraper not implemented. |
-| — | Report Engine | `report_runs` table exists, but core Excel report generator (Phase 5) logic is pending. |
+### 4. Persistence & Database Layer (`db/`)
+- **`db/database.py`**: Database connection pooling, PRAGMA config, execution helpers.
+- **`db/product_repo.py`**: Core CRUD operations. Exposes functions like `delete_rows`, `remove_duplicates`, and pagination logic.
+- **`db/schema_manager.py` / `db/migrations.py`:** Manages DB tables and structure.
 
 ---
 
@@ -85,37 +75,20 @@ Select Project → Set Mode (Search/Category/Seller/Update) → Scrape → DB Co
 ### Raw Scrape Layer (Discovery)
 - `products`: Raw discovery results.
 - `price_history`: Log of every price seen during discovery.
-- `scrape_sessions`: Metadata for every LAUNCH AGENTS run.
+- `scrape_sessions`: Metadata for every parser run.
 
 ### Business Layer (CRM & Monitoring)
-- `projects`: The root entity. All business data belongs to a project.
+- `projects`: The root entity. All business data organically belongs to an `active_project_id`.
 - `project_products`: The client's own product catalog.
 - `competitors`: Defined sellers/shops to be watched.
 - `monitored_products`: Specific URL-to-URL links between a `project_product` and a `competitor`.
-- `price_observations`: Clean, historical price data specifically for monitored items (used for reports).
-- `report_runs`: History of generated Excel/PDF intelligence reports.
+- `price_observations`: Clean, historical price data specifically meant for reporting.
+- `report_runs`: Log of Excel/PDF reports generated as final output.
 
 ---
 
-## Implementation Roadmap (Updated)
-
-### Phase 0 — Stabilize Scraper ✅ (Complete)
-
-### Phase 1 — Business Database Layer ✅ (Complete)
-- [x] Create Projects, Competitors, and Monitoring tables.
-- [x] Integrate Project Selector in Main UI.
-- [x] Implement Full Database Control Panel (CRUD).
-- [x] Handle FK constraints for cleanup.
-
-### Phase 2 — Client Product Catalog ⏳ (Next)
-- [ ] Implement "Import from Excel" for `project_products`.
-- [ ] Add batch matching: auto-link `products` (discovery) to `project_products` (catalog) via AI.
-
-### Phase 3 — Competitor Monitoring Set ⏳
-- [ ] UI to quickly add `monitored_products` from the Discovery tab.
-
-### Phase 4 — Automated Price Updates ⏳
-- [ ] Refine the "Update Price Watchlist" mode to handle massive lists via background queue.
-
-### Phase 5 — Price Audit Report ⏳ (First Sellable Output)
-- [ ] Implement the Excel Report Engine to generate competitive analysis workbooks.
+## Stabilization Notes & Current Edge Cases
+- **Modular Refactor**: As of 2026-05-14, the scraper is fully modular. Site logic resides in `sites/`.
+- **Stateless Epicentr**: Epicentr logic is now fully API-driven and stateless, bypassing previous SSR/session issues.
+- **Prom GraphQL**: Prom.ua uses direct GraphQL queries for speed and reliability.
+- **MAPI Dependency**: Heavily reliant on Node.js availability on the host to process Nuxt object injections using `execjs`, especially for Allo. Ensure Node is on the PATH for Windows hosts.
