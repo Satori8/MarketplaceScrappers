@@ -4,14 +4,12 @@ from typing import Dict, Tuple, Optional
 from curl_cffi import requests
 
 from scrapers.mapi_scraper.base import BaseModule
-from scrapers.mapi_scraper.http import _get_with_meta, _ok, _err, _save_debug_item, logger, _PROM_HEADERS
+from scrapers.mapi_scraper.http import _get_with_meta, _aget_with_meta, _ok, _err, _save_debug_item, logger, _PROM_HEADERS
 from scrapers.mapi_scraper.extractors import _extract_json_assignment, _extract_ld_json
 
 class PromAPI:
     def __init__(self):
         self.site = "prom"
-        self.total_pages = 0
-        self.page_index = 0
 
     _GRAPHQL_QUERIES = {
         "CategoryListingQuery": """query CategoryListingQuery($alias: String!, $params: Any, $offset: Int, $limit: Int, $regionId: Int, $subdomain: String) {
@@ -83,6 +81,9 @@ class PromAPI:
         products = []
         source = raw_data.get("source")
         
+        total_pages = 0
+        page_index = 1
+        
         if source == "window.ApolloCacheState":
             state = raw_data.get("apollo_state", {})
             
@@ -101,15 +102,15 @@ class PromAPI:
                  page_info = res.get("page", {})
 
             total_items = page_info.get("total", 0)
-            self.total_pages = (total_items // 29) + (1 if total_items % 29 > 0 else 0)
+            total_pages = (total_items // 29) + (1 if total_items % 29 > 0 else 0)
             
             try:
                 offset_match = re.search(r'"offset":(\d+)', str(listing_key))
                 if offset_match:
                     offset = int(offset_match.group(1))
-                    self.page_index = (offset // 29) + 1
+                    page_index = (offset // 29) + 1
             except:
-                self.page_index = 1
+                page_index = 1
 
             listing = res.get("listing")
             if not listing:
@@ -239,8 +240,8 @@ class PromAPI:
             page_info = listing.get("page", {})
             
             total_items = page_info.get("total", 0)
-            self.total_pages = (total_items // 29) + (1 if total_items % 29 > 0 else 0)
-            self.page_index = raw_data.get("page_index", 1)
+            total_pages = (total_items // 29) + (1 if total_items % 29 > 0 else 0)
+            page_index = raw_data.get("page_index", 1)
             
             best_cat_name = (listing.get("category") or {}).get("caption")
 
@@ -293,16 +294,16 @@ class PromAPI:
                     "image": it.get("image")
                 })
 
-        if not products and self.total_pages > 0:
-            logger.warning(f"Extracted 0 products from {source}, but total_pages={self.total_pages}", extra={"site": self.site})
+        if not products and total_pages > 0:
+            logger.warning(f"Extracted 0 products from {source}, but total_pages={total_pages}", extra={"site": self.site})
         else:
             logger.info(f"Extracted {len(products)} products from {source}", extra={"site": self.site})
 
         return {
             "products": products,
             "pagination": {
-                "total_pages": self.total_pages,
-                "page_index": self.page_index
+                "total_pages": total_pages,
+                "page_index": page_index
             }
         }
 
@@ -365,6 +366,98 @@ class PromModule(BaseModule):
         # 2. Fallback: HTML extraction (Apollo Cache)
         logger.info(f"Falling back to HTML extraction for {url}", extra={"site": site})
         code, html, meta = _get_with_meta(site, url, extra_headers=_PROM_HEADERS, parse_json=False, save_raw=debug)
+        
+        normalized_data = None
+        
+        # Prom uses Apollo Cache in window.ApolloCacheState
+        apollo = _extract_json_assignment(html, "window.ApolloCacheState")
+        if apollo:
+            raw = {"source": "window.ApolloCacheState", "apollo_state": apollo}
+            normalized_data = api.normalize(raw)
+        else:
+            # Fallback: LD+JSON Product blocks
+            ld_blocks = _extract_ld_json(html)
+            products = [b for b in ld_blocks if b.get("@type") == "Product"]
+            if products:
+                raw = {"source": "ld+json", "ld_json_products": products}
+                normalized_data = api.normalize(raw)
+
+        if debug:
+            products = normalized_data.get("products", []) if normalized_data else []
+            # We already have raw data from extractors
+            debug_raw = {"apollo_state": apollo} if 'apollo' in locals() and apollo else {"html_snippet": html[:5000]}
+            _save_debug_item(site, "html_extraction", meta["url"], meta, debug_raw, products)
+
+        if normalized_data is not None:
+             out = _ok(site, normalized_data.get("products", []), mode)
+             if "pagination" in normalized_data:
+                 out["pagination"] = normalized_data["pagination"]
+             if debug: out["debug"] = True
+             return out
+
+        out = _err(site, mode, "Could not find Apollo state or LD+JSON on Prom", 404)
+        if debug: out["debug"] = True
+        return out
+
+    async def async_scrape_url(
+        self,
+        url: str,
+        page: int = 1,
+        debug: bool = False,
+        proxy: str | None = None,
+    ) -> dict:
+        site = self.SITE_ID
+        api = self._api
+        mode = "url"
+        
+        if not url: return _err(site, mode, "URL is required")
+
+        # 1. Primary: Try GraphQL directly
+        parsed_gql = api.parse_url_to_graphql(url, page=int(page))
+        if parsed_gql:
+            op_name, variables = parsed_gql
+            query = api._GRAPHQL_QUERIES.get(op_name)
+            if query:
+                headers = {
+                    "content-type": "application/json",
+                    "x-language": "uk", 
+                    "x-requested-with": "XMLHttpRequest",
+                    "x-apollo-operation-name": op_name,
+                    "referer": url,
+                    "origin": "https://prom.ua"
+                }
+                payload = {"operationName": op_name, "variables": variables, "query": query}
+                
+                started = time.perf_counter()
+                logger.info(f"FETCH GraphQL {op_name} for {url} (vars: {variables})", extra={"site": site})
+                try:
+                    from curl_cffi.requests import AsyncSession
+                    async with AsyncSession(impersonate="chrome124") as session:
+                        resp = await session.post("https://prom.ua/graphql", headers=headers, json=payload, timeout=15, proxies={"https": proxy, "http": proxy} if proxy else None)
+                    elapsed_ms = int((time.perf_counter() - started) * 1000)
+                    if resp.status_code == 200:
+                        gql_data = resp.json()
+                        if "data" in gql_data and gql_data["data"]:
+                            raw = {"source": "graphql", "data": gql_data["data"], "page_index": int(page)}
+                            normalized_data = api.normalize(raw)
+                            
+                            if debug:
+                                meta = {"url": "https://prom.ua/graphql", "status": 200, "elapsed_ms": elapsed_ms, "bytes": len(resp.content)}
+                                _save_debug_item(site, "graphql_api", url, meta, gql_data, normalized_data.get("products", []))
+                            
+                            if normalized_data and normalized_data.get("products"):
+                                out = _ok(site, normalized_data["products"], mode)
+                                if "pagination" in normalized_data:
+                                    out["pagination"] = normalized_data["pagination"]
+                                if debug: out["debug"] = True # Can be expanded to actual debug dict
+                                return out
+                except Exception as e:
+                    logger.warning(f"GraphQL extraction failed: {e}", extra={"site": site})
+                    pass
+
+        # 2. Fallback: HTML extraction (Apollo Cache)
+        logger.info(f"Falling back to HTML extraction for {url}", extra={"site": site})
+        code, html, meta = await _aget_with_meta(site, url, extra_headers=_PROM_HEADERS, parse_json=False, save_raw=debug, proxy=proxy)
         
         normalized_data = None
         

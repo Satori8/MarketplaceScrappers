@@ -3,7 +3,7 @@ import json
 from typing import Dict, Any
 
 from scrapers.mapi_scraper.base import BaseModule
-from scrapers.mapi_scraper.http import _get, _get_with_meta, _ok, _err, _save_debug_item, logger
+from scrapers.mapi_scraper.http import _get, _get_with_meta, _aget_with_meta, _ok, _err, _save_debug_item, logger
 from scrapers.mapi_scraper.extractors import (
     _extract_ld_json, _extract_script_by_id, 
     _find_common_api_request_in_client_state
@@ -12,13 +12,14 @@ from scrapers.mapi_scraper.extractors import (
 class RozetkaAPI:
     def __init__(self):
         self.site = "rozetka"
-        self.total_pages = 0
-        self.page_index = 0
 
     def normalize(self, raw_data: Dict) -> Dict:
         """Standardizes Rozetka responses from LD+JSON or JS state."""
         products = []
         source = raw_data.get("source")
+        
+        total_pages = 0
+        page_index = 1
         
         if source == "ld+json":
             ld = raw_data.get("ld_json", {})
@@ -71,6 +72,20 @@ class RozetkaAPI:
             if isinstance(api_data, dict):
                 # Standard wrapper
                 data_val = api_data.get("data", {})
+                
+                # Fetch local pagination
+                if isinstance(data_val, dict):
+                    pagination = data_val.get("pagination") or data_val.get("paginator") or {}
+                    if isinstance(pagination, dict):
+                        total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
+                        page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
+                
+                if "goods" in api_data and isinstance(api_data["goods"], dict):
+                    total_pages = api_data["goods"].get("total_pages", total_pages)
+                    page_index = api_data["goods"].get("shown_page", page_index)
+                elif isinstance(data_val, dict) and "goods" in data_val and isinstance(data_val["goods"], dict):
+                    total_pages = data_val["goods"].get("total_pages", total_pages)
+                    page_index = data_val["goods"].get("shown_page", page_index)
                 
                 cat_map = {}
                 brands_map = {}
@@ -248,16 +263,16 @@ class RozetkaAPI:
                 # Placeholder for direct list responses
                 pass
 
-        if not products and self.total_pages > 0:
-            logger.warning(f"Extracted 0 products from {source}, but total_pages={self.total_pages}", extra={"site": self.site})
+        if not products and total_pages > 0:
+            logger.warning(f"Extracted 0 products from {source}, but total_pages={total_pages}", extra={"site": self.site})
         else:
             logger.info(f"Extracted {len(products)} products from {source}", extra={"site": self.site})
 
         return {
             "products": products,
             "pagination": {
-                "total_pages": self.total_pages,
-                "page_index": self.page_index
+                "total_pages": total_pages,
+                "page_index": page_index
             }
         }
 
@@ -299,8 +314,8 @@ class RozetkaModule(BaseModule):
                 
                 if api_code == 200:
                     pagination = api_data.get("data", {}).get("pagination") or api_data.get("data", {}).get("paginator") or {}
-                    api.total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
-                    api.page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
+                    total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
+                    page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
                     
                     if product_ids:
                         all_products = []
@@ -323,7 +338,7 @@ class RozetkaModule(BaseModule):
                         if all_products:
                             logger.info(f"Collected total {len(all_products)} products via detail chunks", extra={"site": site})
                             out = _ok(site, all_products, mode)
-                            out["pagination"] = {"total_pages": api.total_pages, "page_index": api.page_index}
+                            out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
                             if debug_enabled: out["debug"] = debug_log
                             return out
                         else:
@@ -332,7 +347,7 @@ class RozetkaModule(BaseModule):
                     raw = {"source": "api_direct_search", "api_url": api_url, "api_data": api_data}
                     normalized = api.normalize(raw)
                     out = _ok(site, normalized["products"], mode)
-                    out["pagination"] = {"total_pages": api.total_pages, "page_index": api.page_index}
+                    out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
                     if debug_enabled: out["debug"] = debug_log
                     return out
 
@@ -355,8 +370,8 @@ class RozetkaModule(BaseModule):
 
             if api_code == 200:
                 pagination = api_data.get("data", {}).get("pagination") or api_data.get("data", {}).get("paginator") or {}
-                api.total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
-                api.page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
+                total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
+                page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
                 
                 if product_ids:
                     all_products = []
@@ -379,7 +394,7 @@ class RozetkaModule(BaseModule):
                     if all_products:
                         logger.info(f"Collected total {len(all_products)} products via category detail chunks", extra={"site": site})
                         out = _ok(site, all_products, mode)
-                        out["pagination"] = {"total_pages": api.total_pages, "page_index": api.page_index}
+                        out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
                         if debug_enabled: out["debug"] = debug_log
                         return out
                     else:
@@ -388,7 +403,7 @@ class RozetkaModule(BaseModule):
                 raw = {"source": "api_direct_category", "api_url": api_url, "api_data": api_data}
                 normalized = api.normalize(raw)
                 out = _ok(site, normalized["products"], mode)
-                out["pagination"] = {"total_pages": api.total_pages, "page_index": api.page_index}
+                out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
                 if debug_enabled: out["debug"] = debug_log
                 return out
 
@@ -425,8 +440,8 @@ class RozetkaModule(BaseModule):
                     goods = cat_data.get("data", {}).get("goods", {})
                     product_ids = [str(pid) for pid in goods.get("ids", [])]
                     
-                    api.total_pages = goods.get("total_pages", 0)
-                    api.page_index = goods.get("shown_page", 1)
+                    total_pages = goods.get("total_pages", 0)
+                    page_index = goods.get("shown_page", 1)
 
                 if product_ids:
                     all_products = []
@@ -447,7 +462,7 @@ class RozetkaModule(BaseModule):
                     if all_products:
                         logger.info(f"Collected total {len(all_products)} products via seller detail chunks", extra={"site": site})
                         out = _ok(site, all_products, mode)
-                        out["pagination"] = {"total_pages": api.total_pages, "page_index": api.page_index}
+                        out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
                         if debug_enabled: out["debug"] = debug_log
                         return out
                     else:
@@ -472,7 +487,7 @@ class RozetkaModule(BaseModule):
                 raw = {"source": "ld+json", "ld_json": block}
                 normalized = api.normalize(raw)
                 out = _ok(site, normalized["products"], mode)
-                out["pagination"] = {"total_pages": api.total_pages, "page_index": api.page_index}
+                out["pagination"] = normalized.get("pagination", {"total_pages": 0, "page_index": 1})
                 if debug_enabled: out["debug"] = debug_log
                 return out
 
@@ -493,7 +508,258 @@ class RozetkaModule(BaseModule):
                         _save_debug_item(site, "api_client_state", api_url_enc, api_meta, api_data, products)
                     if normalized["products"]:
                         out = _ok(site, normalized["products"], mode)
-                        out["pagination"] = {"total_pages": api.total_pages, "page_index": api.page_index}
+                        out["pagination"] = normalized.get("pagination", {"total_pages": 0, "page_index": 1})
+                        if debug_enabled: out["debug"] = debug_log
+                        return out
+                elif debug_enabled:
+                    _save_debug_item(site, "api_client_state_err", api_url_enc, api_meta, api_meta.get("raw_response"), [])
+
+        # 5. Method: Legacy variable fallback (window.RZ.goods)
+        match = re.search(r"window\.RZ\.goods\s*=\s*(\{.*?\});", html)
+        if match:
+            try:
+                raw = {"source": "window.RZ.goods", "ld_json": json.loads(match.group(1))}
+                normalized = api.normalize(raw)
+                out = _ok(site, normalized["products"], mode)
+                if debug_enabled: out["debug"] = debug_log
+                return out
+            except: pass
+
+        out = _err(site, mode, "Could not find any data source for Rozetka", 404)
+        if debug_enabled: out["debug"] = debug_log
+        return out
+
+    async def async_scrape_url(
+        self,
+        url: str,
+        page: int = 1,
+        debug: bool = False,
+        proxy: str | None = None,
+    ) -> dict:
+        site = self.SITE_ID
+        api = self._api
+        mode = "url"
+        
+        debug_enabled = debug
+        debug_log: Dict[str, Any] = {"requests": []} if debug_enabled else {}
+
+        # 1. PRIORITY: Direct API call if we can map the URL
+        # Search: .../search/?text=iphone
+        if "/search/" in url:
+            from urllib.parse import urlparse, parse_qs
+            parsed = urlparse(url)
+            qs = parse_qs(parsed.query)
+            text = qs.get("text", [None])[0]
+            if text:
+                api_url = f"https://common-api.rozetka.com.ua/v1/api/catalog/search?country=UA&lang=ua&page={page}&text={text}"
+                api_code, api_data, api_meta = await _aget_with_meta(site, api_url, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+                
+                product_ids = []
+                if api_code == 200:
+                    goods_list = api_data.get("data", {}).get("goods", [])
+                    product_ids = [str(g.get("id")) for g in goods_list if isinstance(g, dict) and g.get("id") and not g.get("adv")]
+
+                if debug_enabled:
+                    # Rozetka catalog search response contains product IDs but not full details
+                    _save_debug_item(site, "catalog_search", api_url, api_meta, api_data, [])
+                
+                if api_code == 200:
+                    pagination = api_data.get("data", {}).get("pagination") or api_data.get("data", {}).get("paginator") or {}
+                    total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
+                    page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
+                    
+                    if product_ids:
+                        all_products = []
+                        CHUNK_SIZE = 60
+                        for i in range(0, len(product_ids), CHUNK_SIZE):
+                            chunk = product_ids[i:i + CHUNK_SIZE]
+                            details_url = f"https://common-api.rozetka.com.ua/v1/api/product/details?country=UA&lang=ua&ids={','.join(chunk)}"
+                            det_code, det_data, det_meta = await _aget_with_meta(site, details_url, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+                            
+                            det_products = []
+                            if det_code == 200:
+                                raw = {"source": "api_direct_details", "api_url": details_url, "api_data": det_data}
+                                normalized = api.normalize(raw)
+                                det_products = normalized["products"]
+                                all_products.extend(det_products)
+
+                            if debug_enabled:
+                                _save_debug_item(site, "product_details", details_url, det_meta, det_data, det_products)
+                                
+                        if all_products:
+                            logger.info(f"Collected total {len(all_products)} products via detail chunks", extra={"site": site})
+                            out = _ok(site, all_products, mode)
+                            out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
+                            if debug_enabled: out["debug"] = debug_log
+                            return out
+                        else:
+                            logger.warning(f"No products found in detail chunks for {len(product_ids)} IDs", extra={"site": site})
+                            
+                    raw = {"source": "api_direct_search", "api_url": api_url, "api_data": api_data}
+                    normalized = api.normalize(raw)
+                    out = _ok(site, normalized["products"], mode)
+                    out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
+                    if debug_enabled: out["debug"] = debug_log
+                    return out
+
+        # Category: .../c80004/...
+        cat_match = re.search(r'/c(\d+)/', url)
+        if cat_match:
+            from urllib.parse import quote
+            api_url = f"https://common-api.rozetka.com.ua/v1/api/pages/catalog/category?country=UA&lang=ua&url={quote(url)}"
+            api_code, api_data, api_meta = await _aget_with_meta(site, api_url, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+            
+            product_ids = []
+            if api_code == 200:
+                goods_list = api_data.get("data", {}).get("goods", [])
+                if isinstance(goods_list, dict) and "tiles" in goods_list:
+                    goods_list = goods_list["tiles"]
+                product_ids = [str(g.get("id")) for g in goods_list if isinstance(g, dict) and g.get("id") and not g.get("adv")]
+
+            if debug_enabled:
+                _save_debug_item(site, "api_direct_category", api_url, api_meta, api_data, [])
+
+            if api_code == 200:
+                pagination = api_data.get("data", {}).get("pagination") or api_data.get("data", {}).get("paginator") or {}
+                total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
+                page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
+                
+                if product_ids:
+                    all_products = []
+                    CHUNK_SIZE = 60
+                    for i in range(0, len(product_ids), CHUNK_SIZE):
+                        chunk = product_ids[i:i + CHUNK_SIZE]
+                        details_url = f"https://common-api.rozetka.com.ua/v1/api/product/details?country=UA&lang=ua&ids={','.join(chunk)}"
+                        det_code, det_data, det_meta = await _aget_with_meta(site, details_url, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+                        
+                        det_products_count = 0
+                        if det_code == 200:
+                            raw = {"source": "api_direct_details", "api_url": details_url, "api_data": det_data}
+                            normalized = api.normalize(raw)
+                            det_products_count = len(normalized["products"])
+                            all_products.extend(normalized["products"])
+
+                        if debug_enabled:
+                            _save_debug_item(site, "product_details", details_url, det_meta, det_data, normalized.get("products", []))
+                        
+                    if all_products:
+                        logger.info(f"Collected total {len(all_products)} products via category detail chunks", extra={"site": site})
+                        out = _ok(site, all_products, mode)
+                        out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
+                        if debug_enabled: out["debug"] = debug_log
+                        return out
+                    else:
+                        logger.warning(f"No products found in category detail chunks for {len(product_ids)} IDs", extra={"site": site})
+
+                raw = {"source": "api_direct_category", "api_url": api_url, "api_data": api_data}
+                normalized = api.normalize(raw)
+                out = _ok(site, normalized["products"], mode)
+                out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
+                if debug_enabled: out["debug"] = debug_log
+                return out
+
+        # Seller: .../seller/{slug}/goods/
+        seller_match = re.search(r'/seller/([^/]+)/', url)
+        if seller_match:
+            slug = seller_match.group(1)
+            # 1. Fetch Seller ID
+            sellers_url = f"https://common-api.rozetka.com.ua/v1/api/sellers?country=UA&lang=ua&name={slug}"
+            s_code, s_data, s_meta = await _aget_with_meta(site, sellers_url, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+            
+            seller_id = None
+            if s_code == 200 and isinstance(s_data, dict):
+                data_dict = s_data.get("data", {})
+                if data_dict:
+                    # Get the first key which is usually the ID, or look for 'id' inside the value
+                    first_key = next(iter(data_dict))
+                    seller_info = data_dict[first_key]
+                    # INPORTANT: catalog-api often expects owox_id as the 'id' parameter
+                    seller_id = seller_info.get("owox_id") or seller_info.get("id")
+            
+            if seller_id:
+                catalog_url = f"https://catalog-api.rozetka.com.ua/v0.1/api/category/seller/catalog?country=UA&lang=ua&id={seller_id}"
+                if int(page) > 1:
+                    catalog_url += f"&filters=page:{page}"
+                
+                cat_code, cat_data, cat_meta = await _aget_with_meta(site, catalog_url, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+                
+                if debug_enabled:
+                    _save_debug_item(site, "api_seller_catalog", catalog_url, cat_meta, cat_data, [])
+
+                product_ids = []
+                if cat_code == 200 and isinstance(cat_data, dict):
+                    goods = cat_data.get("data", {}).get("goods", {})
+                    product_ids = [str(pid) for pid in goods.get("ids", [])]
+                    
+                    total_pages = goods.get("total_pages", 0)
+                    page_index = goods.get("shown_page", 1)
+
+                if product_ids:
+                    all_products = []
+                    CHUNK_SIZE = 60
+                    for i in range(0, len(product_ids), CHUNK_SIZE):
+                        chunk = product_ids[i:i + CHUNK_SIZE]
+                        details_url = f"https://common-api.rozetka.com.ua/v1/api/product/details?country=UA&lang=ua&ids={','.join(chunk)}"
+                        det_code, det_data, det_meta = await _aget_with_meta(site, details_url, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+                        
+                        if det_code == 200:
+                            raw = {"source": "api_direct_details", "api_url": details_url, "api_data": det_data}
+                            normalized = api.normalize(raw)
+                            all_products.extend(normalized["products"])
+
+                        if debug_enabled:
+                            _save_debug_item(site, "product_details", details_url, det_meta, det_data, (normalized.get("products", []) if det_code == 200 else []))
+                    
+                    if all_products:
+                        logger.info(f"Collected total {len(all_products)} products via seller detail chunks", extra={"site": site})
+                        out = _ok(site, all_products, mode)
+                        out["pagination"] = {"total_pages": total_pages, "page_index": page_index}
+                        if debug_enabled: out["debug"] = debug_log
+                        return out
+                    else:
+                        logger.warning(f"No products found in seller detail chunks for {len(product_ids)} IDs", extra={"site": site})
+
+        # 2. FALLBACK: Load HTML for LD+JSON or rz-client-state
+        logger.info(f"Falling back to HTML extraction for {url}", extra={"site": site})
+        code, html, html_meta = await _aget_with_meta(site, url, extra_headers={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Referer": "https://rozetka.com.ua/"}, parse_json=False, save_raw=debug_enabled, proxy=proxy)
+        if debug_enabled:
+            _save_debug_item(site, "html_fetch", url, html_meta, {"html_snippet": html[:2000]}, [])
+
+        if code != 200:
+            logger.warning(f"HTML fallback failed with status {code}", extra={"site": site})
+            out = _err(site, mode, f"HTTP {code}", code)
+            if debug_enabled: out["debug"] = debug_log
+            return out
+
+        # 3. Method: LD+JSON (Fastest fallback from HTML)
+        ld_blocks = _extract_ld_json(html)
+        for block in ld_blocks:
+            if block.get("@type") == "ItemList" and block.get("itemListElement"):
+                raw = {"source": "ld+json", "ld_json": block}
+                normalized = api.normalize(raw)
+                out = _ok(site, normalized["products"], mode)
+                out["pagination"] = normalized.get("pagination", {"total_pages": 0, "page_index": 1})
+                if debug_enabled: out["debug"] = debug_log
+                return out
+
+        # 4. Method: Unified rz-client-state (2nd API Query)
+        client_state = _extract_script_by_id(html, "rz-client-state")
+        if client_state:
+            # Reconstruct the best API request from state keys
+            api_url_enc = _find_common_api_request_in_client_state(client_state)
+            if api_url_enc:
+                api_code, api_data, api_meta = await _aget_with_meta(site, api_url_enc, parse_json=True, save_raw=debug_enabled, proxy=proxy)
+                if debug_enabled:
+                    debug_log["requests"].append({"kind": "api_client_state", **api_meta})
+                if api_code == 200:
+                    raw = {"source": "rz-client-state", "api_url": api_url_enc, "api_data": api_data}
+                    normalized = api.normalize(raw)
+                    if debug_enabled:
+                        products = normalized.get("products", []) if normalized else []
+                        _save_debug_item(site, "api_client_state", api_url_enc, api_meta, api_data, products)
+                    if normalized["products"]:
+                        out = _ok(site, normalized["products"], mode)
+                        out["pagination"] = normalized.get("pagination", {"total_pages": 0, "page_index": 1})
                         if debug_enabled: out["debug"] = debug_log
                         return out
                 elif debug_enabled:

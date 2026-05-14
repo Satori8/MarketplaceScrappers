@@ -5,6 +5,7 @@ import re
 import logging
 from typing import Any, Dict, List, Optional, Tuple
 from curl_cffi import requests
+from curl_cffi.requests import AsyncSession
 
 _RUN_TIMESTAMP = int(time.time())
 
@@ -144,6 +145,84 @@ def _get_with_meta(site: str, url: str, params: Optional[Dict] = None, extra_hea
             "elapsed_ms": elapsed_ms,
             "bytes": 0,
         }
+
+async def _aget(
+    site: str,
+    url: str,
+    params: dict | None = None,
+    extra_headers: dict | None = None,
+    proxy: str | None = None,
+) -> tuple[int, Any]:
+    """Async GET. Drop-in async replacement for _get()."""
+    headers = _COMMON_HEADERS.copy()
+    if extra_headers:
+        headers.update(extra_headers)
+    try:
+        async with AsyncSession(impersonate="chrome124") as session:
+            resp = await session.get(
+                url,
+                params=params,
+                headers=headers,
+                proxies={"https": proxy, "http": proxy} if proxy else None,
+                timeout=15,
+            )
+            try:
+                return resp.status_code, resp.json()
+            except Exception:
+                return resp.status_code, resp.text
+    except Exception as e:
+        logger.error(f"Network error for {url}: {e}", extra={"site": site})
+        return 0, str(e)
+
+
+async def _aget_with_meta(
+    site: str,
+    url: str,
+    params: dict | None = None,
+    extra_headers: dict | None = None,
+    parse_json: bool = True,
+    save_raw: bool = False,
+    proxy: str | None = None,
+) -> tuple[int, Any, dict]:
+    """Async GET with timing/meta. Drop-in async replacement for _get_with_meta()."""
+    headers = _COMMON_HEADERS.copy()
+    if extra_headers:
+        headers.update(extra_headers)
+    started = time.perf_counter()
+    try:
+        async with AsyncSession(impersonate="chrome124") as session:
+            resp = await session.get(
+                url,
+                params=params,
+                headers=headers,
+                proxies={"https": proxy, "http": proxy} if proxy else None,
+                timeout=15,
+            )
+            elapsed_ms = int((time.perf_counter() - started) * 1000)
+            body_bytes = len(resp.content or b"")
+            if parse_json:
+                try:
+                    data = resp.json()
+                except Exception:
+                    data = resp.text
+            else:
+                data = resp.text
+            meta = {
+                "url": str(resp.url),
+                "status": resp.status_code,
+                "elapsed_ms": elapsed_ms,
+                "bytes": body_bytes,
+            }
+            if save_raw:
+                if parse_json and isinstance(data, (dict, list)):
+                    meta["raw_response"] = data
+                else:
+                    meta["raw_response"] = str(data)[:2000]
+            return resp.status_code, data, meta
+    except Exception as e:
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        logger.error(f"EXCEPTION for {url}: {e}", extra={"site": site})
+        return 0, str(e), {"url": url, "status": 0, "elapsed_ms": elapsed_ms, "bytes": 0}
 
 _log_counter = 0
 

@@ -39,6 +39,7 @@ class MarketplaceModule(Protocol):
         url: str,
         page: int = 1,
         debug: bool = False,
+        proxy: str | None = None,
     ) -> dict:
         """
         Async entry point — wraps scrape_url() via asyncio executor by default.
@@ -58,7 +59,13 @@ class BaseModule:
     def scrape_url(self, url: str, page: int = 1, debug: bool = False) -> dict:
         raise NotImplementedError
 
-    async def async_scrape_url(self, url: str, page: int = 1, debug: bool = False) -> dict:
+    async def async_scrape_url(
+        self,
+        url: str,
+        page: int = 1,
+        debug: bool = False,
+        proxy: str | None = None,
+    ) -> dict:
         import asyncio
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, self.scrape_url, url, page, debug)

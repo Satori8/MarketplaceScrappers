@@ -10,13 +10,14 @@
 
 Источник правды: `marketplace-scraper/project.md`
 
-- **Phase 1.5 — Fast Scraper API & Normalization ✅ (Завершено, стабилизировано)**
-- Построен быстрый модуль `fast_api/fast_scraper.py` на базе `curl_cffi` (обход Cloudflare).
-- **Rozetka:** Внедрен 3-уровневый парсинг (Direct API → LD+JSON → rz-client-state), покрывающий поиск, категории и поддомены (auto/rztk).
-- **Prom.ua:** Успешно отреверсен неавторизованный GraphQL API (поиск, бренды, категории, продавцы) в обход сессий и WAF. Найдены корректные endpoint'ы и схема пагинации.
-- **Allo:** Извлечение SSR через `execjs`.
-- **Hotline:** Начата интеграция (структура и регистрация класса).
-- Реализована универсальная нормализация (`fast_api/normalizer.py`), сводящая любой результат в единую JSON-схему (цена, наличие, характеристики, id/sku).
+- **Phase 2.5 — Modular Async MAPI Scraper Architecture ✅ (Завершено, стабилизировано)**
+- Построен модульный скрапер на базе `curl_cffi` с поддержкой асинхронных запросов (`async_scrape_url`) и потокобезопасной локализацией состояния (пагинации). Резиновая модульная структура `scrapers/mapi_scraper`.
+- Внедрены потоковые запросы через `asyncio.gather` с проксированием к `Rozetka`, `Prom`, `Allo`, `Epicentr`.
+- **Rozetka:** Внедрен 3-уровневый парсинг (Direct API → LD+JSON → rz-client-state). Асинхронные HTTP-запросы извлекают данные страницами с автоматической переборкой товарных ID.
+- **Prom.ua:** GraphQL (поиск, бренды, категории, продавцы) перенесен на асинхронный пайплайн в обход WAF.
+- **Allo:** Извлечение SSR и исполнение `execjs` безопасно обернуто в `run_in_executor` во избежание блокировок event loop.
+- **Epicentr:** Stateless API вызовы v1 и v2 с поддержкой async.
+- Этап нормализации поддерживает асинхронный и потокобезопасный `normalize(raw_data)`.
 - **Stage 15 — Business Intelligence Layer & Project-Rooted Workflows ✅ (Завершено ранее).**
 - Все операции привязаны к `active_project_id`.
 

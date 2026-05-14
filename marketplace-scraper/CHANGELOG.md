@@ -51,3 +51,15 @@ Updated by coding agent at the end of every completed task.
 
 ---
 ...
+ 
+## 2026-05-14 - Phase 2 Async Rewrite 
+### Done 
+- Removed mutable pagination state from RozetkaAPI, PromAPI, AlloAPI, and EpicentrAPI to ensure thread-safety. 
+- Added native sync_scrape_url to all marketplace modules with asynchronous requests via curl_cffi.AsyncSession. 
+- Created _aget and _aget_with_meta in http.py with support for per-request proxy injection. 
+- Wrapped execjs execution in llo.py inside syncio.get_running_loop().run_in_executor to prevent event loop blocking. 
+- Exposed sync_scrape and sync_scrape_url_auto in __init__.py. 
+### Not done / deferred 
+- Global Intelligence Phase (Gemini Normalization) is deferred to Phase 3. 
+### Notes 
+- Backward compatibility is fully maintained; legacy synchronous scrape_url remains functional.

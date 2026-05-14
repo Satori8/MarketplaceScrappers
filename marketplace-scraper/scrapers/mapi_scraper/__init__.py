@@ -68,6 +68,30 @@ def scrape(site: str, mode: str, **kw) -> Dict[str, Any]:
     else:
         return _err(site, mode, f"Mode '{mode}' implies specific endpoints which are deprecated. Use mode='url'")
 
+async def async_scrape(
+    site: str,
+    url: str,
+    page: int = 1,
+    debug: bool = False,
+    proxy: str | None = None,
+) -> dict:
+    module = get_module(site)
+    if not module:
+        return _err(site, "url", f"Site {site} not supported")
+    return await module.async_scrape_url(url, page=page, debug=debug, proxy=proxy)
+
+async def async_scrape_url_auto(
+    url: str,
+    page: int = 1,
+    debug: bool = False,
+    proxy: str | None = None,
+) -> dict:
+    host = urlparse(url).hostname or ""
+    for site_id, mod in _MODULES.items():
+        if any(d in host for d in mod.DOMAINS):
+            return await mod.async_scrape_url(url, page=page, debug=debug, proxy=proxy)
+    raise ValueError(f"No registered module matches URL: {url}")
+
 if __name__ == "__main__":
     # Quick test
     import sys

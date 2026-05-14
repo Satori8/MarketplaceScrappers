@@ -2,7 +2,7 @@ import re
 from typing import Dict, Optional, Tuple, Any
 
 from scrapers.mapi_scraper.base import BaseModule
-from scrapers.mapi_scraper.http import _get_with_meta, _ok, _err, _save_debug_item, logger, _EPI_API_V1, _EPI_API_V2, _EPI_MERCHANT_API
+from scrapers.mapi_scraper.http import _get_with_meta, _aget_with_meta, _ok, _err, _save_debug_item, logger, _EPI_API_V1, _EPI_API_V2, _EPI_MERCHANT_API
 
 class EpicentrAPI:
     def __init__(self):
@@ -16,8 +16,6 @@ class EpicentrAPI:
             "referer": "https://epicentrk.ua/",
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
         }
-        self.total_pages = 0
-        self.page_index = 0
 
     def _api_get(self, url: str, params: Optional[Dict] = None, debug: bool = False) -> Tuple[int, Any, Dict]:
         # Use impersonate="chrome120" or higher for TLS fingerprinting
@@ -98,9 +96,56 @@ class EpicentrAPI:
             return {"ok": True, "products": data, "meta": meta}
         return {"ok": False, "error": f"HTTP {code}", "code": code, "meta": meta}
 
+
+    async def async_api_get(self, url: str, params: Optional[Dict] = None, debug: bool = False, proxy: str | None = None) -> Tuple[int, Any, Dict]:
+        code, data, meta = await _aget_with_meta(self.site, url, params=params, extra_headers=self.headers, parse_json=True, save_raw=debug, proxy=proxy)
+        return code, data, meta
+
+    async def async_listing(self, path: str, page: int = 1, debug: bool = False, proxy: str | None = None) -> Dict:
+        url = f"{_EPI_API_V2}/product/listing/products"
+        params = {"store_id": "2", "query[]": path, "lang": "ua", "page_size": 60, "rankSort": "by_rank"}
+        if page > 1: params["page"] = page
+        code, data, meta = await self.async_api_get(url, params, debug=debug, proxy=proxy)
+        if code == 200: return {"ok": True, "products": data, "meta": meta}
+        return {"ok": False, "error": f"HTTP {code}", "code": code, "meta": meta}
+
+    async def async_section_data(self, path: str, debug: bool = False, proxy: str | None = None) -> Dict:
+        url = f"{_EPI_API_V2}/product/listing/section-data"
+        params = {"store_id": "2", "query[]": path, "lang": "ua"}
+        code, data, meta = await self.async_api_get(url, params, debug=debug, proxy=proxy)
+        if code == 200:
+             out = _ok(self.site, data, "section_data")
+             out["meta"] = meta
+             return out
+        return _err(self.site, "section_data", f"HTTP {code}", code)
+
+    async def async_merchant(self, name: str, page: int = 1, debug: bool = False, proxy: str | None = None) -> Dict:
+        url = _EPI_MERCHANT_API
+        params = {"lang": "ua", "name": name, "page_size": 60}
+        if page > 1: params["page"] = page
+        code, data, meta = await self.async_api_get(url, params, debug=debug, proxy=proxy)
+        if code == 200: return {"ok": True, "products": data, "meta": meta}
+        return {"ok": False, "error": f"HTTP {code}", "code": code, "meta": meta}
+
+    async def async_search(self, find: str, page: int = 1, debug: bool = False, proxy: str | None = None) -> Dict:
+        url = f"{_EPI_API_V1}/search"
+        params = {"find": find, "store_id": "2", "lang": "ua", "page": page, "search_size": 40}
+        code, data, meta = await self.async_api_get(url, params, debug=debug, proxy=proxy)
+        if code == 200: return {"ok": True, "products": data, "meta": meta}
+        return {"ok": False, "error": f"HTTP {code}", "code": code, "meta": meta}
+
+    async def async_product_full(self, slug: str, debug: bool = False, proxy: str | None = None) -> Dict:
+        url = f"{_EPI_API_V1}/product/card/full"
+        params = {"store_id": "2", "slug": slug, "lang": "ua"}
+        code, data, meta = await self.async_api_get(url, params, debug=debug, proxy=proxy)
+        if code == 200: return {"ok": True, "products": data, "meta": meta}
+        return {"ok": False, "error": f"HTTP {code}", "code": code, "meta": meta}
+
     def normalize(self, raw_data: Any, context: str) -> Dict:
         """Unify different API responses into a single product list format."""
         products = []
+        total_pages = 0
+        page_index = 1
         
         inner = {}
         if isinstance(raw_data, dict):
@@ -112,12 +157,12 @@ class EpicentrAPI:
 
         if context in ("listing", "search"):
             items = inner.get('items', [])
-            self.page_index = inner.get('pageIndex', 1)
-            self.total_pages = inner.get('totalPages', 0)
+            page_index = inner.get('pageIndex', 1)
+            total_pages = inner.get('totalPages', 0)
             
             # Fallback for search total
-            if not self.total_pages and raw_data.get('total'):
-                self.total_pages = (int(raw_data['total']) + 39) // 40
+            if not total_pages and raw_data.get('total'):
+                total_pages = (int(raw_data['total']) + 39) // 40
 
             for it in items:
                 products.append({
@@ -261,6 +306,101 @@ class EpicentrModule(BaseModule):
         # 4. SSR Fallback (Nuxt State)
         logger.info(f"Falling back to SSR extraction for {url}", extra={"site": site})
         code, html, meta = _get_with_meta(site, url, parse_json=False, save_raw=debug)
+        if code == 200:
+            match = re.search(r"window\.__NUXT__\s*=\s*(.*?);(?!<)", html, re.DOTALL)
+            if match:
+                if debug:
+                    _save_debug_item(site, "html_fetch_ssr", meta.get("url", url), meta, {"ssr_nuxt_raw": match.group(0)[:2000]}, [])
+                out = _ok(site, {"source": "window.__NUXT__", "ssr_nuxt_state": match.group(1).strip()[:5000]}, mode)
+                if debug: out["debug"] = True
+                return out
+
+        if 'last_error' in locals():
+            return last_error
+
+        return _err(site, mode, "Could not identify URL pattern or find SSR state for Epicentr", 404)
+
+    async def async_scrape_url(
+        self,
+        url: str,
+        page: int = 1,
+        debug: bool = False,
+        proxy: str | None = None,
+    ) -> dict:
+        site = self.SITE_ID
+        api = self._api
+        mode = "url"
+        
+        if not url: return _err(site, mode, "URL required")
+        
+        res = None
+        context = ""
+        
+        # 1. Detect Merchant
+        if "/merchant/" in url:
+            try:
+                parts = [p for p in url.split("/") if p]
+                if "merchant" in parts:
+                    idx = parts.index("merchant")
+                    if idx + 1 < len(parts):
+                        slug = parts[idx + 1]
+                        res = await api.async_merchant(slug, page=int(page), debug=debug, proxy=proxy)
+                        context = "merchant"
+            except Exception as e:
+                pass
+
+        # 2. Detect Product Card (usually ends in .html)
+        if not res and url.endswith(".html"):
+            try:
+                slug = url.split("/")[-1].replace(".html", "")
+                res = await api.async_product_full(slug, debug=debug, proxy=proxy)
+                # Product details don't go through api.normalize list pipeline in same way
+                if res.get("ok"):
+                    if debug:
+                        meta = res.get("meta", {})
+                        _save_debug_item(site, "api_direct_details", meta.get("url", url), meta, res.get("products", []), [])
+                    return res
+            except: pass
+
+        # 3. Detect Listing (/shop/ and not .html)
+        if not res and "/shop/" in url:
+            try:
+                from urllib.parse import urlparse
+                path = urlparse(url).path
+                res = await api.async_listing(path, page=int(page), debug=debug, proxy=proxy)
+                context = "listing"
+            except: pass
+            
+        # 4. Detect Search
+        if not res and "/search" in url:
+            try:
+                from urllib.parse import urlparse, parse_qs
+                query = parse_qs(urlparse(url).query).get("q", [""])[0]
+                if query:
+                    res = await api.async_search(query, page=int(page), debug=debug, proxy=proxy)
+                    context = "search"
+            except: pass
+
+        if res:
+            if res.get("ok"):
+                normalized_data = api.normalize(res["products"], context)
+                if debug:
+                    meta = res.get("meta", {})
+                    products = normalized_data.get("products", []) if normalized_data else []
+                    _save_debug_item(site, f"api_direct_{context}", meta.get("url", url), meta, res.get("products", []), products)
+                
+                out = _ok(site, normalized_data.get("products", []), mode)
+                if "pagination" in normalized_data:
+                     out["pagination"] = normalized_data["pagination"]
+                if debug: out["debug"] = True
+                return out
+            else:
+                logger.warning(f"Direct API call for {context} failed: {res.get('error')}", extra={"site": site})
+                last_error = res
+
+        # 4. SSR Fallback (Nuxt State)
+        logger.info(f"Falling back to SSR extraction for {url}", extra={"site": site})
+        code, html, meta = await _aget_with_meta(site, url, parse_json=False, save_raw=debug, proxy=proxy)
         if code == 200:
             match = re.search(r"window\.__NUXT__\s*=\s*(.*?);(?!<)", html, re.DOTALL)
             if match:

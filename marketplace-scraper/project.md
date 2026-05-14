@@ -1,9 +1,9 @@
 # Marketplace Scraper — Project Documentation
 
 ### Project status
-Current stage: Phase 2.5 — Modular MAPI Scraper Architecture ✅ (Stable)
+Current stage: Phase 2.5 — Modular Async MAPI Scraper Architecture ✅ (Stable)
 Next stage: Phase 3 — Global Intelligence Phase (Gemini Normalization)
-Last updated: 2026-05-14 (Refactored MAPI Scraper into modular package structure)
+Last updated: 2026-05-14 (Implemented thread-safe asynchronous scraping pipeline)
 
 ---
 
@@ -47,7 +47,7 @@ This section serves as a map for any coding AI agent entering the project to qui
 
 ### 2. Marketplace API (MAPI) Layer (`scrapers/mapi_scraper/`)
 Refactored from a monolithic `mapi_scraper.py` into a modular package. 
-- **`__init__.py`**: Public API. Exposes `scrape(site, mode, **kw)` and `get_module_for_url(url)`. Registry of all site-specific modules.
+- **`__init__.py`**: Public API. Exposes `scrape(...)`, `async_scrape(...)`, and `async_scrape_url_auto(...)`. Registry of all site-specific modules.
 - **`base.py`**: Defines `MarketplaceModule` protocol and `BaseModule` mixin for standardization.
 - **`http.py`**: Shared HTTP layer using `curl_cffi`, common headers, and integrated structured logging.
 - **`extractors.py`**: Shared utility functions for HTML extraction (LD+JSON, JS assignments, scripts by ID).
