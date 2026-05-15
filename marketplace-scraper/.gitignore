@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Project Specific
+tests/
+logs/
+results/
+data/*.db
+data/*.csv
+data/*.xlsx
+*.log
+
+# Debug/Temp
+output.txt
+summary_temp.json
+*.json
+!project.md
+!CHANGELOG.md
+!.gitignore
+
+# IDEs
+.vscode/
+.idea/

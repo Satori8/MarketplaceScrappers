@@ -266,3 +266,35 @@ def _ok(site: str, data: Any, mode: str, code: int = 200) -> Dict:
 
 def _err(site: str, mode: str, error: str, code: int = 0) -> Dict:
     return {"ok": False, "site": site, "mode": mode, "error": error, "code": code}
+
+def _make_sync_fetcher(proxy=None):
+    """Returns a sync fetch coroutine factory compatible with _scrape_impl signature."""
+    async def fetch(site, url, *, params=None, extra_headers=None, parse_json=True, save_raw=False):
+        return _get_with_meta(site, url, params=params, extra_headers=extra_headers, parse_json=parse_json, save_raw=save_raw)
+    return fetch
+
+def _make_async_fetcher(proxy=None):
+    """Returns an async fetch coroutine factory compatible with _scrape_impl signature."""
+    async def fetch(site, url, *, params=None, extra_headers=None, parse_json=True, save_raw=False):
+        return await _aget_with_meta(site, url, params=params, extra_headers=extra_headers, parse_json=parse_json, save_raw=save_raw, proxy=proxy)
+    return fetch
+
+def _make_sync_poster(proxy=None):
+    """Returns a sync post coroutine for _scrape_impl (e.g. Prom GraphQL)."""
+    async def post(url, headers, json):
+        started = time.perf_counter()
+        resp = requests.post(url, headers=headers, json=json, impersonate="chrome124", timeout=15)
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        return resp, elapsed_ms
+    return post
+
+def _make_async_poster(proxy=None):
+    """Returns an async post coroutine for _scrape_impl (e.g. Prom GraphQL)."""
+    async def post(url, headers, json):
+        started = time.perf_counter()
+        async with AsyncSession(impersonate="chrome124") as session:
+            resp = await session.post(url, headers=headers, json=json, timeout=15, proxies={"https": proxy, "http": proxy} if proxy else None)
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        return resp, elapsed_ms
+    return post
+

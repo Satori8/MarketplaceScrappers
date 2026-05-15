@@ -3,7 +3,7 @@
 ### Project status
 Current stage: Phase 2.5 — Modular Async MAPI Scraper Architecture ✅ (Stable)
 Next stage: Phase 3 — Global Intelligence Phase (Gemini Normalization)
-Last updated: 2026-05-14 (Implemented thread-safe asynchronous scraping pipeline)
+Last updated: 2026-05-15 (Standardized availability labels across all marketplaces)
 
 ---
 
@@ -89,6 +89,8 @@ All raw data from APIs/SSR maps into a strict common schema before database inge
 
 ## Stabilization Notes & Current Edge Cases
 - **Modular Refactor**: As of 2026-05-14, the scraper is fully modular. Site logic resides in `sites/`.
+- **Async Pagination Stability**: As of 2026-05-15, resolved identified anomalies (Rozetka loops, Allo duplicate pages, Rozetka subdomain redirects, and Producer endpoint fixes) by implementing explicit page injection, subdomain redirect handling, and specialized producer API logic.
 - **Stateless Epicentr**: Epicentr logic is now fully API-driven and stateless, bypassing previous SSR/session issues.
 - **Prom GraphQL**: Prom.ua uses direct GraphQL queries for speed and reliability.
-- **MAPI Dependency**: Heavily reliant on Node.js availability on the host to process Nuxt object injections using `execjs`, especially for Allo. Ensure Node is on the PATH for Windows hosts.
+- **Allo Lightweight API**: As of 2026-05-15, Allo relies on a direct AJAX API following an initial SSR discovery fetch. In-memory `_DEEPLINK_CACHE` is used for pagination speed, drastically reducing Node/execjs dependency overhead.
+- **MAPI Dependency**: Still reliant on Node.js availability to process Nuxt object injections using `execjs` when lightweight discovery fails. Ensure Node is on the PATH for Windows hosts.

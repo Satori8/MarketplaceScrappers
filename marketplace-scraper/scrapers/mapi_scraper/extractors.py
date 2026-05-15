@@ -163,3 +163,28 @@ def _find_common_api_request_in_client_state(client_state_text: str) -> Optional
         return all_candidates[0]
         
     return None
+
+def _map_ld_json_offer(item: dict) -> dict:
+    """Map a single LD+JSON Product or ItemList item to unified product dict."""
+    offers = item.get("offers") or {}
+    if isinstance(offers, list):
+        offers = offers[0] if offers else {}
+    brand = item.get("brand") or {}
+    seller = offers.get("seller") or {}
+    return {
+        "id": item.get("sku") or item.get("identifier"),
+        "sku": item.get("sku"),
+        "name": item.get("name"),
+        "brand": brand.get("name") if isinstance(brand, dict) else brand,
+        "price": offers.get("price") if isinstance(offers, dict) else None,
+        "avail_code": "В наявності" if "InStock" in str(offers.get("availability", "")) else "Немає в наявності",
+        "merchant_id": None,
+        "merchant_name": seller.get("name") if isinstance(seller, dict) else seller if isinstance(seller, str) else None,
+        "category_id": None,
+        "category_name_ua": None,
+        "category_name_ru": None,
+        "properties": [],
+        "url": item.get("url"),
+        "image": item.get("image"),
+    }
+

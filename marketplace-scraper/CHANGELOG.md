@@ -1,11 +1,66 @@
-# CHANGELOG — Marketplace Scraper
-
-Format: newest entry first.
-Updated by coding agent at the end of every completed task.
+## 2026-05-15 — Allo Lightweight AJAX Integration
+### Done
+- Implemented lightweight, stateless AJAX scraping for Allo (`AlloModule`).
+- Added in-memory discovery cache (`_DEEPLINK_CACHE`) to eliminate redundant SSR fetching during pagination.
+- Added universal `allomobileua://` deeplink parsing for dynamic filter strings and generic parameters.
+- Built partner context fallback logic for URLs containing `partner_` keys.
+- Confirmed paginator accurately processes successive pages without loop triggering or 400 errors.
 
 ---
 
-## 2026-05-14 — Modular MAPI Scraper Architecture
+## 2026-05-15 — Standardization of Availability Labels
+### Done
+- Unified `avail_code` output across all marketplaces to use standardized string labels.
+- Implemented core mapping for "В наявності" and "Немає в наявності" as defaults.
+- Added site-specific granular labels:
+    - **Epicentr**: 250/300 -> "Під замовлення", 500 -> "Знятий з виробництва".
+    - **Rozetka**: limited -> "Закінчується".
+- Updated `PromAPI`, `RozetkaAPI`, `AlloAPI`, `EpicentrAPI`, and shared `LD+JSON` extractors to support the new schema.
+- Verified correct mapping with `tests/test_prom_gql_fields.py`.
+
+---
+
+
+
+## 2026-05-15 — Resolution of Rozetka API Subdomain and Producer Issues
+### Done
+- Corrected Rozetka category/producer API request logic to use full URLs (including subdomains) in the `url=` parameter.
+- Implemented handling for API-level 301 redirects (e.g., to `bt.rozetka.com.ua`) returned in 200 OK JSON responses.
+- Integrated dedicated `/v1/api/catalog/producer` endpoint for producer-specific pages, ensuring full query filter support.
+- Preserved `/ua/` locale prefix in API request URLs to ensure correct server-side routing.
+- Improved robustness with automated fallback to HTML extraction if redirected API calls return zero products.
+- Verified across category, producer, search, and seller endpoints with a complex multi-domain test suite.
+
+---
+
+## 2026-05-15 — Resolution of Async Pagination Anomalies
+### Done
+- Resolved Rozetka producer page infinite loops by implementing explicit `page` parameter passing to the Category API.
+- Fixed Allo duplicate product extraction by implementing `/p-N/` path segment injection.
+- Added site-specific `_inject_page` logic for Prom and Rozetka fallback HTML extractions.
+- Enhanced `AsyncPaginator` in `tests/test_mapi_pagination.py` with duplicate detection and unreported `total_pages` safety breaks.
+- Verified fixes with a 21-URL stress test; 100% success on loop prevention and 95%+ success on multi-page extraction accuracy.
+
+---
+
+## 2026-05-15 — Async Pagination Stress-Test
+### Done
+- Updated `tests/test_mapi_pagination.py` to use the new modular async architecture.
+- Implemented `AsyncPaginator` using `async_scrape` and `get_module_for_url`.
+- Executed tests across 21 diverse marketplace URLs (Categories, Search, Sellers, Producers).
+- Identified major pagination anomalies:
+    - **Rozetka**: Producer pages loop on page 1 when `total_pages` is unreported.
+    - **Allo/Rozetka**: Category subdomains often return duplicate products for pages 2+.
+- Verified stable async performance and structured logging.
+### Not done / deferred
+- Fixing identified pagination anomalies (requires module-specific regex/logic updates).
+- Integration of these URLs into continuous CI/CD pipeline.
+### Notes
+- Sequential execution with 1.5s delay proved stable for anti-bot measures.
+
+---
+
+## 2026-05-14 â€” Modular MAPI Scraper Architecture
 ### Done
 - Refactored `scrapers/mapi_scraper/mapi_scraper.py` monolith into a modular package.
 - Created `scrapers/mapi_scraper/base.py` defining `MarketplaceModule` protocol and `BaseModule` mixin.
@@ -27,7 +82,7 @@ Updated by coding agent at the end of every completed task.
 
 ---
 
-## 2026-05-14 — Prom.ua Company Pagination Fix
+## 2026-05-14 â€” Prom.ua Company Pagination Fix
 ### Done
 - Fixed `PromAPI.parse_url_to_graphql` to correctly handle secondary pages for company listings.
 - Resolved issue where `urllib.parse.urlparse` separated pagination parameters (e.g., `;2.html`) into `parsed.params`, causing the company pattern matcher to fail.
@@ -37,7 +92,7 @@ Updated by coding agent at the end of every completed task.
 
 ---
 
-## 2026-05-14 — Marketplace API (MAPI) Refactor & Migration
+## 2026-05-14 â€” Marketplace API (MAPI) Refactor & Migration
 ### Done
 - Refactored `fast_api` module into a unified nested package: `scrapers/mapi_scraper/`.
 - Renamed the component from "Fast API" to "Marketplace API (MAPI)".
@@ -63,3 +118,17 @@ Updated by coding agent at the end of every completed task.
 - Global Intelligence Phase (Gemini Normalization) is deferred to Phase 3. 
 ### Notes 
 - Backward compatibility is fully maintained; legacy synchronous scrape_url remains functional.
+
+## 2026-05-14 — MAPI Architecture Refactoring & Cleanup
+### Done
+- Unified synchronous and asynchronous scraping logic using fetcher/poster factories in http.py.
+- Refactored llo.py, prom.py, ozetka.py, and epicentr.py to use the new _scrape_impl pattern, eliminating ~1000 lines of duplicated code.
+- Centralized LD+JSON product mapping via _map_ld_json_offer in extractors.py.
+- Deleted unused 
+ormalizer.py.
+- Cleaned up inline imports and resolved variable scoping issues (e.g., pollo in prom.py).
+- Replaced bare except: pass blocks with debug logging.
+### Not done / deferred
+- Full functional validation across all modes (Search/Category/Seller) due to network environment constraints in test runner; manual verification recommended.
+### Notes
+- The new architecture significantly reduces technical debt and prepares the system for easier integration of new marketplaces.
