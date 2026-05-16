@@ -11,15 +11,12 @@
 Источник правды: `marketplace-scraper/project.md`
 
 - **Phase 2.5 — Modular Async MAPI Scraper Architecture ✅ (Завершено, стабилизировано)**
-- Построен модульный скрапер на базе `curl_cffi` с поддержкой асинхронных запросов (`async_scrape_url`) и потокобезопасной локализацией состояния (пагинации). Резиновая модульная структура `scrapers/mapi_scraper`.
-- Внедрены потоковые запросы через `asyncio.gather` с проксированием к `Rozetka`, `Prom`, `Allo`, `Epicentr`.
-- **Rozetka:** Внедрен 3-уровневый парсинг (Direct API → LD+JSON → rz-client-state). Асинхронные HTTP-запросы извлекают данные страницами с автоматической переборкой товарных ID.
-- **Prom.ua:** GraphQL (поиск, бренды, категории, продавцы) перенесен на асинхронный пайплайн в обход WAF.
-- **Allo:** Извлечение SSR и исполнение `execjs` безопасно обернуто в `run_in_executor` во избежание блокировок event loop.
-- **Epicentr:** Stateless API вызовы v1 и v2 с поддержкой async.
-- Этап нормализации поддерживает асинхронный и потокобезопасный `normalize(raw_data)`.
-- **Stage 15 — Business Intelligence Layer & Project-Rooted Workflows ✅ (Завершено ранее).**
-- Все операции привязаны к `active_project_id`.
+- **Phase 4 — MAPI GUI Integration ✅ (Завершено, стабилизировано)**
+  - Интеграция `scrapers/mapi_scraper` как движка, расширение DB, GUI polish.
+  - [x] Создан профессиональный **Portfolio README.md** с архитектурой и product-контекстом.
+- **Phase 5 — Global Intelligence & Reports 🔄 (В работе)**
+  - Первый продаваемый отчет: Price Audit (Excel) + рекомендации
+  - Тестирование интеграции → проектный дашборд
 
 ## Карточки проекта
 
@@ -29,7 +26,9 @@
 
 ## Ближайшие задачи
 
-- [ ] rozetka - seller 3 fast api requests instead of parsing
+- [ ] **АКТИВНО: Интеграция MAPI в GUI** — заменить playwright-вызовы на mapi_scraper, fallback остается
+- [ ] Тестирование интеграции GUI + MAPI
+- [ ] Проектный дашборд
 - [ ] Первый продаваемый отчет: Price Audit (Excel) + рекомендации
 - [ ] Weekly мониторинг (дельты/риски/action list)
 
@@ -37,25 +36,17 @@
 
 - Скрапер не продукт; продукт — отчеты/аналитика/выгрузки/рекомендации.
 - Приоритет: повторяемость, история, качество отчетов.
-- Не приоритет: SaaS-аккаунты, биллинг, внешний “красивый” продукт.
+- Не приоритет: SaaS-аккаунты, биллинг, внешний "красивый" продукт.
 
 ## Технические заметки
 
-- [x] Основной парсинг переведен на JSON API и SSR извлечение (curl_cffi), UI/Selenium остается как fallback.
-- [x] Фильтр «нет в наличии».
-- [ ] Интегрировать Fast Scraper API в основные GUI workflows "Category", "Search" и "Price Update".
+- [x] Основной парсинг переведен на MAPI (curl_cffi + async). Playwright — fallback.
+- [x] Модульная структура `scrapers/mapi_scraper/sites/` для каждого маркетплейса.
+- [x] Нормализация: общая схема `id, sku, price, name, avail_code, merchant_name, url, properties[]`
+- [ ] Интеграция MAPI в GUI workflows — В РАБОТЕ
+- [ ] `config.yaml` содержит реальные API keys. Требует миграции в `.env`!
 
 ## Риски
 
 - `config.yaml` содержит реальные API keys. Требует ближайшей миграции!
 - профили браузера/fallback могут накапливать мусор, нужны сбросы.
-
-## Короткие AI-команды (планирование)
-
-```text
-Прочитай marketplace-scraper/project.md и эту заметку. Начни работу над Phase 2 (Каталог клиента): реализуй импорт каталога из Excel в таблицу project_products с валидацией колонок.
-```
-
-```text
-Перенеси чувствительные данные из config.yaml в .env, обнови логику загрузки конфигурации в приложении и создай шаблон .env.example.
-```

@@ -55,6 +55,21 @@ class EpicentrAPI:
             return {"ok": True, "products": data, "meta": meta}
         return {"ok": False, "error": f"HTTP {code}", "code": code, "meta": meta}
 
+    async def brand(self, fetch_fn, slug: str, page: int = 1, debug: bool = False) -> Dict:
+        """Fetch products from a brand brand page."""
+        url = f"{_EPI_API_V1}/brands/brand"
+        params = {
+            "store_id": "2",
+            "slug": slug,
+            "lang": "ru",
+            "page_size": 60
+        }
+        if page > 1: params["page"] = page
+        code, data, meta = await self._api_get(fetch_fn, url, params, debug=debug)
+        if code == 200:
+            return {"ok": True, "products": data, "meta": meta}
+        return {"ok": False, "error": f"HTTP {code}", "code": code, "meta": meta}
+
     async def search(self, fetch_fn, find: str, page: int = 1, debug: bool = False) -> Dict:
         """Fetch search results."""
         url = f"{_EPI_API_V1}/search"
@@ -104,6 +119,7 @@ class EpicentrAPI:
             if not self.total_pages and raw_data.get('total'):
                 self.total_pages = (int(raw_data['total']) + 39) // 40
 
+            for it in items:
                 # Mapping Epicentr availability codes to standard labels
                 raw_avail = it.get('availabilityStatus', {}).get('code') if isinstance(it.get('availabilityStatus'), dict) else it.get('avail')
                 if raw_avail == 100:
@@ -117,15 +133,24 @@ class EpicentrAPI:
                 else:
                     avail_str = "Немає в наявності"
 
+                seller_obj = it.get('seller') if isinstance(it.get('seller'), dict) else {}
+                merchant_id = str(seller_obj.get('id') or it.get('merchantId') or it.get('merchant') or "")
+                merchant_name = seller_obj.get('name') or it.get('merchantName') or it.get('merchant_name')
+                
+                if not merchant_name and not merchant_id:
+                    merchant_name = "Epicentr"
+                elif not merchant_name:
+                    merchant_name = f"Seller {merchant_id}"
+
                 products.append({
                     "id": str(it.get('productId') or it.get('id') or ""),
                     "sku": str(it.get('id')) if it.get('id') else None,
                     "name": it.get('name') or it.get('name_ua') or it.get('nameUa'),
-                    "brand": it.get('vendorUa') or it.get('brandUa'),
+                    "brand": it.get('brandName') or it.get('brand') or it.get('vendorUa') or it.get('brandUa'),
                     "price": it.get('price'),
                     "avail_code": avail_str,
-                    "merchant_id": str(it.get('merchantId') or it.get('merchant') or ""),
-                    "merchant_name": it.get('merchantName') or it.get('merchant_name'),
+                    "merchant_id": merchant_id,
+                    "merchant_name": merchant_name,
                     "category_id": str(it.get('categoryId') or it.get('sectionId') or it.get('section_id') or ""),
                     "category_name_ua": it.get('sectionsUa') or it.get('sections_ua'),
                     "category_name_ru": it.get('section_ru') or it.get('sectionRu'),
@@ -133,6 +158,7 @@ class EpicentrAPI:
                     "url": it.get('url'),
                     "image": (it.get('img', {}).get('url') if isinstance(it.get('img'), dict) else it.get('picture'))
                 })
+
 
         elif context == "merchant":
             params = raw_data.get('params', {})
@@ -231,11 +257,12 @@ class EpicentrModule(BaseModule):
                 logger.debug(f"Merchant detection failed: {e}", extra={"site": site})
 
         # 2. Detect Product Card
-        if not res and url.endswith(".html"):
+        if not res and url.endswith(".html") and not "/brands/" in url:
             try:
                 slug = url.split("/")[-1].replace(".html", "")
-                res = await api.product_full(fetch, slug, debug=debug)
-                if res.get("ok"):
+                _res = await api.product_full(fetch, slug, debug=debug)
+                if _res.get("ok"):
+                    res = _res
                     if debug:
                         meta = res.get("meta", {})
                         _save_debug_item(site, "api_direct_details", meta.get("url", url), meta, res.get("products", []), [])
@@ -243,16 +270,28 @@ class EpicentrModule(BaseModule):
             except Exception as e:
                 logger.debug(f"Product Card detection failed: {e}", extra={"site": site})
 
-        # 3. Detect Listing
+        # 3. Detect Brand
+        if not res and "/brands/" in url:
+            context = "merchant"
+            try:
+                # Strip trailing slash before split to get actual final segment
+                slug = url.rstrip("/").split("/")[-1].replace(".html", "").split("?")[0]
+                res = await api.brand(fetch, slug, page=int(page), debug=debug)
+            except Exception as e:
+                logger.debug(f"Brand detection failed: {e}", extra={"site": site})
+
+        # 4. Detect Listing (Category)
         if not res and "/shop/" in url:
             try:
                 path = urlparse(url).path
-                res = await api.listing(fetch, path, page=int(page), debug=debug)
+                # Clean path for API: remove locale and .html
+                clean_path = path.replace("/ua/", "/").replace(".html", "").strip("/")
+                res = await api.listing(fetch, clean_path, page=int(page), debug=debug)
                 context = "listing"
             except Exception as e:
                 logger.debug(f"Listing detection failed: {e}", extra={"site": site})
             
-        # 4. Detect Search
+        # 5. Detect Search
         if not res and "/search" in url:
             try:
                 query = parse_qs(urlparse(url).query).get("q", [""])[0]
@@ -285,11 +324,9 @@ class EpicentrModule(BaseModule):
         if code == 200:
             match = re.search(r"window\.__NUXT__\s*=\s*(.*?);(?!<)", html, re.DOTALL)
             if match:
-                if debug:
-                    _save_debug_item(site, "html_fetch_ssr", meta.get("url", url), meta, {"ssr_nuxt_raw": match.group(0)[:2000]}, [])
-                out = _ok(site, {"source": "window.__NUXT__", "ssr_nuxt_state": match.group(1).strip()[:5000]}, mode)
-                if debug: out["debug"] = True
-                return out
+                # We found SSR state, but we don't have a Nuxt normalizer for Epicentr yet.
+                # Returning empty list to prevent crashes, with state in meta for future.
+                return _err(site, mode, "Epicentr SSR (window.__NUXT__) found but not yet supported for this URL pattern", 422)
 
         if last_error:
             return last_error

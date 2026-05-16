@@ -92,6 +92,9 @@ class HotlineModule(BaseModule):
                         "avail_code": 1
                     })
             
-            return _ok(site, api.normalize({"source": "search_html", "items": products}), mode)
+            normalized = api.normalize({"source": "search_html", "items": products})
+            out = _ok(site, normalized["products"], mode)
+            out["pagination"] = normalized.get("pagination")
+            return out
 
         return _err(site, mode, "Unsupported Hotline URL pattern", 400)

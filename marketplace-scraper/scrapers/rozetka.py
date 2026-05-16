@@ -420,7 +420,7 @@ class RozetkaScraper(BaseScraper):
                         products.append(RawProduct(
                             title=title, price=price_val, currency="UAH",
                             url=clean_url, marketplace="rozetka",
-                            brand=item.get("brand"), model=None, raw_specs={},
+                            brand=item.get("brand"), raw_specs={},
                             description=None, image_url=item.get("image_url"),
                             availability=availability, rating=item.get("rating"),
                             reviews_count=item.get("comments_amount"),
@@ -520,7 +520,6 @@ class RozetkaScraper(BaseScraper):
             url=url,
             marketplace="rozetka",
             brand=None,
-            model=None,
             raw_specs={},
             description=None,
             image_url=None,

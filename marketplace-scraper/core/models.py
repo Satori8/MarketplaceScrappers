@@ -13,7 +13,6 @@ class RawProduct:
     url: str
     marketplace: str
     brand: Optional[str]
-    model: Optional[str]
     raw_specs: dict
     description: Optional[str]
     image_url: Optional[str]
@@ -21,7 +20,10 @@ class RawProduct:
     rating: Optional[float]
     reviews_count: Optional[int]
     category_path: Optional[str]
-    scraped_at: datetime
+    sku: Optional[str] = None
+    merchant_id: Optional[str] = None
+    merchant_name: Optional[str] = None
+    scraped_at: datetime = datetime.now()
 
 
 @dataclass
@@ -66,6 +68,9 @@ class ScrapeTask:
     skip_out_of_stock: bool = True
     direct_urls: list[str] = None
     method_preference: str = "Auto"
+    threads_per_site: int = 1
+    request_delay: float = 1.5
+    debug: bool = False
 
 
 @dataclass

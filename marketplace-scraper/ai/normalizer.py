@@ -15,7 +15,6 @@ class Normalizer:
                 {
                     "title": product.title,
                     "brand": product.brand,
-                    "model": product.model,
                     "raw_specs": product.raw_specs,
                     "description": product.description,
                 }

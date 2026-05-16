@@ -173,7 +173,7 @@ class RozetkaAPI:
                         b_id = str(b_raw.get("id"))
                         brand_name = b_raw.get("title") or b_raw.get("name") or brands_map.get(b_id) or b_id
                     else:
-                        brand_name = str(b_raw or "")
+                        brand_name = it.get("brand_name") or it.get("producer_name") or str(b_raw or "")
 
                     desc_raw = it.get("description")
                     description_text = ""
@@ -265,12 +265,13 @@ class RozetkaModule(BaseModule):
                 api_url = f"https://common-api.rozetka.com.ua/v1/api/catalog/search?country=UA&lang=ua&page={page}&text={text}"
                 api_code, api_data, api_meta = await fetch(site, api_url, parse_json=True, save_raw=debug)
                 
-                if api_code == 200:
-                    goods_list = api_data.get("data", {}).get("goods", [])
+                if api_code == 200 and isinstance(api_data, dict):
+                    data_dict = api_data.get("data", {})
+                    goods_list = data_dict.get("goods", [])
                     product_ids = [str(g.get("id")) for g in goods_list if isinstance(g, dict) and g.get("id") and not g.get("adv")]
                     if debug: _save_debug_item(site, "catalog_search", api_url, api_meta, api_data, [])
                     
-                    pagination = api_data.get("data", {}).get("pagination") or api_data.get("data", {}).get("paginator") or {}
+                    pagination = data_dict.get("pagination") or data_dict.get("paginator") or {}
                     total_pages = pagination.get("total_pages") or pagination.get("totalPages", 0)
                     page_index = pagination.get("shown_page") or pagination.get("shownPage", 1)
                     
@@ -372,7 +373,7 @@ class RozetkaModule(BaseModule):
                     api_code, api_data, api_meta = await fetch(site, api_url, parse_json=True, save_raw=debug)
                     was_redirected = True
 
-            if api_code == 200:
+            if api_code == 200 and isinstance(api_data, dict):
                 data_dict = api_data.get("data", {})
                 goods_list = data_dict.get("goods", [])
                 if isinstance(goods_list, dict) and "tiles" in goods_list: goods_list = goods_list["tiles"]

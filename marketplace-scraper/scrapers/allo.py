@@ -115,7 +115,7 @@ class AlloScraper(BaseScraper):
                                 currency="UAH",
                                 url=urljoin(base_url, data['href']),
                                 marketplace="allo",
-                                brand=None, model=None, raw_specs={}, description=None,
+                                brand=None, raw_specs={}, description=None,
                                 image_url=None, availability=data['availability'],
                                 rating=None, reviews_count=None, category_path=None,
                                 scraped_at=datetime.now(timezone.utc)
@@ -224,7 +224,6 @@ class AlloScraper(BaseScraper):
                             url=urljoin(base_url, u_node.get("href")),
                             marketplace="allo",
                             brand=None,
-                            model=None,
                             raw_specs={},
                             description=None,
                             image_url=None,
@@ -247,7 +246,7 @@ class AlloScraper(BaseScraper):
     def _create_raw(self, title, price, url, mp):
         return RawProduct(
             title=title, price=price, currency="UAH", url=url, marketplace=mp,
-            brand=None, model=None, raw_specs={}, description=None,
+            brand=None, raw_specs={}, description=None,
             image_url=None, availability=None, rating=None, reviews_count=None,
             category_path=None, scraped_at=datetime.now(timezone.utc)
         )

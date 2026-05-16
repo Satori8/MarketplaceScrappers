@@ -10,7 +10,7 @@ import tkinter as tk
 import customtkinter as ctk
 from typing import Any, Optional
 
-from gui.styles import COLORS, FONTS
+from gui.styles import COLORS, FONTS, AutohideScrollbar
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +25,8 @@ TABLES: dict[str, dict[str, Any]] = {
         "label": "Discovered Products", "icon": "🔍", "section": "raw",
         "table": "products",
         "sql": """
-            SELECT p.id, p.marketplace, p.norm_brand AS brand, p.norm_model AS model,
-                   p.norm_voltage AS v, p.norm_capacity AS ah, ph.price,
+            SELECT p.id, p.marketplace, p.sku, COALESCE(NULLIF(p.norm_brand, ''), NULLIF(p.brand, '')) AS brand, p.merchant_name AS merchant,
+                   COALESCE(NULLIF(p.norm_category, ''), NULLIF(p.category_path, '')) AS category, ph.price,
                    CASE p.is_relevant WHEN 1 THEN '✓' ELSE '✗' END AS rel,
                    p.title, p.url, DATE(p.first_seen_at) AS seen
             FROM products p
@@ -39,10 +39,11 @@ TABLES: dict[str, dict[str, Any]] = {
         """,
         "cols": [
             ("id","ID",40,False), ("marketplace","MP",65,True),
-            ("brand","Brand",100,True), ("model","Model",110,True),
-            ("v","V",45,True), ("ah","Ah",45,True), ("price","Price",75,True),
-            ("rel","Rel",35,True), ("title","Title",280,True),
-            ("url","URL",0,False), ("seen","Seen",80,False),
+            ("sku","SKU",70,True), ("brand","Brand",100,True),
+            ("merchant","Merchant",100,True), ("category","Cat",90,True),
+            ("price","Price",75,True), ("rel","Rel",35,True),
+            ("title","Title",280,True), ("url","URL",180,False),
+            ("seen","Seen",80,False),
         ],
         "editable": False, "pk": "id",
     },
@@ -99,24 +100,26 @@ TABLES: dict[str, dict[str, Any]] = {
         "label": "Client Products", "icon": "📦", "section": "business",
         "table": "project_products", "project_join": "pp.project_id",
         "sql": """
-            SELECT pp.id, pr.name AS project, pp.sku, pp.title, pp.brand, pp.model,
+            SELECT pp.id, pr.name AS project, pp.sku, pp.title, pp.brand,
                    pp.category, pp.cost_price, pp.selling_price, pp.marketplace,
+                   pp.product_url AS url,
                    CASE pp.is_active WHEN 1 THEN '✓' ELSE '✗' END AS active
             FROM project_products pp LEFT JOIN projects pr ON pp.project_id=pr.id
         """,
         "cols": [
             ("id","ID",40,False), ("project","Project",100,True),
             ("sku","SKU",70,True), ("title","Title",220,True),
-            ("brand","Brand",80,True), ("model","Model",100,True),
+            ("brand","Brand",80,True),
             ("category","Cat",90,True), ("cost_price","Cost",65,True),
             ("selling_price","Sale",65,True), ("marketplace","MP",75,True),
+            ("url","URL",150,False),
             ("active","Active",45,False),
         ],
         "editable": True, "pk": "id",
         "form": [
             ("project_id","Project *","project_select"),
             ("sku","SKU","text"), ("title","Title *","text"),
-            ("brand","Brand","text"), ("model","Model","text"),
+            ("brand","Brand","text"),
             ("category","Category","text"),
             ("cost_price","Cost Price","number"), ("selling_price","Selling Price","number"),
             ("marketplace","MP","select:rozetka,prom,allo,epicentrk,hotline,m.ua,other"),
@@ -230,7 +233,6 @@ CREATE TABLE IF NOT EXISTS project_products (
     sku           TEXT,
     title         TEXT NOT NULL,
     brand         TEXT,
-    model         TEXT,
     category      TEXT,
     cost_price    REAL,
     selling_price REAL,
@@ -539,8 +541,8 @@ class DbBrowserWindow(ctk.CTkToplevel):
 
         self._tree = ttk.Treeview(tf, style="DB.Treeview",
                                   selectmode="extended", show="headings")
-        vsb = ttk.Scrollbar(tf, orient="vertical", command=self._tree.yview)
-        hsb = ttk.Scrollbar(tf, orient="horizontal", command=self._tree.xview)
+        vsb = AutohideScrollbar(tf, orientation="vertical", command=self._tree.yview)
+        hsb = AutohideScrollbar(tf, orientation="horizontal", command=self._tree.xview)
         self._tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
 
         self._tree.grid(row=0, column=0, sticky="nsew")
@@ -760,15 +762,20 @@ class DbBrowserWindow(ctk.CTkToplevel):
         if not sel:
             return
         td = TABLES[self._current_table]
-        if not td.get("editable"):
-            messagebox.showinfo("Read-only", "This table is read-only.")
-            return
         pk = td["pk"]
-        try:
-            row_id = int(sel[0])
-        except ValueError:
-            return
+        row_id = sel[0]
         row_data = next((r for r in self._displayed_rows if str(r.get(pk)) == str(row_id)), None)
+
+        if not td.get("editable"):
+            # Fallback for read-only tables: Open URL if present
+            url = (row_data or {}).get("url") or (row_data or {}).get("product_url") or \
+                  (row_data or {}).get("seller_url") or (row_data or {}).get("comp_url")
+            if url and str(url).startswith("http"):
+                webbrowser.open(url)
+            else:
+                messagebox.showinfo("Read-only", "This table is read-only.")
+            return
+
         if row_data:
             self._show_edit_form(row_data=row_data)
 

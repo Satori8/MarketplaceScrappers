@@ -115,7 +115,7 @@ class PromScraper(BaseScraper):
                                     currency="UAH",
                                     url=urljoin(base_url, data['href']),
                                     marketplace="prom",
-                                    brand=None, model=None, raw_specs={}, description=None,
+                                    brand=None, raw_specs={}, description=None,
                                     image_url=None, availability=data['availability'],
                                     rating=None, reviews_count=None, category_path=None,
                                     scraped_at=datetime.now(timezone.utc)
@@ -267,7 +267,6 @@ class PromScraper(BaseScraper):
                             url=product_url,
                             marketplace="prom",
                             brand=None,
-                            model=None,
                             raw_specs={},
                             description=None,
                             image_url=image_url,
@@ -329,7 +328,7 @@ class PromScraper(BaseScraper):
                 currency="UAH",
                 url=url,
                 marketplace="prom",
-                brand=None, model=None, raw_specs={}, description=None,
+                brand=None, raw_specs={}, description=None,
                 image_url=image_url, availability=None, rating=None, reviews_count=None,
                 category_path=None, scraped_at=datetime.now(timezone.utc),
             )

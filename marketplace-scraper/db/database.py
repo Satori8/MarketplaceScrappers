@@ -18,6 +18,9 @@ class Database:
         conn.row_factory = sqlite3.Row
         conn.execute("PRAGMA journal_mode=WAL")
         conn.execute("PRAGMA foreign_keys=ON")
+        # Allow up to 5s of retry when another thread holds the write lock,
+        # instead of immediately raising "database is locked".
+        conn.execute("PRAGMA busy_timeout=5000")
         return conn
 
     def get_connection(self) -> sqlite3.Connection:
@@ -43,9 +46,7 @@ class Database:
                 marketplace     TEXT NOT NULL,
                 title           TEXT NOT NULL,
                 brand           TEXT,
-                model           TEXT,
                 norm_brand      TEXT,
-                norm_model      TEXT,
                 is_relevant     INTEGER DEFAULT 1,
                 norm_category   TEXT,
                 category_path   TEXT,
@@ -54,7 +55,10 @@ class Database:
                 description     TEXT,
                 first_seen_at   TEXT NOT NULL,
                 last_seen_at    TEXT NOT NULL,
-                is_active       INTEGER NOT NULL DEFAULT 1
+                is_active       INTEGER NOT NULL DEFAULT 1,
+                sku             TEXT,
+                merchant_id     TEXT,
+                merchant_name   TEXT
             );
 
             CREATE TABLE IF NOT EXISTS price_history (
@@ -105,7 +109,7 @@ class Database:
         conn.commit()
 
         # Simple migration for existing DB
-        for col in ["norm_brand", "norm_model", "norm_category", "is_relevant"]:
+        for col in ["norm_brand", "norm_category", "is_relevant", "sku", "merchant_id", "merchant_name"]:
             try:
                 conn.execute(f"ALTER TABLE products ADD COLUMN {col} TEXT")
             except:

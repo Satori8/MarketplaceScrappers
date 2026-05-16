@@ -1,9 +1,9 @@
 # Marketplace Scraper — Project Documentation
 
 ### Project status
-Current stage: Phase 2.5 — Modular Async MAPI Scraper Architecture ✅ (Stable)
+Current stage: Phase 2.13 — Documentation & Portfolio presentation ✅
 Next stage: Phase 3 — Global Intelligence Phase (Gemini Normalization)
-Last updated: 2026-05-15 (Standardized availability labels across all marketplaces)
+Last updated: 2026-05-16 (Fixed MAPI Debug flag, GUI aesthetics, and Portfolio README creation)
 
 ---
 
@@ -16,7 +16,7 @@ This is an **internal production tool** for generating **market intelligence rep
 
 **Workflow:**
 ```
-Select Project → Set Mode (Search/Category/Seller/Update) → Scrape (via Marketpalce API Scraper + Browser Fallbacks) → DB Control Panel → Export Report
+Select Project → Set Mode (Search/URL) → Scrape (via Marketplace API Scraper) → DB Control Panel → Export Report
 ```
 
 ---
@@ -41,12 +41,13 @@ This section serves as a map for any coding AI agent entering the project to qui
 ### 1. The Core GUI (Entry Point)
 - **`main.py`** -> Loads the Tkinter app.
 - **`gui/main_window.py` (MainWindow):**
-  Features Project Selector (`active_project_id`) and 4 parsing modes: Search, Filter/Category, Seller/Store, Price Update.
+  Features Project Selector (`active_project_id`) and 2 primary parsing modes: Search, Target URL (with modal paste).
 - **`gui/db_browser_window.py`:**
   Database Control Panel. Includes Treeview for exploring Business Database Layer (Projects, Competitors, Raw Data). Has modal form systems for modifying CRM data.
 
 ### 2. Marketplace API (MAPI) Layer (`scrapers/mapi_scraper/`)
 Refactored from a monolithic `mapi_scraper.py` into a modular package. 
+- **`AGENT_GUIDE.md`**: Comprehensive developer guide for the MAPI module (Architecture, API, Templates).
 - **`__init__.py`**: Public API. Exposes `scrape(...)`, `async_scrape(...)`, and `async_scrape_url_auto(...)`. Registry of all site-specific modules.
 - **`base.py`**: Defines `MarketplaceModule` protocol and `BaseModule` mixin for standardization.
 - **`http.py`**: Shared HTTP layer using `curl_cffi`, common headers, and integrated structured logging.
@@ -93,4 +94,6 @@ All raw data from APIs/SSR maps into a strict common schema before database inge
 - **Stateless Epicentr**: Epicentr logic is now fully API-driven and stateless, bypassing previous SSR/session issues.
 - **Prom GraphQL**: Prom.ua uses direct GraphQL queries for speed and reliability.
 - **Allo Lightweight API**: As of 2026-05-15, Allo relies on a direct AJAX API following an initial SSR discovery fetch. In-memory `_DEEPLINK_CACHE` is used for pagination speed, drastically reducing Node/execjs dependency overhead.
+- **MAPI Debug Mode**: As of 2026-05-16, implemented full debug flag propagation from GUI to Scraper Engines. Raw JSON responses and normalized results are now persisted to `scrapers/mapi_scraper/results/` when the debug checkbox is enabled.
+- **Epicentr Merchant Accuracy**: Refined Epicentr normalization to correctly identify marketplace vs. first-party sellers using the `seller` field and improved category path extraction via `sectionsUa`.
 - **MAPI Dependency**: Still reliant on Node.js availability to process Nuxt object injections using `execjs` when lightweight discovery fails. Ensure Node is on the PATH for Windows hosts.

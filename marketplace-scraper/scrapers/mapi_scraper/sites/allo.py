@@ -39,8 +39,10 @@ class AlloAPI:
                 return {"products": [], "pagination": {"total_pages": 0, "page_index": 0}}
 
             state = raw.get("state", {})
-            pl_data = state.get("catalog/category/product-list", {})
-            cat_root = state.get("catalog/category", {})
+            
+            # Try category path first
+            pl_data = state.get("catalog/category/product-list") or state.get("catalog/search/product-list") or {}
+            cat_root = state.get("catalog/category") or state.get("catalog/search") or {}
             cat_inner = cat_root.get("category", {}) or {}
 
             products_raw = pl_data.get("products", [])
@@ -57,14 +59,30 @@ class AlloAPI:
             # Category info
             category_id = cat_inner.get("categoryId") or cat_root.get("categoryId")
             category_name = cat_inner.get("name") or cat_inner.get("label")
+            
+            # Step 1.5: Build Category Map from Layered Navigation (useful for search results)
+            cat_map = {}
+            layered = state.get("layered_navigation") or {}
+            cat_filters = layered.get("category_filter", [])
+            for cf in cat_filters:
+                if cf.get("categoryId"):
+                    cat_map[str(cf.get("categoryId"))] = cf.get("label")
+                for child in cf.get("children", []):
+                    if child.get("cat_id"):
+                        cat_map[str(child.get("cat_id"))] = child.get("label")
+
             if not category_name:
                 crumbs = state.get("common", {}).get("breadcrumbs", [])
                 if crumbs:
                     category_name = crumbs[-1].get("label")
 
-            # Build merchant mapping from seoMicroMarkup (found inside catalog/category)
+            # Build merchant mapping from seoMicroMarkup
             merchant_map = {}
-            seo_markup = cat_root.get("seoMicroMarkup", {})
+            seo_markup = cat_root.get("seoMicroMarkup") or {}
+            if not seo_markup:
+                # Try global seo markup if category-specific is missing
+                seo_markup = state.get("common", {}).get("seoMicroMarkup") or {}
+                
             graph = seo_markup.get("@graph", [])
             for node in graph:
                 if isinstance(node, dict) and node.get("@type") == "Product":
@@ -101,6 +119,10 @@ class AlloAPI:
                 price_obj = p.get("price", {})
                 price_val = price_obj.get("price") or price_obj.get("amount")
 
+                # Merchant logic: check SKU suffix for partner ID (e.g. 12345-5598 -> 5598 is Partner ID)
+                sku_parts = psku.split("-") if psku else []
+                partner_id = sku_parts[-1] if len(sku_parts) > 1 and sku_parts[-1].isdigit() else ""
+                
                 products.append({
                     "id": str(pid) if pid is not None else psku,
                     "sku": psku,
@@ -108,10 +130,10 @@ class AlloAPI:
                     "brand": p.get("brand"),
                     "price": str(price_val) if price_val is not None else None,
                     "avail_code": "В наявності" if p.get("stock_status") == 1 else "Немає в наявності",
-                    "merchant_id": None,
-                    "merchant_name": merchant_map.get(psku),
+                    "merchant_id": str(p.get("seller_id") or p.get("seller", {}).get("id") or partner_id),
+                    "merchant_name": p.get("seller_name") or p.get("seller", {}).get("name") or merchant_map.get(psku) or ("Allo" if not partner_id else f"Seller {partner_id}"),
                     "category_id": category_id or p.get("category_id"),
-                    "category_name_ua": category_name,
+                    "category_name_ua": category_name or p.get("category_name") or cat_map.get(str(p.get("category_id"))),
                     "category_name_ru": None,
                     "properties": properties,
                     "url": p.get("url"),
@@ -314,6 +336,19 @@ class AlloModule(BaseModule):
             
             if code_ajax == 200 and isinstance(data_ajax, dict):
                 products = data_ajax.get("product_list", {}).get("items", [])
+
+                # Determine real total_pages from AJAX response.
+                # Allo AJAX may expose total_count at data_ajax["product_list"]["total_count"].
+                per_page = 60
+                product_list = data_ajax.get("product_list") or {}
+                total_count = product_list.get("total_count") or product_list.get("totalCount") or 0
+                if total_count:
+                    calc_total_pages = (int(total_count) + per_page - 1) // per_page
+                elif products and len(products) >= per_page:
+                    calc_total_pages = page + 1  # full page → at least one more
+                else:
+                    calc_total_pages = page  # partial/empty page → this is the last
+
                 mock_raw = {
                     "source": "window.__ALLO__",
                     "raw__allo": {
@@ -321,15 +356,23 @@ class AlloModule(BaseModule):
                             "catalog/category/product-list": {
                                 "products": products,
                                 "pagination": {
-                                    # Fallback pagination values as needed
-                                     "total_pages": 1 if page == 1 and not products else page + 1 # Dummy
+                                    "total_pages": calc_total_pages,
+                                    "current_page": page,
                                 }
-                            }
+                            },
+                            "catalog/category": {
+                                "categoryId": parsed_deeplink.get("category_id"),
+                                "category": {"name": parsed_deeplink.get("category_name")}
+                            },
+                            "layered_navigation": data_ajax.get("layered_navigation")
                         }
                     }
                 }
                 normalized_data = api.normalize(mock_raw)
                 if normalized_data and normalized_data.get("products"):
+                    if debug:
+                        from scrapers.mapi_scraper.http import _save_debug_item
+                        _save_debug_item(site, "ajax", ajax_url, meta_ajax, data_ajax, normalized_data["products"])
                     out = _ok(site, normalized_data["products"], mode)
                     if "pagination" in normalized_data: out["pagination"] = normalized_data["pagination"]
                     if debug: out["debug"] = True

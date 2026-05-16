@@ -24,6 +24,10 @@ _register_module(AlloModule())
 _register_module(EpicentrModule())
 _register_module(HotlineModule())
 
+# "epicentrk" is the marketplace ID used throughout the scheduler and GUI,
+# but EpicentrModule.SITE_ID = "epicentr". Register the alias so both work.
+_MODULES["epicentrk"] = _MODULES["epicentr"]
+
 def get_module(site_id: str) -> Optional[MarketplaceModule]:
     return _MODULES.get(site_id)
 

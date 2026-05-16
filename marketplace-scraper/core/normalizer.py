@@ -71,12 +71,9 @@ class DataNormalizer:
             "Analyze the following products and extract structured data. Check if they match the search query intent.\n"
             "IMPORTANT: Use the 'url' if the title is insufficient, as it often contains brand, voltage, and capacity in the slug.\n"
             "Rules:\n"
-            "1. If 'Model' is not explicitly stated, use the descriptive text following the manufacturer/brand name as the model.\n"
-            "2. Category (e.g. 'Battery LiFePO4').\n"
-            "3. Extract Brand, Model, Voltage, Capacity.\n"
-            "4. 12.8V is EQUIVALENT to 12V; 25.6V is EQUIVALENT to 24V.\n"
-            "5. Be strict: if query asks for 100Ah and title says 150Ah, mark 'is_relevant': false.\n\n"
-            "Return JSON. Format: { \"products\": [ { \"id\": 0, \"is_relevant\": ..., \"brand\": ..., \"model\": ..., \"voltage\": ..., \"capacity\": ..., \"category\": ... }, ... ] }\n"
+            "1. Extract Category (e.g. 'Electronics') and Brand.\n"
+            "2. Be strict: check if product truly matches the search query intent.\n\n"
+            "Return JSON. Format: { \"products\": [ { \"id\": 0, \"is_relevant\": ..., \"brand\": ..., \"category\": ... }, ... ] }\n"
             f"Input Data: {json.dumps(data_with_id, ensure_ascii=False)}"
         )
 

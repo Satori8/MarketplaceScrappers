@@ -20,6 +20,32 @@ FONTS = {
     "mono": ("Consolas", 11),
 }
 
+class AutohideScrollbar(ctk.CTkScrollbar):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._pack_data = None
+        self._grid_data = None
+
+    def pack(self, **kwargs):
+        self._pack_data = kwargs
+        super().pack(**kwargs)
+
+    def grid(self, **kwargs):
+        self._grid_data = kwargs
+        super().grid(**kwargs)
+
+    def set(self, start, end):
+        if float(start) <= 0.0 and float(end) >= 1.0:
+            if self.winfo_manager() == "pack": self.pack_forget()
+            elif self.winfo_manager() == "grid": self.grid_remove()
+        else:
+            if not self.winfo_manager():
+                if self._pack_data is not None:
+                    super().pack(**self._pack_data)
+                elif self._grid_data is not None:
+                    super().grid(**self._grid_data)
+        super().set(start, end)
+
 def apply_styles():
     """Initializes CustomTkinter global settings and Treeview Styles."""
     ctk.set_appearance_mode("dark")

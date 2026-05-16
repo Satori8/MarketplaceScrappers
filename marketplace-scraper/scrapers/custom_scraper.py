@@ -176,7 +176,6 @@ class CustomScraper(BaseScraper):
                             url=product_url,
                             marketplace="custom",
                             brand=None,
-                            model=None,
                             raw_specs={},
                             description=None,
                             image_url=image_url,
@@ -184,7 +183,6 @@ class CustomScraper(BaseScraper):
                             rating=None,
                             reviews_count=None,
                             category_path=None,
-                            scraped_at=datetime.now(timezone.utc),
                         )
                     )
 
@@ -239,7 +237,6 @@ class CustomScraper(BaseScraper):
             url=url,
             marketplace="custom",
             brand=None,
-            model=None,
             raw_specs={},
             description=None,
             image_url=image_url,

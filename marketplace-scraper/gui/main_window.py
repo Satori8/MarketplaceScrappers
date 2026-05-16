@@ -11,11 +11,12 @@ from typing import Dict, List, Optional
 
 from db.database import Database
 from db.product_repo import ProductRepository
-from gui.styles import COLORS, FONTS, apply_styles
+from gui.styles import COLORS, FONTS, apply_styles, AutohideScrollbar
 from core.scheduler import TaskScheduler
 from core.models import ScrapeTask
 
 logger = logging.getLogger(__name__)
+
 
 class MainWindow(ctk.CTkFrame):
     def __init__(self, master, db: Database):
@@ -37,6 +38,10 @@ class MainWindow(ctk.CTkFrame):
         self.log_widgets: Dict[str, ctk.CTkTextbox] = {}
         self.target_links = []
         self.skip_stock_var = tk.BooleanVar(value=True)
+        self.pages_all_var = tk.BooleanVar(value=False)
+        self.threads_var = tk.StringVar(value="1")
+        self.delay_var = tk.StringVar(value="1.5")
+        self.debug_var = tk.BooleanVar(value=False)
         self.product_count = 0
         
         self._setup_ui()
@@ -64,11 +69,9 @@ class MainWindow(ctk.CTkFrame):
                     group = "AI"
                 elif "scheduler" in name: 
                     group = "SCHEDULER"
-                elif "scheduler" in name: 
-                    group = "SCHEDULER"
                     # Smart routing: If scheduler info mentions a marketplace, also copy it there
                     for mp in ["ROZETKA", "PROM", "ALLO", "EPICENTRK", "HOTLINE"]:
-                        if mp.lower() in msg.lower():
+                        if f"[{mp}]" in msg or f" {mp.lower()} " in msg.lower():
                             group = mp
                             break
                 elif "scrapers." in name or "scraper" in name:
@@ -76,7 +79,15 @@ class MainWindow(ctk.CTkFrame):
                     # First fallback: use parts[1] (e.g. scrapers.prom -> PROM)
                     group = parts[1].upper() if len(parts) > 1 else "SYSTEM"
                     
-                    # High-precision routing: check if message contains [MP] tag or scraper name
+                    # MAPI modules log with extra={"site": "rozetka"} but use a flat
+                    # logger name ("scraper"), so parts[1] doesn't exist.
+                    # Check the `site` attribute injected via extra= to route correctly.
+                    if group == "SYSTEM":
+                        site_attr = getattr(record, "site", None)
+                        if site_attr:
+                            group = str(site_attr).upper()
+                    
+                    # High-precision routing: check if message contains [MP] tag
                     match_mp = re.search(r"\[([A-Z0-9_]{3,15})\]", msg)
                     if match_mp:
                         group = match_mp.group(1).upper()
@@ -111,13 +122,13 @@ class MainWindow(ctk.CTkFrame):
         self.content.grid(row=0, column=1, sticky="nsew", padx=0, pady=15)
 
         # ── Sidebar Content ──────────────────────────────────────────────────
-        main_frame = ctk.CTkScrollableFrame(self.sidebar, fg_color="transparent")
-        main_frame.pack(fill="both", expand=True, padx=5, pady=5)
+        main_frame = ctk.CTkFrame(self.sidebar, fg_color="transparent")
+        main_frame.pack(fill="both", expand=True, padx=20, pady=5)
 
         # 1. Project Selection
-        ctk.CTkLabel(main_frame, text="ACTIVE PROJECT", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(0, 5), anchor="w")
+        ctk.CTkLabel(main_frame, text="ACTIVE PROJECT", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(0, 2), anchor="w")
         proj_row = ctk.CTkFrame(main_frame, fg_color="transparent")
-        proj_row.pack(fill="x", pady=(0, 15))
+        proj_row.pack(fill="x", pady=(0, 10))
         
         self.project_var = tk.StringVar()
         self.project_dropdown = ctk.CTkComboBox(proj_row, values=[], variable=self.project_var, command=self._on_project_selected)
@@ -126,19 +137,19 @@ class MainWindow(ctk.CTkFrame):
         ctk.CTkButton(proj_row, text="＋", width=34, height=34, font=FONTS["title"], command=self._on_new_project_click).pack(side="right")
 
         # 2. Parsing Mode
-        ctk.CTkLabel(main_frame, text="PARSING MODE", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(5, 5), anchor="w")
+        ctk.CTkLabel(main_frame, text="PARSING MODE", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(2, 2), anchor="w")
         self.mode_var = tk.StringVar(value="search")
         modes = [
-            ("Parse Search Keywords", "search"),
-            ("Parse Filter/Category URLs", "filter"),
-            ("Parse Seller/Store list", "seller"),
-            ("Update Price Watchlist", "update")
+            ("Search", "search"),
+            ("URLs", "url")
         ]
         mode_frame = ctk.CTkFrame(main_frame, fg_color="#2a2a2a", corner_radius=8)
-        mode_frame.pack(fill="x", pady=(0, 15), padx=2)
+        mode_frame.pack(fill="x", pady=(0, 10), padx=2)
         
+        mode_inner = ctk.CTkFrame(mode_frame, fg_color="transparent")
+        mode_inner.pack(padx=10, pady=5)
         for text, val in modes:
-             ctk.CTkRadioButton(mode_frame, text=text, variable=self.mode_var, value=val, font=("Segoe UI", 12), command=self._on_mode_change).pack(anchor="w", padx=12, pady=8)
+             ctk.CTkRadioButton(mode_inner, text=text, variable=self.mode_var, value=val, font=("Segoe UI", 12), command=self._on_mode_change).pack(side="left", padx=15)
 
         # 3. Mode Inputs
         self.input_container = ctk.CTkFrame(main_frame, fg_color="transparent")
@@ -160,9 +171,9 @@ class MainWindow(ctk.CTkFrame):
             cb = ctk.CTkCheckBox(row, text=mp, variable=var, width=100)
             cb.pack(side="left")
             
-            method_var = tk.StringVar(value="Auto")
+            method_var = tk.StringVar(value="MAPI")
             self.marketplaces_methods[mp.lower()] = method_var
-            m_opt = ctk.CTkOptionMenu(row, values=["Auto", "Browser", "Requests"], variable=method_var, width=110, height=28, font=FONTS["small"])
+            m_opt = ctk.CTkOptionMenu(row, values=["Auto", "Browser", "Requests", "MAPI"], variable=method_var, width=110, height=28, font=FONTS["small"])
             m_opt.pack(side="right")
             
             # Status dot/label
@@ -171,18 +182,32 @@ class MainWindow(ctk.CTkFrame):
             self.marketplaces_status_labels[mp.lower()] = lbl
 
         # 5. Global Controls
-        ctk.CTkLabel(main_frame, text="OPTIONS", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(20, 5), anchor="w")
-        ctk.CTkCheckBox(main_frame, text="Skip Out of Stock", variable=self.skip_stock_var).pack(anchor="w", pady=5)
+        ctk.CTkLabel(main_frame, text="OPTIONS", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(15, 5), anchor="w")
         
-        self.start_btn = ctk.CTkButton(main_frame, text="START EXTRACTION", font=FONTS["title"], height=45, fg_color=COLORS["success"], hover_color="#27ae60", command=self._on_start_click)
-        self.start_btn.pack(fill="x", pady=(25, 10))
+        opt_row = ctk.CTkFrame(main_frame, fg_color="transparent")
+        opt_row.pack(fill="x", pady=2)
+        ctk.CTkCheckBox(opt_row, text="Skip OOS", variable=self.skip_stock_var, font=FONTS["small"]).pack(side="left")
+        ctk.CTkCheckBox(opt_row, text="Debug", variable=self.debug_var, font=FONTS["small"]).pack(side="left", padx=10)
+
+        # Concurrency & Throttling
+        ctk_row2 = ctk.CTkFrame(main_frame, fg_color="transparent")
+        ctk_row2.pack(fill="x", pady=5)
         
-        self.stop_btn = ctk.CTkButton(main_frame, text="STOP", font=FONTS["title"], height=45, state="disabled", fg_color="#333333", command=self._on_stop_click)
+        ctk.CTkLabel(ctk_row2, text="Threads:", font=FONTS["small"]).pack(side="left")
+        ctk.CTkEntry(ctk_row2, textvariable=self.threads_var, width=40, height=24).pack(side="left", padx=(5, 10))
+        
+        ctk.CTkLabel(ctk_row2, text="Delay (s):", font=FONTS["small"]).pack(side="left")
+        ctk.CTkEntry(ctk_row2, textvariable=self.delay_var, width=40, height=24).pack(side="left", padx=5)
+        
+        self.start_btn = ctk.CTkButton(main_frame, text="START EXTRACTION", font=FONTS["title"], height=38, fg_color=COLORS["success"], hover_color="#27ae60", command=self._on_start_click)
+        self.start_btn.pack(fill="x", pady=(15, 5))
+        
+        self.stop_btn = ctk.CTkButton(main_frame, text="STOP", font=FONTS["title"], height=38, state="disabled", fg_color="#333333", command=self._on_stop_click)
         self.stop_btn.pack(fill="x", pady=0)
 
         # 6. Database Tools
-        ctk.CTkLabel(main_frame, text="TOOLS", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(30, 5), anchor="w")
-        ctk.CTkButton(main_frame, text="Database Control Panel", command=self._on_db_browser_click).pack(fill="x", pady=5)
+        ctk.CTkLabel(main_frame, text="TOOLS", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(15, 2), anchor="w")
+        ctk.CTkButton(main_frame, text="Database Control Panel", height=32, command=self._on_db_browser_click).pack(fill="x", pady=5)
 
         # ── Main Content Area ────────────────────────────────────────────────
         header_row = ctk.CTkFrame(self.content, fg_color="transparent")
@@ -190,6 +215,9 @@ class MainWindow(ctk.CTkFrame):
         
         self.status_label = ctk.CTkLabel(header_row, text="Ready", font=FONTS["normal"])
         self.status_label.pack(side="left")
+
+        self.selection_label = ctk.CTkLabel(header_row, text="0 items selected", font=FONTS["small"], text_color="#888888")
+        self.selection_label.pack(side="right")
         
         self.progress = ctk.CTkProgressBar(self.content, mode="determinate")
         self.progress.pack(fill="x", pady=(0, 15), padx=20)
@@ -210,13 +238,11 @@ class MainWindow(ctk.CTkFrame):
             self.tree.column(c, width=widths.get(c, 100), anchor="w" if c=="TITLE" else "center")
             
         self.tree.pack(side="left", fill="both", expand=True)
-        data_scroll = ttk.Scrollbar(data_frame, orient="vertical", command=self.tree.yview)
+        data_scroll = AutohideScrollbar(data_frame, orientation="vertical", command=self.tree.yview)
         self.tree.configure(yscrollcommand=data_scroll.set)
         data_scroll.pack(side="right", fill="y")
 
         # Bottom row for selection stats
-        self.selection_label = ctk.CTkLabel(data_frame, text="0 items selected", font=FONTS["small"], text_color="#aaaaaa")
-        self.selection_label.pack(side="bottom", anchor="w", padx=5, pady=2)
         
         self.tree.bind("<<TreeviewSelect>>", self._on_tree_select)
 
@@ -243,22 +269,56 @@ class MainWindow(ctk.CTkFrame):
             self.query_entry.pack(fill="x", pady=(2, 8))
             self.query_entry.insert(0, "lifepo4 100ah 12v")
             
-        elif mode in ("filter", "seller"):
-            ctk.CTkLabel(self.input_container, text="Paste URLs (one per line):").pack(anchor="w")
-            self.url_text = ctk.CTkTextbox(self.input_container, height=120)
-            self.url_text.pack(fill="x", pady=(2, 8))
-            
-        elif mode == "update":
-            desc = "Mode: Update Prices\nOnly currently monitored products in selected project will be re-scraped."
-            ctk.CTkLabel(self.input_container, text=desc, text_color="#aaaaaa", justify="left", wraplength=380).pack(anchor="w", pady=5)
-            # Standard return to avoid showing Pages for individual update
-            return
+        elif mode == "url":
+            self.url_btn = ctk.CTkButton(self.input_container, text=f"Paste URLs ({len(getattr(self, 'url_list', []))} loaded)", command=self._open_url_modal)
+            self.url_btn.pack(fill="x", pady=(10, 8))
 
-        # Common 'Pages' entry for search/filter/seller
+        # Common 'Pages' entry for search/url
         ctk.CTkLabel(self.input_container, text="Pages:").pack(anchor="w")
+        
+        pages_row = ctk.CTkFrame(self.input_container, fg_color="transparent")
+        pages_row.pack(fill="x", pady=(2, 0))
+        
         self.pages_var = tk.StringVar(value="1")
-        self.pages_entry = ctk.CTkEntry(self.input_container, textvariable=self.pages_var, width=80)
-        self.pages_entry.pack(anchor="w")
+        self.pages_entry = ctk.CTkEntry(pages_row, textvariable=self.pages_var, width=80)
+        self.pages_entry.pack(side="left")
+        
+        def _toggle_pages():
+            if self.pages_all_var.get():
+                self.pages_entry.configure(state="disabled")
+            else:
+                self.pages_entry.configure(state="normal")
+        
+        ctk.CTkCheckBox(pages_row, text="All", variable=self.pages_all_var, width=50, command=_toggle_pages).pack(side="left", padx=10)
+        _toggle_pages() # init state
+
+    def _open_url_modal(self):
+        modal = ctk.CTkToplevel(self)
+        modal.title("Paste Target URLs")
+        modal.geometry("500x400")
+        modal.transient(self)
+        modal.grab_set()
+        
+        ctk.CTkLabel(modal, text="Paste URLs (one per line):").pack(pady=(10, 5), padx=10, anchor="w")
+        txt = ctk.CTkTextbox(modal, height=250)
+        txt.pack(fill="both", expand=True, padx=10, pady=5)
+        
+        curr_urls = getattr(self, "url_list", [])
+        if curr_urls:
+            txt.insert("1.0", "\n".join(curr_urls))
+            
+        def _save():
+            content = txt.get("1.0", "end").splitlines()
+            cleaned = [u.strip() for u in content if u.strip().startswith("http")]
+            self.url_list = cleaned
+            if hasattr(self, "url_btn"):
+                self.url_btn.configure(text=f"Paste URLs ({len(self.url_list)} loaded)")
+            modal.destroy()
+            
+        btn_frame = ctk.CTkFrame(modal, fg_color="transparent")
+        btn_frame.pack(fill="x", pady=10, padx=10)
+        ctk.CTkButton(btn_frame, text="Cancel", width=100, fg_color="#555", command=modal.destroy).pack(side="left")
+        ctk.CTkButton(btn_frame, text="Save URLs", width=100, command=_save).pack(side="right")
 
     def _refresh_projects(self):
         try:
@@ -305,7 +365,10 @@ class MainWindow(ctk.CTkFrame):
         # Prepare tasks based on mode
         discovery_tasks = [] # (mp, method, data)
         try: 
-            pages = int(self.pages_var.get())
+            if self.pages_all_var.get():
+                pages = 9999 # Unlimited (early stop will handle it)
+            else:
+                pages = int(self.pages_var.get())
         except: 
             pages = 1
         
@@ -316,9 +379,11 @@ class MainWindow(ctk.CTkFrame):
                 for mp, meth in selected_mps.items():
                     discovery_tasks.append((mp, meth, q))
                     
-        elif mode in ("filter", "seller"):
-            urls = [u.strip() for u in self.url_text.get("1.0", "end").splitlines() if u.strip()]
-            if not urls: return
+        elif mode == "url":
+            urls = getattr(self, "url_list", [])
+            if not urls: 
+                messagebox.showwarning("Required", "Please click 'Paste URLs' and add at least one target link.")
+                return
             for url in urls:
                 url_l = url.lower()
                 mp_detect = None
@@ -332,32 +397,19 @@ class MainWindow(ctk.CTkFrame):
                     discovery_tasks.append((mp_detect, selected_mps[mp_detect], url))
                 else:
                     logger.warning(f"Marketplace for URL {url} not selected or not supported. Check that the marketplace checkbox is enabled.")
-
-        elif mode == "update":
-            # LOGIC: Fetch monitored products for current project
-            try:
-                conn = self.db.get_connection()
-                products = conn.execute("""
-                    SELECT mp.marketplace, mp.competitor_product_url 
-                    FROM monitored_products mp
-                    JOIN project_products pp ON mp.project_product_id = pp.id
-                    WHERE pp.project_id = ? AND mp.enabled = 1
-                """, (self.active_project_id,)).fetchall()
-                for p in products:
-                    m = p["marketplace"].lower()
-                    if m in selected_mps:
-                        discovery_tasks.append((m, selected_mps[m], p["competitor_product_url"]))
-                if not discovery_tasks:
-                    messagebox.showinfo("Empty", "No active monitored products found for this project.")
-                    return
-            except Exception as e:
-                messagebox.showerror("Error", str(e))
-                return
         
         skip_stock = self.skip_stock_var.get()
-        self._run_discovery_batch(discovery_tasks, pages, skip_stock)
+        debug_mode = self.debug_var.get()
+        try:
+            threads = int(self.threads_var.get())
+            delay = float(self.delay_var.get())
+        except:
+            threads = 1
+            delay = 1.5
+            
+        self._run_discovery_batch(discovery_tasks, pages, skip_stock, threads, delay, debug_mode)
 
-    def _run_discovery_batch(self, tasks, pages, skip_stock):
+    def _run_discovery_batch(self, tasks, pages, skip_stock, threads=1, delay=1.5, debug=False):
         self.is_running = True
         self.start_btn.configure(state="disabled")
         self.stop_btn.configure(state="normal")
@@ -369,17 +421,22 @@ class MainWindow(ctk.CTkFrame):
         session_id = str(uuid.uuid4())
         query_str = ", ".join(queries[:5])  # cap for display
 
-        # Write the session row NOW so _update_session_count can find it
-        try:
-            conn = self.db.get_connection()
-            conn.execute(
-                """INSERT INTO scrape_sessions (id, query, marketplaces, status, products_found, started_at)
-                   VALUES (?, ?, ?, 'running', 0, ?)""",
-                (session_id, query_str, str(mps), datetime.now(timezone.utc).isoformat())
-            )
-            conn.commit()
-        except Exception as e:
-            logger.warning(f"Could not create session row: {e}")
+        # Route session creation through the scheduler's serialized write queue
+        task_stub = ScrapeTask(
+            query=query_str,
+            session_id=session_id,
+            product_type=None,
+            marketplaces={m: "MAPI" for m in mps}, # Stub for tracking
+            pages_limit=pages,
+            use_category_urls=False,
+            category_urls={},
+            skip_known_urls=False,
+            skip_out_of_stock=skip_stock,
+            threads_per_site=threads,
+            request_delay=delay,
+            debug=debug
+        )
+        self.scheduler.create_session(task_stub)
 
         def run_batch():
             self.msg_queue.put(("status_update", f"Processing {len(tasks)} jobs…"))
@@ -387,7 +444,7 @@ class MainWindow(ctk.CTkFrame):
                 futures = [
                     executor.submit(
                         self.scheduler.run_individual_discovery,
-                        mp, meth, data, pages, session_id, skip_stock
+                        mp, meth, data, pages, session_id, skip_stock, threads, delay, debug
                     )
                     for mp, meth, data in tasks
                 ]
@@ -402,17 +459,9 @@ class MainWindow(ctk.CTkFrame):
                 except Exception as e:
                     logger.error(f"Error in batch execution loop: {e}")
 
-            # Update session final status
+            # Update session final status via serialized queue
             final = "stopped" if not self.is_running else "completed"
-            try:
-                conn = self.db.get_connection()
-                conn.execute(
-                    "UPDATE scrape_sessions SET status=?, finished_at=? WHERE id=?",
-                    (final, datetime.now(timezone.utc).isoformat(), session_id)
-                )
-                conn.commit()
-            except Exception as e:
-                logger.warning(f"Could not finalize session row: {e}")
+            self.scheduler.update_session(session_id, final, [], 0)
 
             # Normalization is manual-only — launch from DB Control Panel
             self.msg_queue.put(("batch_finished", None))

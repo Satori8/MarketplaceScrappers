@@ -2,11 +2,12 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import threading
 import logging
-from gui.styles import COLORS, FONTS
+import customtkinter as ctk
+from gui.styles import COLORS, FONTS, AutohideScrollbar
 
 logger = logging.getLogger(__name__)
 
-class ApiKeyStatusWindow(tk.Toplevel):
+class ApiKeyStatusWindow(ctk.CTkToplevel):
     def __init__(self, master, gemini_client):
         super().__init__(master)
         self.gemini_client = gemini_client
@@ -47,7 +48,7 @@ class ApiKeyStatusWindow(tk.Toplevel):
 
         self.tree.pack(side="left", fill="both", expand=True)
         
-        sb = ttk.Scrollbar(self.tree_frame, orient="vertical", command=self.tree.yview)
+        sb = AutohideScrollbar(self.tree_frame, orientation="vertical", command=self.tree.yview)
         self.tree.configure(yscroll=sb.set)
         sb.pack(side="right", fill="y")
 

@@ -62,23 +62,26 @@ class ProductRepository:
             cursor = conn.execute(
                 """
                 INSERT INTO products (
-                    url, marketplace, title, brand, model, category_path, product_type,
-                    image_url, description, first_seen_at, last_seen_at, is_active
+                    url, marketplace, title, brand, category_path, product_type,
+                    image_url, description, first_seen_at, last_seen_at, is_active,
+                    sku, merchant_id, merchant_name
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?)
                 """,
                 (
                     product.url,
                     product.marketplace,
                     product.title,
                     product.brand,
-                    product.model,
                     product.category_path,
                     None,
                     product.image_url,
                     product.description,
                     now,
                     now,
+                    getattr(product, 'sku', None),
+                    getattr(product, 'merchant_id', None),
+                    getattr(product, 'merchant_name', None),
                 ),
             )
             product_id = int(cursor.lastrowid)
@@ -88,18 +91,21 @@ class ProductRepository:
             conn.execute(
                 """
                 UPDATE products
-                SET title = ?, brand = ?, model = ?, category_path = ?,
-                    image_url = ?, description = ?, last_seen_at = ?, is_active = 1
+                SET title = ?, brand = ?, category_path = ?,
+                    image_url = ?, description = ?, last_seen_at = ?, is_active = 1,
+                    sku = COALESCE(sku, ?), merchant_id = COALESCE(merchant_id, ?), merchant_name = COALESCE(merchant_name, ?)
                 WHERE id = ?
                 """,
                 (
                     product.title,
                     product.brand,
-                    product.model,
                     product.category_path,
                     product.image_url,
                     product.description,
                     now,
+                    getattr(product, 'sku', None),
+                    getattr(product, 'merchant_id', None),
+                    getattr(product, 'merchant_name', None),
                     product_id,
                 ),
             )
@@ -135,9 +141,16 @@ class ProductRepository:
             delta = None
         return product_id, is_new, delta
 
-    def _save_raw_specs(self, product_id: int, specs: dict) -> None:
+    def _save_raw_specs(self, product_id: int, specs) -> None:
+        """Persist raw specs for a product. `specs` may be a dict (normalized)
+        or a list (raw MAPI properties array). JSON serialization works for both;
+        norm_brand/model/category extraction only runs for dict specs."""
         conn = self.db.get_connection()
-        specs_str = json.dumps(specs, ensure_ascii=False)
+        try:
+            specs_str = json.dumps(specs, ensure_ascii=False)
+        except Exception as e:
+            logger.warning("Could not serialize specs for product %s: %s", product_id, e)
+            return
         conn.execute(
             """
             INSERT OR REPLACE INTO product_specs (
@@ -153,21 +166,23 @@ class ProductRepository:
                 datetime.now(timezone.utc).isoformat(),
             ),
         )
-        
-        conn.execute(
-            """
-            UPDATE products
-            SET norm_brand = ?, norm_model = ?, norm_category = ?, is_relevant = ?
-            WHERE id = ?
-            """,
-            (
-                specs.get("Brand"),
-                specs.get("Model"),
-                specs.get("Category"),
-                1 if specs.get("is_relevant", True) else 0,
-                product_id
+
+        # Only dict specs carry normalized Brand/Model/Category keys.
+        # MAPI returns a list of {name, value} objects — skip norm update for those.
+        if isinstance(specs, dict):
+            conn.execute(
+                """
+                UPDATE products
+                SET norm_brand = ?, norm_category = ?, is_relevant = ?
+                WHERE id = ?
+                """,
+                (
+                    specs.get("Brand") or specs.get("brand"),
+                    specs.get("Category") or specs.get("category") or specs.get("product_type"),
+                    1 if specs.get("is_relevant", True) else 0,
+                    product_id
+                )
             )
-        )
         conn.commit()
 
     def save_specs(self, product_id: int, normalized: NormalizedProduct) -> None:
