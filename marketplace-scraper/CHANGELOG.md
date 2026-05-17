@@ -1,4 +1,115 @@
-## 2026-05-16 — Portfolio Presentation & README
+## 2026-05-18 — Professional README Update
+### Done
+- Analyzed `project.md` and recent `CHANGELOG.md` entries to synthesize the current project state.
+- Completely redesigned `README.md` in the workspace root to showcase the shift from a simple scraper to a Business Intelligence tool.
+- Added technical deep dives for **SQLite Serialized Writes**, **GraphQL Master Spec**, and **Professional Reporting Engine**.
+- Updated tech stack badges to include **Gemini 3 Flash** and **openpyxl**.
+- Modernized the Architecture diagram (Mermaid) to reflect the current modular MAPI pipeline, BI layer, and reporting flow.
+
+---
+
+## 2026-05-17 — Prom.ua Contact Scraper
+### Done
+- Created a standalone `scrapers/prom_contact_scraper/` utility for extracting seller contacts out of category listings via `https://prom.ua/graphql`.
+- Built `gui.py` containing a fully disconnected Tkinter GUI with robust category dropdown, scrolling log output, and custom threading.
+- Built `scraper.py` which persists additive `prom_contacts` and `prom_crawl_progress` tables to the existing active database (`config.yaml`).
+- Implemented robust error stopping and offset resume logic to recover gracefully from network or user interruption.
+- Added a Database Viewer (`DBViewerWindow`) inside `gui.py` to inspect extracted contacts via a `ttk.Treeview`.
+- Implemented `Export to Excel` (using `openpyxl`) and `Export to JSON` functionalities directly from the DB Viewer.
+
+---
+
+## 2026-05-17 — Data Consolidation & Path Robustness
+- Consolidated `D:\Scrappers\data` into `D:\Scrappers\marketplace-scraper\data`.
+- Replaced the 0.9MB database with the 7.3MB historical database to restore missing records.
+- Removed the redundant parent `D:\Scrappers\data` directory.
+- Updated `db/database.py` to resolve relative database paths against the project root.
+- Updated `BaseScraper`, `rozetka.py`, and `hotline.py` to use absolute data paths relative to project root for browser profiles, preventing duplicate folder creation.
+
+---
+
+## 2026-05-17 — Prom.ua GraphQL Query Enrichment
+### Done
+- Added `CategoryListingQuery_Full` to `prom_queries.json` with a comprehensive list of 50+ fields extracted from production GraphQL fragments.
+- Implemented a more robust `template` for `CategoryListingQuery_Full` that includes top-level metadata like `country`, `context`, `region`, and `breadCrumbs`.
+- Synchronized variables and signatures to support `includePremiumAdvBlock` and `regionDelivery` parameters in the GQL Builder.
+
+---
+
+## 2026-05-17 — Prom.ua GraphQL Documentation
+### Done
+- Created `prom_graph.ql` as a **Master Specification** for Prom.ua GraphQL API.
+- Created `scrapers/mapi_scraper/tools/prom_gql_builder.py`: A standalone module & GUI tool for constructing, testing, and exporting GQL requests (CURL/JSON/Presets).
+- Added **Preset Management** to the GQL builder for persistent custom requests.
+- Consolidated Discovery, Enrichment, Contacts, and Category Tree mapping into a single source of truth.
+- Created technical query maps for Rozetka (`MAPI_ROZETKA_QUERY_MAP.md`), Allo (`MAPI_ALLO_QUERY_MAP.md`), and Epicentr (`MAPI_EPICENTR_QUERY_MAP.md`).
+- Updated `project.md` and Obsidian `INDEX.md`.
+
+---
+
+## 2026-05-17 — Excel Reporting Engine
+### Done
+- Implemented `reports/snapshot_report.py`: a functional interface to generate professional 4-sheet comparison reports using `openpyxl`.
+- Report includes:
+  - **Summary**: Key Performance Indicators (KPIs) and trend charts (Product Count, Avg Price).
+  - **Current Products**: Full list of the latest snapshot with price delta vs the earliest one, including color-coding (Red = Price Up, Green = Price Down, Blue = New).
+  - **Price Dynamics**: Tracking historical price changes for products present in 2+ snapshots.
+  - **Appeared - Disappeared**: Categorized view of new arrivals and discontinued items.
+- Integrated "Export Report" button into the DB Browser toolbar.
+- The button is context-aware: only enabled in the "Snapshots" view and when 2+ snapshots are selected.
+- Handled `openpyxl` restrictions (renamed sheet from "/" to "-" to avoid ValueError).
+- Verified with a dedicated smoke-test `tests/test_snapshot_report.py`.
+
+---
+
+## 2026-05-16 — Business Layer Stabilization
+### Done
+- Fixed "Client -> Task -> Snapshot" drill-down navigation in DB Browser.
+- Implemented automatic Task/Snapshot creation when running scrapes from the Main Window.
+- Added Migration v2 to safely add `client_id` to the `tasks` table if it was missing.
+- Fixed `snapshot_products` filtering: it now correctly loads products for the selected snapshot.
+- Rebuilt "Compare Snapshots" (Diff) logic: now shows NEW, GONE, CHANGED, and UNCHANGED products with price delta.
+- Added "View Price History" context menu action for products in the DB Browser.
+- Added `import json` to `main_window.py` to fix serialization errors.
+- Fixed SQL alias mismatch in `db_browser_window.py` (all `fk_join` now use aliases like `t.client_id`, `s.task_id`).
+- Added Migration v3 to safely add `task_id` to the `snapshots` table if it was missing.
+- Resolved "no such column" errors in the DB Browser when filtering for tasks or snapshots.
+- UI is significantly more reactive with double-click and single-click drill-downs.
+
+---
+
+## 2026-05-16 — DB Browser Fix & MAPI Restoration
+### Done
+- **DB Browser Query Builder**:
+  - Implemented robust top-level `WHERE` detection in `gui/db_browser_window.py`.
+  - Resolved `near "AND": syntax error` which occurred when subqueries in column definitions contained their own `WHERE` clauses.
+- **MAPI Engine Restoration**:
+  - Restored missing `scrapers/mapi_scraper/sites/` directory via `git restore`.
+  - Verified that all site-specific modules (`rozetka.py`, `prom.py`, `allo.py`, `epicentr.py`, `hotline.py`) are present and importable.
+  - Resolved `No module named 'scrapers.mapi_scraper.sites'` error in the TaskScheduler.
+
+---
+## 2026-05-16 — Business Layer Refactoring: Clients, Tasks, and Snapshots
+### Done
+- **Database Schema Migration**:
+  - Implemented MigrationManager to manage additive SQLite schema upgrades securely.
+  - V1 Migration enacted adding clients, 	asks, snapshots, and snapshot_products tables.
+  - Safely removed references to the legacy nested "Projects" business schema across the repository.
+- **Context-Sensitive Sidebar Navigation**:
+  - Restructured db_browser_window.py sidebar to reflect the new Client -> Task hierarchy.
+  - Implemented expandable tasks and immediate data-grid synchronization (loading snapshots when a task is selected).
+- **Core Operations**:
+  - Bound generic _show_edit_form to new clients and 	asks modal forms.
+  - Created logic to capture the current state of newly discovered products that match a query string into a frozen snapshot.
+  - Deprecated legacy "Import to Project" logic.
+- **Snapshot Diff UI**:
+  - Built a snapshot comparison feature to instantly highlight "NEW", "MISSING", and "CHANGED" products between two runs of a single task.
+
+### Notes
+- This paves the way for the Global Intelligence Phase to integrate tracking/discovery results into stable deliverables.
+
+---
+## 2026-05-16 вЂ” Portfolio Presentation & README
 ### Done
 - **High-Impact README**: Created a professional, technical-first `README.md` optimized for portfolio presentation. 
   - Included interactive architecture diagrams (Mermaid).
@@ -8,7 +119,7 @@
 
 ---
 
-## 2026-05-16 — GUI Aesthetics & Compact Layout
+## 2026-05-16 вЂ” GUI Aesthetics & Compact Layout
 ### Done
 - **Compact Sidebar**:
   - Inlined "Search" and "URLs" mode selectors.
@@ -23,7 +134,7 @@
 
 ---
 
-## 2026-05-16 — MAPI Debug Flag & Site Data Extraction Stabilization
+## 2026-05-16 вЂ” MAPI Debug Flag & Site Data Extraction Stabilization
 ### Done
 - **MAPI Debug Propagation**: Fixed critical bug where the `debug` flag was not passed from GUI/TaskScheduler to the scraping engine.
 - **Debug Persistence**: 
@@ -43,7 +154,7 @@
 
 ---
 
-## 2026-05-16 — Database & Model Schema Modernization
+## 2026-05-16 вЂ” Database & Model Schema Modernization
 ### Done
 - **GUI Column Cleanup**: Removed legacy `V`, `Ah`, and `Model` columns from "Discovered Products" and "Client Products" views in `db_browser_window.py`.
 - **New GUI Columns**: Added `SKU`, `Merchant`, and `Category` columns to the Discovered Products table for better traceability.
@@ -64,7 +175,7 @@
 
 ---
 
-## 2026-05-16 — MAPI Developer Documentation
+## 2026-05-16 вЂ” MAPI Developer Documentation
 ### Done
 - **Developer Guide**: Created `scrapers/mapi_scraper/AGENT_GUIDE.md` containing comprehensive documentation for the MAPI module.
 - **Architecture Mapping**: Documented the relationship between core HTTP layer, extractors, and site-specific modules.
@@ -74,7 +185,7 @@
 
 ---
 
-## 2026-05-16 — MAPI Stability, Pagination & GUI Polish
+## 2026-05-16 вЂ” MAPI Stability, Pagination & GUI Polish
 ### Done
 - **GUI Refactor**: Simplified sidebar to only 2 modes: "Search" and "URL".
   - Moved the URL entry to a specialized Modal Window to keep the sidebar clean.
@@ -88,7 +199,7 @@
   - **Brand Support**: Implemented specialized `/v1/brands/brand` API endpoint for brand pages. Now correctly using `merchant` normalization context (`params.products`) for brand data.
   - **Slug Robustness**: Fixed empty slug extraction bug by stripping trailing slashes before splitting URLs.
   - **Path Cleaning**: Improved URL path normalization in the listing fallback.
-- **OOS Filter Fix**: Updated `scheduler.py` to recognize Ukrainian terms ("Немає", "Знятий") so "Skip out of stock" works for MAPI.
+- **OOS Filter Fix**: Updated `scheduler.py` to recognize Ukrainian terms ("РќРµРјР°С”", "Р—РЅСЏС‚РёР№") so "Skip out of stock" works for MAPI.
 - **MAPI Guard**: Added type-checking for product lists in `scheduler.py` to prevent crashes if a module returns strings or dicts (fixed `'str' has no attribute 'get'`).
 - **Log Enrichment**: Added per-page URL logging with marketplace-first tags for correct GUI routing.
 - **GUI Log Routing**: Cleaned up duplicate scheduler routing logic and improved marketplace-tagged log steering to ensure scheduler reports appear in correct tabs.
@@ -104,13 +215,13 @@
 
 ---
 
-## 2026-05-16 — MAPI Crash & DB Lock Fixes
+## 2026-05-16 вЂ” MAPI Crash & DB Lock Fixes
 ### Done
-- **`db/product_repo.py`** — Fixed `'list' object has no attribute 'get'` crash in `_save_raw_specs`:
+- **`db/product_repo.py`** вЂ” Fixed `'list' object has no attribute 'get'` crash in `_save_raw_specs`:
   - MAPI scrapers pass `properties` as a `list` of `{name, value}` dicts into `raw_specs`; the method previously called `.get()` on it unconditionally.
   - Added `isinstance(specs, dict)` guard: JSON serialization runs for both types; the `norm_brand/model/category` UPDATE only runs when `specs` is a dict.
   - Added `try/except` around `json.dumps` with a warning log.
-- **`db/database.py`** — Added `PRAGMA busy_timeout=5000` to every new connection:
+- **`db/database.py`** вЂ” Added `PRAGMA busy_timeout=5000` to every new connection:
   - SQLite now retries write-lock acquisition for up to 5 seconds before raising `database is locked`.
   - Covers all direct DB writes that don't go through `DbWriteQueue` (session finalization in GUI, `_update_session_count` in scheduler, DB Control Panel operations).
 ### Notes
@@ -118,19 +229,19 @@
 
 ---
 
-## 2026-05-16 — Serialized DB Writes via DbWriteQueue
+## 2026-05-16 вЂ” Serialized DB Writes via DbWriteQueue
 ### Done
 - Added `DbWriteQueue` class to `core/scheduler.py`: a single background writer thread that processes all SQLite write jobs sequentially via a `queue.Queue`.
 - All `repo.upsert_product()` calls in both `_run_mapi_async` and `_run_scraper_async` now go through `self._db_write_queue.submit(lambda ...)` instead of calling SQLite directly.
 - Writer thread starts once in `TaskScheduler.__init__` and runs for the lifetime of the scheduler (daemon thread, cleaned up on app exit).
 - Eliminates `database is locked` errors caused by 5+ parallel scraper threads writing concurrently under MAPI mode.
 ### Notes
-- `_update_session_count` writes are still direct (called once per marketplace after scraper finishes, not in a hot loop — low collision risk).
+- `_update_session_count` writes are still direct (called once per marketplace after scraper finishes, not in a hot loop вЂ” low collision risk).
 - Lambda default-argument capture (`p=prod, s=sid`) ensures correct variable binding across the loop.
 
 ---
 
-## 2026-05-16 — MAPI Default Method & Rozetka Bug Fix
+## 2026-05-16 вЂ” MAPI Default Method & Rozetka Bug Fix
 ### Done
 - Set MAPI as the default execution method for all marketplaces in `gui/main_window.py` (was `Auto`).
 - Fixed `'list' object has no attribute 'get'` crash in `scrapers/mapi_scraper/sites/rozetka.py`:
@@ -143,7 +254,7 @@
 
 ---
 
-## 2026-05-15 — Tkinter GUI Integration of MAPI Scraper
+## 2026-05-15 вЂ” Tkinter GUI Integration of MAPI Scraper
 ### Done
 - Replaced monolithic legacy routing in `core/scheduler.py` by intercepting `method == "MAPI"` in `_run_scraper_async`.
 - Updated Tkinter `gui/main_window.py` to expose "MAPI" inside the marketplace Method drop-down per session.
@@ -153,7 +264,7 @@
 
 ---
 
-## 2026-05-15 — Allo Lightweight AJAX Integration
+## 2026-05-15 вЂ” Allo Lightweight AJAX Integration
 ### Done
 - Implemented lightweight, stateless AJAX scraping for Allo (`AlloModule`).
 - Added in-memory discovery cache (`_DEEPLINK_CACHE`) to eliminate redundant SSR fetching during pagination.
@@ -163,13 +274,13 @@
 
 ---
 
-## 2026-05-15 — Standardization of Availability Labels
+## 2026-05-15 вЂ” Standardization of Availability Labels
 ### Done
 - Unified `avail_code` output across all marketplaces to use standardized string labels.
-- Implemented core mapping for "В наявності" and "Немає в наявності" as defaults.
+- Implemented core mapping for "Р’ РЅР°СЏРІРЅРѕСЃС‚С–" and "РќРµРјР°С” РІ РЅР°СЏРІРЅРѕСЃС‚С–" as defaults.
 - Added site-specific granular labels:
-    - **Epicentr**: 250/300 -> "Під замовлення", 500 -> "Знятий з виробництва".
-    - **Rozetka**: limited -> "Закінчується".
+    - **Epicentr**: 250/300 -> "РџС–Рґ Р·Р°РјРѕРІР»РµРЅРЅСЏ", 500 -> "Р—РЅСЏС‚РёР№ Р· РІРёСЂРѕР±РЅРёС†С‚РІР°".
+    - **Rozetka**: limited -> "Р—Р°РєС–РЅС‡СѓС”С‚СЊСЃСЏ".
 - Updated `PromAPI`, `RozetkaAPI`, `AlloAPI`, `EpicentrAPI`, and shared `LD+JSON` extractors to support the new schema.
 - Verified correct mapping with `tests/test_prom_gql_fields.py`.
 
@@ -177,7 +288,7 @@
 
 
 
-## 2026-05-15 — Resolution of Rozetka API Subdomain and Producer Issues
+## 2026-05-15 вЂ” Resolution of Rozetka API Subdomain and Producer Issues
 ### Done
 - Corrected Rozetka category/producer API request logic to use full URLs (including subdomains) in the `url=` parameter.
 - Implemented handling for API-level 301 redirects (e.g., to `bt.rozetka.com.ua`) returned in 200 OK JSON responses.
@@ -188,7 +299,7 @@
 
 ---
 
-## 2026-05-15 — Resolution of Async Pagination Anomalies
+## 2026-05-15 вЂ” Resolution of Async Pagination Anomalies
 ### Done
 - Resolved Rozetka producer page infinite loops by implementing explicit `page` parameter passing to the Category API.
 - Fixed Allo duplicate product extraction by implementing `/p-N/` path segment injection.
@@ -198,7 +309,7 @@
 
 ---
 
-## 2026-05-15 — Async Pagination Stress-Test
+## 2026-05-15 вЂ” Async Pagination Stress-Test
 ### Done
 - Updated `tests/test_mapi_pagination.py` to use the new modular async architecture.
 - Implemented `AsyncPaginator` using `async_scrape` and `get_module_for_url`.
@@ -215,7 +326,7 @@
 
 ---
 
-## 2026-05-14 â€” Modular MAPI Scraper Architecture
+## 2026-05-14 Гўв‚¬вЂќ Modular MAPI Scraper Architecture
 ### Done
 - Refactored `scrapers/mapi_scraper/mapi_scraper.py` monolith into a modular package.
 - Created `scrapers/mapi_scraper/base.py` defining `MarketplaceModule` protocol and `BaseModule` mixin.
@@ -237,7 +348,7 @@
 
 ---
 
-## 2026-05-14 â€” Prom.ua Company Pagination Fix
+## 2026-05-14 Гўв‚¬вЂќ Prom.ua Company Pagination Fix
 ### Done
 - Fixed `PromAPI.parse_url_to_graphql` to correctly handle secondary pages for company listings.
 - Resolved issue where `urllib.parse.urlparse` separated pagination parameters (e.g., `;2.html`) into `parsed.params`, causing the company pattern matcher to fail.
@@ -247,7 +358,7 @@
 
 ---
 
-## 2026-05-14 â€” Marketplace API (MAPI) Refactor & Migration
+## 2026-05-14 Гўв‚¬вЂќ Marketplace API (MAPI) Refactor & Migration
 ### Done
 - Refactored `fast_api` module into a unified nested package: `scrapers/mapi_scraper/`.
 - Renamed the component from "Fast API" to "Marketplace API (MAPI)".
@@ -274,7 +385,7 @@
 ### Notes 
 - Backward compatibility is fully maintained; legacy synchronous scrape_url remains functional.
 
-## 2026-05-14 — MAPI Architecture Refactoring & Cleanup
+## 2026-05-14 вЂ” MAPI Architecture Refactoring & Cleanup
 ### Done
 - Unified synchronous and asynchronous scraping logic using fetcher/poster factories in http.py.
 - Refactored llo.py, prom.py, ozetka.py, and epicentr.py to use the new _scrape_impl pattern, eliminating ~1000 lines of duplicated code.
@@ -287,3 +398,4 @@ ormalizer.py.
 - Full functional validation across all modes (Search/Category/Seller) due to network environment constraints in test runner; manual verification recommended.
 ### Notes
 - The new architecture significantly reduces technical debt and prepares the system for easier integration of new marketplaces.
+

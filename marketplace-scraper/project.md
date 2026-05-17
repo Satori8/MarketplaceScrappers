@@ -1,9 +1,9 @@
 # Marketplace Scraper — Project Documentation
 
 ### Project status
-Current stage: Phase 2.13 — Documentation & Portfolio presentation ✅
+Current stage: Phase 2.18 — Data Directory Consolidation & Path Robustness
 Next stage: Phase 3 — Global Intelligence Phase (Gemini Normalization)
-Last updated: 2026-05-16 (Fixed MAPI Debug flag, GUI aesthetics, and Portfolio README creation)
+Last updated: 2026-05-18 (Updated README to reflect BI Layer and Reporting Engine progress)
 
 ---
 
@@ -54,10 +54,10 @@ Refactored from a monolithic `mapi_scraper.py` into a modular package.
 - **`extractors.py`**: Shared utility functions for HTML extraction (LD+JSON, JS assignments, scripts by ID).
 - **`paginator.py`**: Logic for URL-based pagination across different marketplaces.
 - **`sites/`**: Site-specific implementations:
-  - `rozetka.py`: Multi-source extraction (GraphQL, API, LD+JSON, client-state).
-  - `prom.py`: GraphQL-first extraction with Apollo Cache fallback.
-  - `allo.py`: ExecJS-based Nuxt state processing.
-  - `epicentr.py`: Stateless API interaction (v1/v2).
+  - `rozetka.py`: Multi-source extraction (GraphQL, API, LD+JSON, client-state). See `MAPI_ROZETKA_QUERY_MAP.md`.
+  - `prom.py`: GraphQL-first extraction with Apollo Cache fallback. See `prom_graph.ql` (Master GQL Spec).
+  - `allo.py`: ExecJS-based Nuxt state processing. See `MAPI_ALLO_QUERY_MAP.md`.
+  - `epicentr.py`: Stateless API interaction (v1/v2). See `MAPI_EPICENTR_QUERY_MAP.md`.
   - `hotline.py`: BS4-based HTML parsing.
 
 ### 3. Normalization Engine
@@ -69,6 +69,13 @@ All raw data from APIs/SSR maps into a strict common schema before database inge
 - **`db/product_repo.py`**: Core CRUD operations. Exposes functions like `delete_rows`, `remove_duplicates`, and pagination logic.
 - **`db/schema_manager.py` / `db/migrations.py`:** Manages DB tables and structure.
 
+### 5. Reporting Engine (`reports/`)
+- **`reports/snapshot_report.py`**: logic to generate professional, multi-sheet Excel (.xlsx) comparison reports. Features KPIs, price dynamics analysis, and line charts using `openpyxl`. Integrates directly with the DB Browser's snapshot selection.
+
+### 6. Standalone Utilities (`scrapers/prom_contact_scraper/`)
+- A specialized scraping tool designed to extract seller contact details (email, phones) from Prom.ua category listings.
+- Features robust pagination, additive thread-local SQLite schemas (`prom_contacts` and `prom_crawl_progress`), resume/stop logic, and a standalone GUI (`gui.py`) disconnected from the main app.
+
 ---
 
 ## Database Schema (v2.0 — Full Business Layer)
@@ -79,12 +86,10 @@ All raw data from APIs/SSR maps into a strict common schema before database inge
 - `scrape_sessions`: Metadata for every parser run.
 
 ### Business Layer (CRM & Monitoring)
-- `projects`: The root entity. All business data organically belongs to an `active_project_id`.
-- `project_products`: The client's own product catalog.
-- `competitors`: Defined sellers/shops to be watched.
-- `monitored_products`: Specific URL-to-URL links between a `project_product` and a `competitor`.
-- `price_observations`: Clean, historical price data specifically meant for reporting.
-- `report_runs`: Log of Excel/PDF reports generated as final output.
+- `clients`: The root entity representing a customer or internal organization.
+- `tasks`: Specific parsing/monitoring tasks belonging to a client (e.g. tracking or discovery) holding querying logic.
+- `snapshots`: Immutable points-in-time holding a snapshot of the parsed layout.
+- `snapshot_products`: The specific products that matched the task query during a snapshot execution, mapped back to the raw source data.
 
 ---
 
@@ -92,7 +97,7 @@ All raw data from APIs/SSR maps into a strict common schema before database inge
 - **Modular Refactor**: As of 2026-05-14, the scraper is fully modular. Site logic resides in `sites/`.
 - **Async Pagination Stability**: As of 2026-05-15, resolved identified anomalies (Rozetka loops, Allo duplicate pages, Rozetka subdomain redirects, and Producer endpoint fixes) by implementing explicit page injection, subdomain redirect handling, and specialized producer API logic.
 - **Stateless Epicentr**: Epicentr logic is now fully API-driven and stateless, bypassing previous SSR/session issues.
-- **Prom GraphQL**: Prom.ua uses direct GraphQL queries for speed and reliability.
+- **Prom GraphQL**: Prom.ua uses direct GraphQL queries for speed and reliability. Detailed API structure and documentation added in `scrapers/mapi_scraper/prom_graph.ql`.
 - **Allo Lightweight API**: As of 2026-05-15, Allo relies on a direct AJAX API following an initial SSR discovery fetch. In-memory `_DEEPLINK_CACHE` is used for pagination speed, drastically reducing Node/execjs dependency overhead.
 - **MAPI Debug Mode**: As of 2026-05-16, implemented full debug flag propagation from GUI to Scraper Engines. Raw JSON responses and normalized results are now persisted to `scrapers/mapi_scraper/results/` when the debug checkbox is enabled.
 - **Epicentr Merchant Accuracy**: Refined Epicentr normalization to correctly identify marketplace vs. first-party sellers using the `seller` field and improved category path extraction via `sectionsUa`.
