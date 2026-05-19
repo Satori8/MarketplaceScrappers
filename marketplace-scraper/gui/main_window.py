@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 import customtkinter as ctk
@@ -10,10 +11,10 @@ from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
 from db.database import Database
-from db.product_repo import ProductRepository
 from gui.styles import COLORS, FONTS, apply_styles, AutohideScrollbar
 from core.scheduler import TaskScheduler
 from core.models import ScrapeTask
+from gui.direct_urls_window import DirectUrlsWindow
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +24,12 @@ class MainWindow(ctk.CTkFrame):
         super().__init__(master)
         self.master = master
         self.db = db
-        self.repo = ProductRepository(self.db)
+        self.db = db
         self.scheduler = TaskScheduler(self.db)
         
         # UI State
-        self.active_project_id = None
-        self.projects_dict = {}
+        self.active_client_id = None
+        self.clients_dict = {}
         self.marketplaces_vars = {}
         self.marketplaces_methods = {} # mp -> StringVar (Auto/Browser/Requests)
         self.marketplaces_status_labels = {}
@@ -44,11 +45,16 @@ class MainWindow(ctk.CTkFrame):
         self.debug_var = tk.BooleanVar(value=False)
         self.product_count = 0
         
+        # New Snapshot Mode State
+        self.snap_mode_var = tk.StringVar(value="new")
+        self.snapshots_dict = {} # "Run At - [ID]" -> id
+        self.url_configs = [] # list of {"url": "...", "tag": "..."}
+        
         self._setup_ui()
         self._setup_logging()
         self._setup_callbacks()
         self._poll_queue()
-        self._refresh_projects()
+        self._refresh_clients()
 
     def _setup_logging(self):
         class MultiChannelHandler(logging.Handler):
@@ -121,20 +127,20 @@ class MainWindow(ctk.CTkFrame):
         self.content = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.content.grid(row=0, column=1, sticky="nsew", padx=0, pady=15)
 
-        # ── Sidebar Content ──────────────────────────────────────────────────
+        # ----------------- Sidebar Content ---------------------------------------
         main_frame = ctk.CTkFrame(self.sidebar, fg_color="transparent")
         main_frame.pack(fill="both", expand=True, padx=20, pady=5)
 
-        # 1. Project Selection
-        ctk.CTkLabel(main_frame, text="ACTIVE PROJECT", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(0, 2), anchor="w")
+        # 1. client Selection
+        ctk.CTkLabel(main_frame, text="ACTIVE client", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(0, 2), anchor="w")
         proj_row = ctk.CTkFrame(main_frame, fg_color="transparent")
         proj_row.pack(fill="x", pady=(0, 10))
         
-        self.project_var = tk.StringVar()
-        self.project_dropdown = ctk.CTkComboBox(proj_row, values=[], variable=self.project_var, command=self._on_project_selected)
-        self.project_dropdown.pack(side="left", fill="x", expand=True, padx=(0, 10))
+        self.client_var = tk.StringVar()
+        self.client_dropdown = ctk.CTkComboBox(proj_row, values=[], variable=self.client_var, command=self._on_client_selected)
+        self.client_dropdown.pack(side="left", fill="x", expand=True, padx=(0, 10))
         
-        ctk.CTkButton(proj_row, text="＋", width=34, height=34, font=FONTS["title"], command=self._on_new_project_click).pack(side="right")
+        ctk.CTkButton(proj_row, text="+", width=34, height=34, font=FONTS["title"], command=self._on_new_client_click).pack(side="right")
 
         # 2. Parsing Mode
         ctk.CTkLabel(main_frame, text="PARSING MODE", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(2, 2), anchor="w")
@@ -181,7 +187,17 @@ class MainWindow(ctk.CTkFrame):
             lbl.pack(side="right", padx=10)
             self.marketplaces_status_labels[mp.lower()] = lbl
 
-        # 5. Global Controls
+        # 4b. Snapshot Target (New)
+        ctk.CTkLabel(main_frame, text="SNAPSHOT TARGET", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(15, 5), anchor="w")
+        self.snap_mode_frame = ctk.CTkFrame(main_frame, fg_color="transparent")
+        self.snap_mode_frame.pack(fill="x", pady=2)
+        
+        ctk.CTkRadioButton(self.snap_mode_frame, text="New", variable=self.snap_mode_var, value="new", font=FONTS["small"]).pack(side="left")
+        ctk.CTkRadioButton(self.snap_mode_frame, text="Append to existing", variable=self.snap_mode_var, value="append", font=FONTS["small"], command=self._refresh_snapshots).pack(side="left", padx=10)
+        
+        self.snap_dropdown = ctk.CTkComboBox(main_frame, values=[], width=380, font=FONTS["small"])
+        self.snap_dropdown.pack(fill="x", pady=(2, 5))
+        self.snap_dropdown.set("Select Snapshot...")
         ctk.CTkLabel(main_frame, text="OPTIONS", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(15, 5), anchor="w")
         
         opt_row = ctk.CTkFrame(main_frame, fg_color="transparent")
@@ -209,7 +225,7 @@ class MainWindow(ctk.CTkFrame):
         ctk.CTkLabel(main_frame, text="TOOLS", font=FONTS["title"], text_color=COLORS["accent"]).pack(pady=(15, 2), anchor="w")
         ctk.CTkButton(main_frame, text="Database Control Panel", height=32, command=self._on_db_browser_click).pack(fill="x", pady=5)
 
-        # ── Main Content Area ────────────────────────────────────────────────
+        # --- Main Content Area -----------------------------------------------
         header_row = ctk.CTkFrame(self.content, fg_color="transparent")
         header_row.pack(fill="x", pady=(0, 15), padx=20)
         
@@ -270,7 +286,7 @@ class MainWindow(ctk.CTkFrame):
             self.query_entry.insert(0, "lifepo4 100ah 12v")
             
         elif mode == "url":
-            self.url_btn = ctk.CTkButton(self.input_container, text=f"Paste URLs ({len(getattr(self, 'url_list', []))} loaded)", command=self._open_url_modal)
+            self.url_btn = ctk.CTkButton(self.input_container, text=f"Paste URLs ({len(self.url_configs)} loaded)", command=self._open_url_modal)
             self.url_btn.pack(fill="x", pady=(10, 8))
 
         # Common 'Pages' entry for search/url
@@ -293,58 +309,79 @@ class MainWindow(ctk.CTkFrame):
         _toggle_pages() # init state
 
     def _open_url_modal(self):
-        modal = ctk.CTkToplevel(self)
-        modal.title("Paste Target URLs")
-        modal.geometry("500x400")
-        modal.transient(self)
-        modal.grab_set()
-        
-        ctk.CTkLabel(modal, text="Paste URLs (one per line):").pack(pady=(10, 5), padx=10, anchor="w")
-        txt = ctk.CTkTextbox(modal, height=250)
-        txt.pack(fill="both", expand=True, padx=10, pady=5)
-        
-        curr_urls = getattr(self, "url_list", [])
-        if curr_urls:
-            txt.insert("1.0", "\n".join(curr_urls))
-            
-        def _save():
-            content = txt.get("1.0", "end").splitlines()
-            cleaned = [u.strip() for u in content if u.strip().startswith("http")]
-            self.url_list = cleaned
+        def _on_save(configs):
+            self.url_configs = configs
             if hasattr(self, "url_btn"):
-                self.url_btn.configure(text=f"Paste URLs ({len(self.url_list)} loaded)")
-            modal.destroy()
-            
-        btn_frame = ctk.CTkFrame(modal, fg_color="transparent")
-        btn_frame.pack(fill="x", pady=10, padx=10)
-        ctk.CTkButton(btn_frame, text="Cancel", width=100, fg_color="#555", command=modal.destroy).pack(side="left")
-        ctk.CTkButton(btn_frame, text="Save URLs", width=100, command=_save).pack(side="right")
+                self.url_btn.configure(text=f"Paste URLs ({len(self.url_configs)} loaded)")
+        
+        modal = DirectUrlsWindow(self, self.url_configs, _on_save)
+        modal.focus_set()
 
-    def _refresh_projects(self):
+    def _refresh_clients(self):
         try:
             conn = self.db.get_connection()
-            rows = conn.execute("SELECT id, name FROM projects ORDER BY name").fetchall()
-            self.projects_dict = {r["name"]: r["id"] for r in rows}
-            names = list(self.projects_dict.keys())
-            self.project_dropdown.configure(values=names)
-            if names and not self.active_project_id:
-                self.project_var.set(names[0])
-                self.active_project_id = self.projects_dict[names[0]]
+            rows = conn.execute("SELECT id, name FROM clients ORDER BY name").fetchall()
+            
+            if not rows:
+                # Automagically create a default client if none exist (e.g. fresh DB)
+                conn.execute("INSERT INTO clients (name) VALUES ('Default Client')")
+                conn.commit()
+                rows = conn.execute("SELECT id, name FROM clients ORDER BY name").fetchall()
+
+            self.clients_dict = {r["name"]: r["id"] for r in rows}
+            names = list(self.clients_dict.keys())
+            self.client_dropdown.configure(values=names)
+            if names and not self.active_client_id:
+                self.client_var.set(names[0])
+                self.active_client_id = self.clients_dict[names[0]]
         except Exception as e:
-            logger.error(f"Failed to load projects: {e}")
+            logger.error(f"Failed to load clients: {e}")
 
-    def _on_project_selected(self, name):
-        self.active_project_id = self.projects_dict.get(name)
-        logger.info(f"Switched to project: {name} (ID: {self.active_project_id})")
+    def _on_client_selected(self, name):
+        self.active_client_id = self.clients_dict.get(name)
+        logger.info(f"Switched to client: {name} (ID: {self.active_client_id})")
+        self._refresh_snapshots()
 
-    def _on_new_project_click(self):
-        name = simpledialog.askstring("New Project", "Enter project name:")
+    def _refresh_snapshots(self):
+        if not self.active_client_id:
+            self.snap_dropdown.configure(values=[])
+            self.snap_dropdown.set("Select Snapshot...")
+            return
+        try:
+            conn = self.db.get_connection()
+            rows = conn.execute("""
+                SELECT s.id, s.run_at, t.title 
+                FROM snapshots s
+                JOIN tasks t ON s.task_id = t.id
+                WHERE t.client_id = ?
+                ORDER BY s.run_at DESC
+                LIMIT 30
+            """, (self.active_client_id,)).fetchall()
+            
+            self.snapshots_dict = {}
+            names = []
+            for r in rows:
+                name = f"{r['run_at'][:16]} - {r['title'][:30]} [#{r['id']}]"
+                self.snapshots_dict[name] = r["id"]
+                names.append(name)
+            
+            self.snap_dropdown.configure(values=names)
+            if names:
+                if self.snap_dropdown.get() not in names:
+                    self.snap_dropdown.set(names[0])
+            else:
+                self.snap_dropdown.set("No snapshots found")
+        except Exception as e:
+            logger.error(f"Failed to load snapshots: {e}")
+
+    def _on_new_client_click(self):
+        name = simpledialog.askstring("New client", "Enter client name:")
         if name:
              try:
                 conn = self.db.get_connection()
-                conn.execute("INSERT INTO projects (name) VALUES (?)", (name,))
+                conn.execute("INSERT INTO clients (name) VALUES (?)", (name,))
                 conn.commit()
-                self._refresh_projects()
+                self._refresh_clients()
              except Exception as e:
                  messagebox.showerror("Error", str(e))
 
@@ -377,14 +414,14 @@ class MainWindow(ctk.CTkFrame):
             if not queries: return
             for q in queries:
                 for mp, meth in selected_mps.items():
-                    discovery_tasks.append((mp, meth, q))
+                    discovery_tasks.append((mp, meth, q, None))
                     
         elif mode == "url":
-            urls = getattr(self, "url_list", [])
-            if not urls: 
+            if not self.url_configs: 
                 messagebox.showwarning("Required", "Please click 'Paste URLs' and add at least one target link.")
                 return
-            for url in urls:
+            for cfg in self.url_configs:
+                url = cfg["url"]
                 url_l = url.lower()
                 mp_detect = None
                 if "rozetka" in url_l: mp_detect = "rozetka"
@@ -394,7 +431,7 @@ class MainWindow(ctk.CTkFrame):
                 elif "epicentr" in url_l: mp_detect = "epicentrk"
 
                 if mp_detect and mp_detect in selected_mps:
-                    discovery_tasks.append((mp_detect, selected_mps[mp_detect], url))
+                    discovery_tasks.append((mp_detect, selected_mps[mp_detect], url, cfg.get("tag")))
                 else:
                     logger.warning(f"Marketplace for URL {url} not selected or not supported. Check that the marketplace checkbox is enabled.")
         
@@ -407,15 +444,35 @@ class MainWindow(ctk.CTkFrame):
             threads = 1
             delay = 1.5
             
-        self._run_discovery_batch(discovery_tasks, pages, skip_stock, threads, delay, debug_mode)
+        append_mode = self.snap_mode_var.get() == "append"
+        task_data = None
+        
+        # Open task modal only for new tasks
+        if not append_mode:
+            queries = list({t[2] for t in discovery_tasks})
+            mps = list({t[0] for t in discovery_tasks})
+            query_str = ", ".join(queries[:5])
+            mp_label = ", ".join(sorted(mps)).upper()
+            default_title = f"{query_str[:60]}  [{mp_label}]"
+            
+            from gui.task_dialog import TaskDialog
+            dialog = TaskDialog(self, title="New Task parameters", task_data={"title": default_title, "task_type": "discovery"})
+            task_data = dialog.get_result()
+            
+            if not task_data:
+                # User cancelled parsing
+                return
+            
+        self._run_discovery_batch(discovery_tasks, pages, skip_stock, threads, delay, debug_mode, task_id=None, task_data=task_data)
 
-    def _run_discovery_batch(self, tasks, pages, skip_stock, threads=1, delay=1.5, debug=False):
+    def _run_discovery_batch(self, tasks, pages, skip_stock, threads=1, delay=1.5, debug=False, task_id=None, task_data=None):
         self.is_running = True
         self.start_btn.configure(state="disabled")
         self.stop_btn.configure(state="normal")
         self.scheduler._stop_event.clear()
 
         # Derive query and marketplace set for the session record
+        mode = self.mode_var.get()
         queries = list({t[2] for t in tasks})
         mps = list({t[0] for t in tasks})
         session_id = str(uuid.uuid4())
@@ -434,19 +491,100 @@ class MainWindow(ctk.CTkFrame):
             skip_out_of_stock=skip_stock,
             threads_per_site=threads,
             request_delay=delay,
+            direct_urls=self.url_configs if mode == "url" else None,
             debug=debug
         )
         self.scheduler.create_session(task_stub)
 
+        # -- Snapshot Handling --
+        append_mode = self.snap_mode_var.get() == "append"
+        _snap_db_id: Optional[int] = None
+        if append_mode:
+            selected_name = self.snap_dropdown.get()
+            _snap_db_id = self.snapshots_dict.get(selected_name)
+            if not _snap_db_id:
+                messagebox.showerror("Error", "Selected snapshot not found. Please refresh list.")
+                return
+            logger.info(f"[DB] Appending results to existing snapshot #{_snap_db_id}")
+
+        # Derive task record
+        _task_db_id: Optional[int] = task_id
+        if self.active_client_id is not None or _task_db_id is not None:
+            try:
+                conn = self.db.get_connection()
+                conn.execute("BEGIN")
+                now_iso = datetime.now(timezone.utc).isoformat()
+                
+                # If we have a snapshot ID but no task ID, find the task ID
+                if _snap_db_id and not _task_db_id:
+                    row = conn.execute("SELECT task_id FROM snapshots WHERE id = ?", (_snap_db_id,)).fetchone()
+                    if row: _task_db_id = row["task_id"]
+
+                mode = self.mode_var.get()
+                task_type = "search" if mode == "search" else "url_list"
+                mp_label = ", ".join(sorted(mps)).upper()
+                task_title = f"{query_str[:60]}  [{mp_label}]"
+                query_params_json = json.dumps({
+                    "queries": queries,
+                    "marketplaces": mps,
+                    "pages": pages,
+                    "threads": threads,
+                    "delay": delay,
+                    "skip_stock": skip_stock,
+                    "session_id": session_id,
+                }, ensure_ascii=False)
+
+                if _task_db_id is None:
+                    t_title = task_data["title"] if task_data else task_title
+                    t_type = task_data["task_type"] if task_data else task_type
+                    t_desc = task_data.get("description") if task_data else None
+
+                    conn.execute(
+                        """INSERT INTO tasks
+                           (client_id, title, task_type, description, schedule_type, query_params, created_at, updated_at)
+                           VALUES (?, ?, ?, ?, 'one_time', ?, ?, ?)""",
+                        (self.active_client_id, t_title, t_type, t_desc,
+                         query_params_json, now_iso, now_iso)
+                    )
+                    _task_db_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
+                else:
+                    # Update existing task timestamp
+                    conn.execute("UPDATE tasks SET updated_at = ? WHERE id = ?", (now_iso, _task_db_id))
+
+                if not _snap_db_id:
+                    conn.execute(
+                        """INSERT INTO snapshots (task_id, run_at, status)
+                           VALUES (?, ?, 'running')""",
+                        (_task_db_id, now_iso)
+                    )
+                    _snap_db_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
+                else:
+                    # Update existing snapshot status
+                    conn.execute("UPDATE snapshots SET status = 'running' WHERE id = ?", (_snap_db_id,))
+                
+                conn.execute("COMMIT")
+                logger.info(f"[DB] Using task #{_task_db_id} and snapshot #{_snap_db_id}")
+            except Exception as _e:
+                logger.exception(f"[DB] Failed to setup task/snapshot context: {_e}")
+                messagebox.showerror("Database Error", f"Failed to initialize snapshot: {_e}")
+                self._on_stop_click()
+                return
+
+        if not _snap_db_id:
+             logger.error("[DB] No snapshot ID available. Scraper results will not be persisted.")
+             messagebox.showerror("Error", "Required database snapshot could not be created. Is a client selected?")
+             self._on_stop_click()
+             return
+
         def run_batch():
-            self.msg_queue.put(("status_update", f"Processing {len(tasks)} jobs…"))
+            self.msg_queue.put(("status_update", f"Processing {len(tasks)} jobs..."))
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
                 futures = [
                     executor.submit(
                         self.scheduler.run_individual_discovery,
-                        mp, meth, data, pages, session_id, skip_stock, threads, delay, debug
+                        mp, meth, data, pages, _snap_db_id or session_id, skip_stock, threads, delay, debug, tag
                     )
-                    for mp, meth, data in tasks
+                    for mp, meth, data, tag in tasks
                 ]
                 try:
                     for _ in concurrent.futures.as_completed(futures):
@@ -459,11 +597,22 @@ class MainWindow(ctk.CTkFrame):
                 except Exception as e:
                     logger.error(f"Error in batch execution loop: {e}")
 
-            # Update session final status via serialized queue
-            final = "stopped" if not self.is_running else "completed"
-            self.scheduler.update_session(session_id, final, [], 0)
+            # -- Finalise snapshot --
+            if _snap_db_id is not None:
+                def _finalize_snap(sid=_snap_db_id, count=self.scheduler._total_new, running=self.is_running):
+                    conn = self.db.get_connection()
+                    status = "stopped" if not running else "completed"
+                    try:
+                        conn.execute("UPDATE snapshots SET product_count = ?, status = ? WHERE id = ?", (count, status, sid))
+                        conn.commit()
+                        logger.info(f"[DB] Snapshot #{sid} finalized - {count} products total")
+                    except Exception as e:
+                        logger.error(f"[DB] Failed to finalize snapshot: {e}")
 
-            # Normalization is manual-only — launch from DB Control Panel
+                self.scheduler._db_write_queue.submit(_finalize_snap)
+
+
+            # Normalization is manual-only вЂ” launch from DB Control Panel
             self.msg_queue.put(("batch_finished", None))
 
         threading.Thread(target=run_batch, daemon=True).start()
@@ -504,7 +653,7 @@ class MainWindow(ctk.CTkFrame):
         elif mtype == "product":
             prod, is_new, delta = args
             self.product_count += 1
-            d_str = f" (Δ{delta:+.0f})" if delta is not None else ""
+            d_str = f" (О”{delta:+.0f})" if delta is not None else ""
             clean_title = str(prod.title).replace("\n", " ").strip()
             iid = self.tree.insert("", "end", values=(self.product_count, prod.marketplace.upper(), clean_title, f"{prod.price}{d_str}"))
             try:
@@ -534,10 +683,10 @@ class MainWindow(ctk.CTkFrame):
 
     def _on_db_browser_click(self):
         from gui.db_browser_window import DbBrowserWindow
-        win = DbBrowserWindow(self.master, self.db, self.repo, scheduler=self.scheduler)
-        # Hook into win destroy to refresh our projects
+        win = DbBrowserWindow(self, self.db, scheduler=self.scheduler)
+        # Hook into win destroy to refresh our clients
         def on_win_closed(event):
-            if event.widget == win: self._refresh_projects()
+            if event.widget == win: self._refresh_clients()
         win.bind("<Destroy>", on_win_closed)
 
     def _on_normalize_excel_click(self):

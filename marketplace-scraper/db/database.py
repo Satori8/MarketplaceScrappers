@@ -6,8 +6,17 @@ from pathlib import Path
 
 
 class Database:
-    def __init__(self, db_path: str = "data/products.db") -> None:
-        self.db_path = Path(db_path)
+    def __init__(self, db_path: str | None = None) -> None:
+        base_dir = Path(__file__).parent.parent
+        if db_path is None:
+            # Default to data/products.db inside common project root
+            self.db_path = base_dir / "data" / "products.db"
+        else:
+            p = Path(db_path)
+            if not p.is_absolute():
+                self.db_path = (base_dir / p).resolve()
+            else:
+                self.db_path = p
         self._local = threading.local()
 
     def _create_connection(self) -> sqlite3.Connection:
@@ -40,56 +49,52 @@ class Database:
         conn = self.get_connection()
         conn.executescript(
             """
-            CREATE TABLE IF NOT EXISTS products (
-                id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                url             TEXT NOT NULL UNIQUE,
-                marketplace     TEXT NOT NULL,
-                title           TEXT NOT NULL,
-                brand           TEXT,
-                norm_brand      TEXT,
-                is_relevant     INTEGER DEFAULT 1,
-                norm_category   TEXT,
-                category_path   TEXT,
-                product_type    TEXT,
-                image_url       TEXT,
-                description     TEXT,
-                first_seen_at   TEXT NOT NULL,
-                last_seen_at    TEXT NOT NULL,
-                is_active       INTEGER NOT NULL DEFAULT 1,
-                sku             TEXT,
-                merchant_id     TEXT,
-                merchant_name   TEXT
+            CREATE TABLE IF NOT EXISTS clients (
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                name       TEXT NOT NULL,
+                contact_info TEXT,
+                notes      TEXT,
+                created_at TEXT NOT NULL DEFAULT (datetime('now'))
             );
 
-            CREATE TABLE IF NOT EXISTS price_history (
-                id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                product_id      INTEGER NOT NULL REFERENCES products(id),
-                price           REAL NOT NULL,
-                currency        TEXT NOT NULL DEFAULT 'UAH',
-                availability    TEXT,
-                scraped_at      TEXT NOT NULL,
-                scrape_session  TEXT NOT NULL
+            CREATE TABLE IF NOT EXISTS tasks (
+                id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                client_id     INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+                title         TEXT NOT NULL,
+                description   TEXT,
+                task_type     TEXT DEFAULT 'discovery',
+                config        TEXT DEFAULT '{}',
+                schedule_type TEXT CHECK(schedule_type IN ('one_time','recurring')),
+                query_params  TEXT,
+                created_at    TEXT NOT NULL DEFAULT (datetime('now')),
+                updated_at    TEXT NOT NULL DEFAULT (datetime('now'))
             );
 
-            CREATE TABLE IF NOT EXISTS product_specs (
-                id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                product_id      INTEGER NOT NULL REFERENCES products(id),
-                schema_version  TEXT NOT NULL,
-                specs_json      TEXT NOT NULL,
-                raw_specs_json  TEXT NOT NULL,
-                updated_at      TEXT NOT NULL
+            CREATE TABLE IF NOT EXISTS snapshots (
+                id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                task_id       INTEGER NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+                run_at        TEXT NOT NULL,
+                product_count INTEGER DEFAULT 0,
+                status        TEXT,
+                notes         TEXT
             );
 
-            CREATE TABLE IF NOT EXISTS scrape_sessions (
-                id              TEXT PRIMARY KEY,
-                query           TEXT NOT NULL,
-                product_type    TEXT,
-                marketplaces    TEXT NOT NULL,
-                status          TEXT NOT NULL,
-                products_found  INTEGER NOT NULL DEFAULT 0,
-                errors_json     TEXT,
-                started_at      TEXT NOT NULL,
-                finished_at     TEXT
+            CREATE TABLE IF NOT EXISTS snapshot_products (
+                id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                snapshot_id   INTEGER NOT NULL REFERENCES snapshots(id) ON DELETE CASCADE,
+                product_id    INTEGER, -- Optional link for normalized entities
+                mp            TEXT,
+                sku           TEXT,
+                name          TEXT,
+                price         REAL,
+                avail_code    INTEGER,
+                merchant_name TEXT,
+                url           TEXT,
+                url_tag       TEXT,
+                category      TEXT,
+                image         TEXT,
+                attributes    TEXT DEFAULT '{}',
+                extra         TEXT DEFAULT '{}'
             );
 
             CREATE TABLE IF NOT EXISTS schema_versions (
@@ -99,19 +104,14 @@ class Database:
                 description     TEXT
             );
 
-            CREATE INDEX IF NOT EXISTS idx_products_marketplace ON products(marketplace);
-            CREATE INDEX IF NOT EXISTS idx_products_type        ON products(product_type);
-            CREATE INDEX IF NOT EXISTS idx_price_history_product ON price_history(product_id);
-            CREATE INDEX IF NOT EXISTS idx_price_history_scraped ON price_history(scraped_at);
-            CREATE INDEX IF NOT EXISTS idx_scrape_sessions_status ON scrape_sessions(status);
+            CREATE INDEX IF NOT EXISTS idx_tasks_client ON tasks(client_id);
+            CREATE INDEX IF NOT EXISTS idx_snapshots_task ON snapshots(task_id);
+            CREATE INDEX IF NOT EXISTS idx_snapshot_products_snap ON snapshot_products(snapshot_id);
             """
         )
         conn.commit()
 
-        # Simple migration for existing DB
-        for col in ["norm_brand", "norm_category", "is_relevant", "sku", "merchant_id", "merchant_name"]:
-            try:
-                conn.execute(f"ALTER TABLE products ADD COLUMN {col} TEXT")
-            except:
-                pass
-        conn.commit()
+        # Apply schema migrations
+        from db.migrations import MigrationManager
+        mgr = MigrationManager(self)
+        mgr.apply_pending()

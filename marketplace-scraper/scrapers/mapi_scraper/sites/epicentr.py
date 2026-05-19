@@ -154,9 +154,10 @@ class EpicentrAPI:
                     "category_id": str(it.get('categoryId') or it.get('sectionId') or it.get('section_id') or ""),
                     "category_name_ua": it.get('sectionsUa') or it.get('sections_ua'),
                     "category_name_ru": it.get('section_ru') or it.get('sectionRu'),
-                    "properties": it.get('properties', []),
                     "url": it.get('url'),
-                    "image": (it.get('img', {}).get('url') if isinstance(it.get('img'), dict) else it.get('picture'))
+                    "image": (it.get('img', {}).get('url') if isinstance(it.get('img'), dict) else it.get('picture')),
+                    "attributes": {p.get('name'): p.get('value') for p in it.get('properties', []) if isinstance(p, dict) and p.get('name')} if isinstance(it.get('properties'), list) else {},
+                    "extra": {}
                 })
 
 
@@ -194,9 +195,10 @@ class EpicentrAPI:
                     "category_id": str(it.get('section_id') or it.get('sectionId') or it.get('categoryId') or ""),
                     "category_name_ua": it.get('sections_ua') or it.get('sectionsUa'),
                     "category_name_ru": it.get('section_ru') or it.get('sectionRu'),
-                    "properties": it.get('properties', []),
                     "url": it.get('url'),
-                    "image": it.get('picture') or (it.get('img', {}).get('url') if isinstance(it.get('img'), dict) else None)
+                    "image": it.get('picture') or (it.get('img', {}).get('url') if isinstance(it.get('img'), dict) else None),
+                    "attributes": {p.get('name'): p.get('value') for p in it.get('properties', []) if isinstance(p, dict) and p.get('name')} if isinstance(it.get('properties'), list) else {},
+                    "extra": {}
                 })
 
         if not products:

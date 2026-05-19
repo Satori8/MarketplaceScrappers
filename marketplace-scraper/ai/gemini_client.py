@@ -5,6 +5,7 @@ import logging
 import threading
 import time
 import yaml
+import os
 from collections import deque
 from pathlib import Path
 from typing import Any, Callable
@@ -40,7 +41,14 @@ class GeminiClient:
         self.config_path = Path(config_path)
         self.config = self._load_config()
         gemini_cfg = self.config.get("gemini", {})
-        self.keys: list[str] = [k.strip() for k in gemini_cfg.get("keys", []) if str(k).strip()]
+        
+        # Priority: Environment variable -> config.yaml
+        env_keys = os.getenv("GEMINI_KEYS")
+        if env_keys:
+            self.keys = [k.strip() for k in env_keys.split(",") if k.strip()]
+        else:
+            self.keys = [k.strip() for k in gemini_cfg.get("keys", []) if str(k).strip()]
+            
         self.rotation_strategy = str(gemini_cfg.get("rotation_strategy", "on_limit"))
         self.model_name = str(gemini_cfg.get("model", "gemini-2.0-flash"))
         self.current_key_index = int(gemini_cfg.get("current_key_index", 0) or 0)
@@ -65,12 +73,13 @@ class GeminiClient:
             return yaml.safe_load(fh) or {}
 
     def _save_config(self) -> None:
-        """Persist current keys list and key index back to config.yaml."""
+        """Persist key index back to config.yaml. Keys are NOT saved for security."""
         with self._config_lock:
             # Re-load to get latest changes from other threads
             cfg = self._load_config()
             cfg.setdefault("gemini", {})
-            cfg["gemini"]["keys"] = self.keys
+            # We no longer save keys to config.yaml to prevent security leaks
+            # Keys should be managed via .env
             cfg["gemini"]["current_key_index"] = self.current_key_index
             with self.config_path.open("w", encoding="utf-8") as fh:
                 yaml.safe_dump(cfg, fh, allow_unicode=True, sort_keys=False)

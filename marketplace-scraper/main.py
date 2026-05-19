@@ -2,6 +2,10 @@ import argparse
 import sys
 import os
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
 
 # Ensure project root is in sys.path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))

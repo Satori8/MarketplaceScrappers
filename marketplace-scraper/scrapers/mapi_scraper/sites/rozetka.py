@@ -51,10 +51,10 @@ class RozetkaAPI:
                         "category_id": it.get("category_id"),
                         "category_name_ua": None,
                         "category_name_ru": None,
-                        "properties": [],
-                        "description": None,
                         "url": it.get("href"),
-                        "image": it.get("image_url")
+                        "image": it.get("image_url"),
+                        "attributes": {},
+                        "extra": {}
                     })
 
         elif source in ["rz-client-state", "api_direct_search", "api_direct_category", "api_direct_details"]:
@@ -144,7 +144,7 @@ class RozetkaAPI:
                     
                     c_name_ua = c_name_ru 
 
-                    properties = []
+                    attributes = {}
                     docket = it.get("docket")
                     if isinstance(docket, list):
                         for d in docket:
@@ -152,20 +152,20 @@ class RozetkaAPI:
                                 opt_title = d.get("option_title")
                                 value_title = d.get("value_title")
                                 if opt_title and value_title:
-                                    properties.append({"name": opt_title, "value": value_title})
+                                    attributes[opt_title] = value_title
                     
                     var_params = it.get("var_params", {})
                     if isinstance(var_params, dict):
                         colors = var_params.get("color")
                         if isinstance(colors, list):
                             color_vals = [str(c.get("value")) for c in colors if c.get("value") is not None]
-                            if color_vals: properties.append({"name": "Цвет", "value": "; ".join(color_vals)})
+                            if color_vals: attributes["Color"] = "; ".join(color_vals)
                         block = var_params.get("block")
                         if isinstance(block, dict):
                             for b_name, b_items in block.items():
                                 if isinstance(b_items, list):
                                     b_vals = [str(bi.get("value")) for bi in b_items if bi.get("value") is not None]
-                                    if b_vals: properties.append({"name": b_name, "value": "; ".join(b_vals)})
+                                    if b_vals: attributes[b_name] = "; ".join(b_vals)
                     
                     b_raw = it.get("brand")
                     brand_name = None
@@ -184,7 +184,7 @@ class RozetkaAPI:
                                 g_items = group.get("items", [])
                                 if g_items and g_title:
                                     g_vals = [str(gi.get("title")) for gi in g_items if isinstance(gi, dict) and gi.get("title")]
-                                    if g_vals: properties.append({"name": g_title, "value": "; ".join(g_vals)})
+                                    if g_vals: attributes[g_title] = "; ".join(g_vals)
                     elif isinstance(desc_raw, str):
                         description_text = desc_raw
 
@@ -210,10 +210,10 @@ class RozetkaAPI:
                         "category_id": str(c_id) if c_id else None,
                         "category_name_ua": c_name_ua,
                         "category_name_ru": c_name_ru,
-                        "properties": properties,
-                        "description": description_text,
                         "url": it.get("href") or f"https://rozetka.com.ua/ua/{raw_id}/p{raw_id}/",
-                        "image": image
+                        "image": image,
+                        "attributes": attributes,
+                        "extra": {"description": description_text}
                     })
 
         if not products and total_pages > 0:

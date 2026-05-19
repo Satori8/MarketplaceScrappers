@@ -42,7 +42,7 @@ class HotlineScraper(BaseScraper):
             current_url = search_template.format(query=quote_plus(query))
 
         async with async_playwright() as p:
-            user_data_dir = str(Path("data/browser_profile_hotline").resolve())
+            user_data_dir = str((self.project_root / "data" / "browser_profile_hotline").resolve())
             browser_context = await p.chromium.launch_persistent_context(
                 user_data_dir=user_data_dir,
                 headless=False,

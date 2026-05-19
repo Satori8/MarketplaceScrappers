@@ -151,8 +151,9 @@ Every `scrape_url` call must return a dictionary following this structure.
 | `sku` | `str` | No | Manufacturer SKU |
 | `brand` | `str` | No | Brand/Manufacturer name |
 | `merchant_name`| `str` | No | Seller name (if marketplace) |
-| `properties` | `list` | No | `[{"name": "...", "value": "..."}, ...]` |
 | `image` | `str` | No | URL to primary product image |
+| `attributes` | `dict` | No | `{"AttributeName": "Value", ...}` |
+| `extra` | `dict` | No | `{"meta_field": "value", ...}` |
 
 ### `avail_code` Behavior
 Callers must be prepared to handle various types. Modules should preserve the values found in source data:

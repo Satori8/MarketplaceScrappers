@@ -201,9 +201,10 @@ class PromAPI:
                     "category_id": cat.get("id") if isinstance(cat, dict) else p.get("categoryId"),
                     "category_name_ua": best_cat_name,
                     "category_name_ru": None,
-                    "properties": [],
                     "url": p_url,
-                    "image": p.get("image")
+                    "image": p.get("image"),
+                    "attributes": {c.get("name"): c.get("value") for c in p.get("characteristics", []) if c.get("name") and c.get("value")} if isinstance(p.get("characteristics"), list) else {},
+                    "extra": {"orders_count": p.get("ordersCount") or p.get("orders_count") or 0}
                 })
 
         elif source == "graphql":
@@ -249,9 +250,10 @@ class PromAPI:
                     "category_id": p.get("categoryId") or (p.get("categoryIds") or [None])[0],
                     "category_name_ua": best_cat_name,
                     "category_name_ru": None,
-                    "properties": [],
                     "url": f"https://prom.ua/ua/p{p_id}-{p_slug}.html" if p_id and p_slug else None,
-                    "image": p.get("image")
+                    "image": p.get("image"),
+                    "attributes": {c.get("name"): c.get("value") for c in p.get("characteristics", []) if c.get("name") and c.get("value")} if isinstance(p.get("characteristics"), list) else {},
+                    "extra": {"orders_count": p.get("ordersCount") or p.get("orders_count") or 0}
                 })
 
         elif source == "ld+json":

@@ -8,7 +8,7 @@ COLORS = {
     "accent": "#1f538d", # CTk Blue-ish
     "table_bg": "#2d2d2d",
     "table_fg": "#cccccc",
-    "success": "#2ecc71",
+    "success": "#27ae60",
     "error": "#e74c3c",
     "warning": "#f1c40f",
 }

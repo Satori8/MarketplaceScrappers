@@ -183,8 +183,9 @@ def _map_ld_json_offer(item: dict) -> dict:
         "category_id": None,
         "category_name_ua": None,
         "category_name_ru": None,
-        "properties": [],
         "url": item.get("url"),
         "image": item.get("image"),
+        "attributes": {},
+        "extra": {}
     }
 

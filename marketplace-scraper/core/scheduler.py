@@ -9,7 +9,6 @@ from typing import Callable, Any
 
 from core.models import ScrapeTask, ScrapeResult, RawProduct
 from db.database import Database
-from db.product_repo import ProductRepository
 
 # Import scrapers
 from scrapers.hotline import HotlineScraper
@@ -86,7 +85,6 @@ class TaskScheduler:
     def __init__(self, db: Database, config_path: str = "config.yaml", on_keys_exhausted=None):
         self.db = db
         self.config_path = config_path
-        self.repo = ProductRepository(self.db)
         self.normalizer = DataNormalizer(
             config_path=self.config_path,
             on_keys_exhausted=on_keys_exhausted,
@@ -163,53 +161,16 @@ class TaskScheduler:
         return False
 
     def create_session(self, task: ScrapeTask) -> None:
-        def _do_create():
-            conn = self.db.get_connection()
-            conn.execute(
-                """
-                INSERT INTO scrape_sessions (
-                    id, query, product_type, marketplaces, status, products_found, started_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    task.session_id,
-                    task.query,
-                    task.product_type,
-                    json.dumps(task.marketplaces),
-                    "running",
-                    0,
-                    datetime.now(timezone.utc).isoformat()
-                )
-            )
-            conn.commit()
-        self._db_write_queue.submit(_do_create)
+        # Business logic: Sessions are now handled entirely by the 'snapshots' table.
+        # This is a no-op or wrapper for snapshot status updates.
+        pass
 
     def update_session(self, session_id: str, status: str, err: list, count: int) -> None:
-        def _do_update():
-            conn = self.db.get_connection()
-            conn.execute(
-                """
-                UPDATE scrape_sessions 
-                SET status = ?, finished_at = ?, errors_json = ?, products_found = products_found + ?
-                WHERE id = ?
-                """,
-                (
-                    status,
-                    datetime.now(timezone.utc).isoformat(),
-                    json.dumps(err) if err else None,
-                    count,
-                    session_id
-                )
-            )
-            conn.commit()
-        self._db_write_queue.submit(_do_update)
+        # Wrapper for snapshot status updates if needed
+        pass
 
     def update_session_count(self, session_id: str, count: int) -> None:
-        def _do_update_count():
-            conn = self.db.get_connection()
-            conn.execute("UPDATE scrape_sessions SET products_found = products_found + ? WHERE id = ?", (count, session_id))
-            conn.commit()
-        self._db_write_queue.submit(_do_update_count)
+        pass
 
     def run(self, task: ScrapeTask):
         """Blocking call. Launches threadpool for marketplaces and awaits them."""
@@ -239,11 +200,11 @@ class TaskScheduler:
             asyncio.run(self.normalize_all_pending(stop_event=self._stop_event))
 
         final_status = "stopped" if self._stop_event.is_set() else "completed"
-        self.update_session(task.session_id, final_status, [], 0)
+        # Snapshot status update is now handled by MainWindow
         logger.info(f"--- Scrape Task {final_status.upper()} (ID: {task.session_id}) ---")
 
     def run_individual_discovery(self, mp: str, method: str, query: str, pages: int, session_id: str, 
-                                 skip_stock: bool = True, threads_per_site: int = 1, request_delay: float = 1.5, debug: bool = False):
+                                 skip_stock: bool = True, threads_per_site: int = 1, request_delay: float = 1.5, debug: bool = False, url_tag: str = None):
         """Standalone discovery for a single (marketplace, query) job.
 
         Called concurrently by the GUI ThreadPoolExecutor — one call per job.
@@ -259,6 +220,7 @@ class TaskScheduler:
             skip_out_of_stock=skip_stock,
             threads_per_site=threads_per_site,
             request_delay=request_delay,
+            direct_urls=[{"url": query, "tag": url_tag}] if url_tag else None,
             debug=debug
         )
         
@@ -303,28 +265,12 @@ class TaskScheduler:
             rp._db_id = r["id"]
             to_norm.append(rp)
             
-        def save_results(chunk_results):
-            def _do_save():
-                # Inner helper to save results immediately
-                conn = self.db.get_connection()
-                count = 0
-                for norm in chunk_results:
-                    db_id = getattr(norm.raw, "_db_id", None)
-                    if db_id:
-                        self.repo.save_specs(db_id, norm)
-                        conn.execute("UPDATE products SET product_type = ?, is_relevant = ? WHERE id = ?", 
-                                     (norm.product_type, 1 if norm.normalized_specs.get("is_relevant", True) else 0, db_id))
-                        count += 1
-                conn.commit()
-                logger.info(f"[Scheduler] Immediate DB Update: Persisted {count} products from current batch.")
-            self._db_write_queue.submit(_do_save)
-
         # Step 2: Normalize with immediate callback
         normalized = await self.normalizer.normalize_batch(
             to_norm, 
             "Global Cleanup Batch", 
             stop_event=stop_event,
-            on_chunk_callback=save_results
+            on_chunk_callback=None # Repository logic removed
         )
         
         logger.info(f"[Scheduler] Global Intelligence Phase complete. Normalized {len(normalized)}/{len(to_norm)} products.")
@@ -349,21 +295,29 @@ class TaskScheduler:
             products = []
             
             # If we have direct URLs for this marketplace, or the task is specifically for direct URLs
-            relevant_urls = []
+            relevant_configs = [] # List of {"url": "...", "tag": "..."}
             if task.direct_urls:
-                for url in task.direct_urls:
+                for cfg in task.direct_urls:
+                    url = cfg.get("url", "")
                     if marketplace in url.lower() or (marketplace == "epicentrk" and "epicentr" in url.lower()):
-                        relevant_urls.append(url)
+                        relevant_configs.append(cfg)
 
-            if relevant_urls:
-                logger.info(f"Scraper '{marketplace}' processing {len(relevant_urls)} direct URLs.")
+            if relevant_configs:
+                logger.info(f"Scraper '{marketplace}' processing {len(relevant_configs)} direct URLs.")
                 # Process URLs in parallel tasks within the current event loop
-                tasks = [scraper.get_product_details(url) for url in relevant_urls]
-                detail_prods = await asyncio.gather(*tasks)
-                products.extend([p for p in detail_prods if p and p.title])
+                tasks_list = []
+                for cfg in relevant_configs:
+                    tasks_list.append(scraper.get_product_details(cfg["url"]))
+                
+                detail_prods = await asyncio.gather(*tasks_list)
+                
+                for idx, prod in enumerate(detail_prods):
+                    if prod and prod.title:
+                        prod.url_tag = relevant_configs[idx].get("tag")
+                        products.append(prod)
             
             # If there's a real query, also run the search
-            if task.query and task.query != "Direct URLs Scan":
+            if task.query and task.query != "Direct URLs Scan" and not task.query.startswith("http"):
                 logger.info(f"Scraper '{marketplace}' searching for: {task.query}")
                 search_prods = await scraper.search_products(
                     task.query, 
@@ -388,18 +342,39 @@ class TaskScheduler:
                     continue
                 
                 _prod_ref = prod
-                _sid_ref = task.session_id
-                pid, is_new, delta = self._db_write_queue.submit(
-                    lambda p=_prod_ref, s=_sid_ref: self.repo.upsert_product(p, s)
-                )
+                _sid_ref = task.session_id # This should be the snapshot_id for direct writing
+                
+                def _do_snapshot_insert(p=prod, sid=task.session_id):
+                    # In this refactor, session_id is expected to be the integer snapshot_id
+                    if not isinstance(sid, int):
+                        try: sid = int(sid)
+                        except: pass
+
+                    conn = self.db.get_connection()
+                    try:
+                        conn.execute("""
+                            INSERT INTO snapshot_products 
+                            (snapshot_id, product_id, mp, sku, name, category, image, price, avail_code, merchant_name, url, url_tag, attributes, extra)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            sid, p.id, p.marketplace, p.sku, p.title, p.category_path, p.image_url, p.price,
+                            1 if p.availability and any(x in p.availability.lower() for x in ["наявності", "stock", "есть"]) else 0,
+                            p.merchant_name, p.url, p.url_tag,
+                            json.dumps(p.attributes or {}, ensure_ascii=False),
+                            json.dumps(p.extra or {}, ensure_ascii=False)
+                        ))
+                    except Exception as e:
+                        logger.error(f"[DB] Insert failed for sid={sid} (Type: {type(sid).__name__}): {e}")
+                        raise
+                    conn.commit()
+                    return True # is_new = True for snapshot records
+
+                is_new = self._db_write_queue.submit(_do_snapshot_insert)
                 
                 with self._stats_lock:
-                    if is_new:
-                        self._total_new += 1
-                    elif delta is not None:
-                        self._total_updated += 1
+                    self._total_new += 1
 
-                self.on_product_found(prod, is_new, delta)
+                self.on_product_found(prod, is_new, 0)
                 found_products.append(prod)
                 
             self.on_mp_status(marketplace, f"Finished ({len(products)})")
@@ -426,21 +401,25 @@ class TaskScheduler:
             target_urls = []
             
             if task.direct_urls:
-                for url in task.direct_urls:
+                for cfg in task.direct_urls:
+                    url = cfg.get("url", "")
+                    tag = cfg.get("tag", "")
                     if marketplace in url.lower() or (marketplace == "epicentrk" and "epicentr" in url.lower()):
-                        target_urls.append(url)
+                        target_urls.append((url, tag))
             
             if task.query and task.query != "Direct URLs Scan" and not task.query.startswith("http"):
                 q = quote_plus(task.query)
-                if marketplace == "rozetka": target_urls.append(f"https://rozetka.com.ua/ua/search/?text={q}")
-                elif marketplace == "prom": target_urls.append(f"https://prom.ua/ua/search?search_term={q}")
-                elif marketplace == "allo": target_urls.append(f"https://allo.ua/ua/catalogsearch/result/?q={q}")
-                elif marketplace == "epicentrk": target_urls.append(f"https://epicentrk.ua/ua/search/?q={q}")
-                elif marketplace == "hotline": target_urls.append(f"https://hotline.ua/sr/?q={q}")
+                if marketplace == "rozetka": target_urls.append((f"https://rozetka.com.ua/ua/search/?text={q}", None))
+                elif marketplace == "prom": target_urls.append((f"https://prom.ua/ua/search?search_term={q}", None))
+                elif marketplace == "allo": target_urls.append((f"https://allo.ua/ua/catalogsearch/result/?q={q}", None))
+                elif marketplace == "epicentrk": target_urls.append((f"https://epicentrk.ua/ua/search/?q={q}", None))
+                elif marketplace == "hotline": target_urls.append((f"https://hotline.ua/sr/?q={q}", None))
             elif task.query and task.query.startswith("http"):
-                target_urls.append(task.query)
+                if not any(t[0] == task.query for t in target_urls):
+                    target_urls.append((task.query, None))
 
-            for target_url in target_urls:
+            for target_url_info in target_urls:
+                target_url, url_tag = target_url_info
                 for p in range(1, pages + 1):
                     if self._stop_event.is_set(): break
                     mp_tag = marketplace.upper()
@@ -481,16 +460,20 @@ class TaskScheduler:
                             url=d.get("url", ""),
                             marketplace=marketplace,
                             brand=d.get("brand"),
-                            raw_specs=d.get("properties", []),
+                            raw_specs=d.get("attributes", {}),
                             description=d.get("description"),
                             image_url=d.get("image"),
                             availability=d.get("avail_code", "InStock"),
                             rating=None,
                             reviews_count=None,
                             category_path=d.get("category_name_ua") or d.get("category_name_ru"),
+                            id=d.get("id"),
                             sku=d.get("sku"),
                             merchant_id=d.get("merchant_id"),
                             merchant_name=d.get("merchant_name"),
+                            url_tag=url_tag,
+                            attributes=d.get("attributes", {}),
+                            extra=d.get("extra", {}),
                             scraped_at=datetime.now(timezone.utc)
                         )
 
@@ -500,16 +483,38 @@ class TaskScheduler:
                             continue
 
                         _prod_ref = prod
-                        _sid_ref = task.session_id
-                        pid, is_new, delta = self._db_write_queue.submit(
-                            lambda p=_prod_ref, s=_sid_ref: self.repo.upsert_product(p, s)
-                        )
+                        _sid_ref = task.session_id # expected to be snapshot_id
+                        
+                        def _do_snapshot_insert_mapi(p=prod, sid=task.session_id):
+                            if not isinstance(sid, int):
+                                try: sid = int(sid)
+                                except: pass
+                                
+                            conn = self.db.get_connection()
+                            try:
+                                conn.execute("""
+                                    INSERT INTO snapshot_products 
+                                    (snapshot_id, product_id, mp, sku, name, category, image, price, avail_code, merchant_name, url, url_tag, attributes, extra)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                """, (
+                                    sid, p.id, p.marketplace, p.sku, p.title, p.category_path, p.image_url, p.price,
+                                    1 if p.availability and any(x in p.availability.lower() for x in ["наявності", "stock", "есть"]) else 0,
+                                    p.merchant_name, p.url, p.url_tag,
+                                    json.dumps(p.attributes or {}, ensure_ascii=False),
+                                    json.dumps(p.extra or {}, ensure_ascii=False)
+                                ))
+                            except Exception as e:
+                                logger.error(f"[DB] MAPI Insert failed for sid={sid} (Type: {type(sid).__name__}): {e}")
+                                raise
+                            conn.commit()
+                            return True
+
+                        is_new = self._db_write_queue.submit(_do_snapshot_insert_mapi)
 
                         with self._stats_lock:
-                            if is_new: self._total_new += 1
-                            elif delta is not None: self._total_updated += 1
+                            self._total_new += 1
 
-                        self.on_product_found(prod, is_new, delta)
+                        self.on_product_found(prod, is_new, 0)
                         found_products.append(prod)
                         _page_valid_products += 1
                         sess_in_stock += 1

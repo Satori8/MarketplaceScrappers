@@ -1,9 +1,9 @@
 # Marketplace Scraper — Project Documentation
 
 ### Project status
-Current stage: Phase 2.18 — Data Directory Consolidation & Path Robustness
-Next stage: Phase 3 — Global Intelligence Phase (Gemini Normalization)
-Last updated: 2026-05-18 (Updated README to reflect BI Layer and Reporting Engine progress)
+Current stage: Phase 3 — Global Intelligence Phase (Database Cleanup)
+Next stage: Phase 3.1 — Gemini Attribute Extraction
+Last updated: 2026-05-18 (Phase 3.0 stabilization: Foreign Key fix, DB Lock mitigation, and Image Integration)
 
 ---
 
@@ -62,7 +62,7 @@ Refactored from a monolithic `mapi_scraper.py` into a modular package.
 
 ### 3. Normalization Engine
 All raw data from APIs/SSR maps into a strict common schema before database ingestion.
-- Site-specific modules implement a `normalize(raw_data)` method to map site-specific JSON to standard keys: `id`, `sku`, `price`, `name`, `avail_code`, `merchant_name`, `url`, and `properties[]`.
+- Site-specific modules implement a `normalize(raw_data)` method to map site-specific JSON to standard keys: `id`, `sku`, `price`, `name`, `avail_code`, `merchant_name`, `url`, `image`, `attributes`, and `extra`.
 
 ### 4. Persistence & Database Layer (`db/`)
 - **`db/database.py`**: Database connection pooling, PRAGMA config, execution helpers.
@@ -78,18 +78,18 @@ All raw data from APIs/SSR maps into a strict common schema before database inge
 
 ---
 
-## Database Schema (v2.0 — Full Business Layer)
+## Database Schema (v3.0 — Clean Business Layer)
 
 ### Raw Scrape Layer (Discovery)
 - `products`: Raw discovery results.
-- `price_history`: Log of every price seen during discovery.
 - `scrape_sessions`: Metadata for every parser run.
+- `product_specs`: Detailed specifications for products.
 
 ### Business Layer (CRM & Monitoring)
 - `clients`: The root entity representing a customer or internal organization.
 - `tasks`: Specific parsing/monitoring tasks belonging to a client (e.g. tracking or discovery) holding querying logic.
 - `snapshots`: Immutable points-in-time holding a snapshot of the parsed layout.
-- `snapshot_products`: The specific products that matched the task query during a snapshot execution, mapped back to the raw source data.
+- `snapshot_products`: The specific products that matched the task query during a snapshot execution, mapped back to the raw source data (now extended with `attributes` and `extra` JSON columns).
 
 ---
 

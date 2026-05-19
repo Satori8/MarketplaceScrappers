@@ -48,7 +48,7 @@ class RozetkaScraper(BaseScraper):
 
         async with async_playwright() as p:
             # Use a local directory for persistent profile data
-            user_data_dir = str(Path("data/browser_profile").resolve())
+            user_data_dir = str((self.project_root / "data" / "browser_profile").resolve())
             
             browser_context = await p.chromium.launch_persistent_context(
                 user_data_dir=user_data_dir,
@@ -308,8 +308,24 @@ class RozetkaScraper(BaseScraper):
                             
                         price_val = self.parse_price(price_text) or 0
                             
+                        # Extract ID from URL as fallback if not provided
+                        product_id = None
+                        if href and "/p" in href:
+                            import re
+                            match = re.search(r"/p(\d+)/?", href)
+                            if match: product_id = match.group(1)
+
                         clean_url = self._clean_url(urljoin(base_url, href))
-                        products.append(self._create_raw(title_text, price_val, clean_url, availability))
+                        products.append(RawProduct(
+                            title=title_text,
+                            price=price_val,
+                            currency="UAH",
+                            url=clean_url,
+                            marketplace="rozetka",
+                            id=product_id,
+                            availability=availability,
+                            scraped_at=datetime.now(timezone.utc)
+                        ))
                         added_on_page += 1
                     except Exception as e:
                         logger.warning(f"[Rozetka] Extraction error on card: {e}")

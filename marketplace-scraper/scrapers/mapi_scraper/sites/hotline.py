@@ -31,9 +31,10 @@ class HotlineAPI:
                     "category_id": None,
                     "category_name_ua": it.get("category"),
                     "category_name_ru": None,
-                    "properties": [],
                     "url": it.get("url"),
-                    "image": it.get("image")
+                    "image": it.get("image"),
+                    "attributes": it.get("attributes") or {},
+                    "extra": it.get("extra") or {}
                 })
         
         return {
@@ -89,7 +90,9 @@ class HotlineModule(BaseModule):
                         "name": title,
                         "url": "https://hotline.ua" + href if href.startswith("/") else href,
                         "price": price.group(1) if price else None,
-                        "avail_code": 1
+                        "avail_code": 1,
+                        "attributes": {},
+                        "extra": {}
                     })
             
             normalized = api.normalize({"source": "search_html", "items": products})

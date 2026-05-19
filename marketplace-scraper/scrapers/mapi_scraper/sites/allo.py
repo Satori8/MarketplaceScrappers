@@ -107,13 +107,8 @@ class AlloAPI:
                     # Prefer image_xl, then lg, etc.
                     image_url = g0.get("image_xl") or g0.get("image_lg") or g0.get("image_md") or g0.get("image_sm")
 
-                # Mapping description_attributes to properties
-                properties = []
-                for attr in p.get("description_attributes", []):
-                    properties.append({
-                        "name": attr.get("label"),
-                        "values": attr.get("value")
-                    })
+                # Mapping description_attributes to attributes
+                attributes = {attr.get("label"): attr.get("value") for attr in p.get("description_attributes", []) if attr.get("label")}
 
                 # Price from price object
                 price_obj = p.get("price", {})
@@ -135,9 +130,10 @@ class AlloAPI:
                     "category_id": category_id or p.get("category_id"),
                     "category_name_ua": category_name or p.get("category_name") or cat_map.get(str(p.get("category_id"))),
                     "category_name_ru": None,
-                    "properties": properties,
                     "url": p.get("url"),
-                    "image": image_url
+                    "image": image_url,
+                    "attributes": attributes,
+                    "extra": {}
                 })
 
         if not products and total_pages > 0:

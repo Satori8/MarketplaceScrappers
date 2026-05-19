@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
 
@@ -20,9 +20,13 @@ class RawProduct:
     rating: Optional[float]
     reviews_count: Optional[int]
     category_path: Optional[str]
+    id: Optional[str] = None
     sku: Optional[str] = None
     merchant_id: Optional[str] = None
     merchant_name: Optional[str] = None
+    url_tag: Optional[str] = None
+    attributes: dict = field(default_factory=dict)
+    extra: dict = field(default_factory=dict)
     scraped_at: datetime = datetime.now()
 
 
@@ -32,6 +36,8 @@ class NormalizedProduct:
     product_type: str
     normalized_specs: dict
     schema_version: str
+    attributes: dict = field(default_factory=dict)
+    extra: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -66,7 +72,7 @@ class ScrapeTask:
     category_urls: dict
     skip_known_urls: bool
     skip_out_of_stock: bool = True
-    direct_urls: list[str] = None
+    direct_urls: list[dict[str, str]] = None
     method_preference: str = "Auto"
     threads_per_site: int = 1
     request_delay: float = 1.5

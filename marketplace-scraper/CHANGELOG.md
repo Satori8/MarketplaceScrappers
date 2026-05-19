@@ -1,3 +1,94 @@
+## 2026-05-18 — Database Integrity & Lock Stabilization
+### Done
+- **Structural Bug Fix (Critical)**: Resolved `FOREIGN KEY constraint failed` error by identifying and removing an orphan `REFERENCES products(id)` constraint on the `snapshot_products.product_id` column. This constraint remained from an old schema version even after the `products` table was dropped in Phase 3.
+- **Migration v13**: Implemented a "shadow table" migration to safely recreate `snapshot_products` without the invalid FK constraint while preserving all existing data.
+- **Lock Contention Mitigation**: 
+    - Offloaded snapshot finalization (completion status and product count updates) to the `DbWriteQueue` to ensure the UI thread never competes for the SQLite write lock with background scraper threads.
+    - Wrapped batch setup (Task/Snapshot creation) in `MainWindow` with explicit `BEGIN/COMMIT` transactions to ensure atomicity and reduce lock duration.
+- **Database Extension**: Added `image` column to `snapshot_products` table and registered Migration v12 to automate the upgrade and view updates.
+- **Data Persistence**: Updated `TaskScheduler` to map and persist `image_url` from scrapers into the new database column.
+- **GUI Image Integration**:
+    - Updated `DetailsPanel` to display product image URLs with click-to-open browser functionality.
+    - Added `webbrowser` integration for native link handling.
+- **UX Improvements**:
+    - Implemented **Automatic Default Client** creation if the database is empty.
+    - Added mandatory validation in `MainWindow` to stop execution if snapshot/task context initialization fails.
+### Not done / deferred
+- N/A
+### Notes
+- The "FOREIGN KEY constraint failed" was a silent structural issue that only manifested when `PRAGMA foreign_keys = ON` was enabled. It was caused by the `product_id` column referencing a table that was deleted during the "Phase 3 Cleanup".
+- `database is locked` issues are now largely mitigated by routing ALL writes (including GUI-triggered status updates) through the serialized `DbWriteQueue`.
+
+---
+
+## 2026-05-18 — MAPI Normalization Schema Refactor
+### Done
+- Unified product normalization schema by removing the legacy `properties` field and migrating characteristics logic to the `attributes` dictionary across all MAPI scraper modules.
+- Updated `extractors.py` to remove `properties` from the LD+JSON mapping utility and ensure `attributes` and `extra` are correctly initialized.
+- Refactored `PromModule` (`prom.py`) to remove the redundant `properties: []` placeholder.
+- Refactored `AlloModule` (`allo.py`) to convert internal `description_attributes` list into the standard `attributes` dictionary.
+- Refactored `EpicentrModule` (`epicentr.py`) to map raw API properties into the unified `attributes` KV store.
+- Refactored `RozetkaModule` (`rozetka.py`) to migrate docket, var_params, and brand information into the `attributes` dictionary and fixed critical indentation errors in the normalization loop.
+- Updated `HotlineModule` (`hotline.py`) to include `attributes` and `extra` placeholders, maintaining output consistency.
+- Updated `TaskScheduler` (`core/scheduler.py`) to correctly map the new `attributes` dictionary from MAPI outputs to the `RawProduct.raw_specs` field.
+- Updated `AGENT_GUIDE.md` documentation to reflect the new `attributes` and `extra` dictionary-based schema.
+### Not done / deferred
+- N/A
+### Notes
+- This change ensures that all product characteristics are stored as key-value pairs, which is more efficient for searching and display in the UI than the previous list-based structure.
+
+---
+
+## 2026-05-18 — DbBrowserWindow Modular Refactor
+### Done
+- Extracted `EditFormDialog` to `gui/dialogs/edit_form_dialog.py`.
+- Extracted `PromptEditorDialog` to `gui/dialogs/prompt_editor_dialog.py`.
+- Extracted `DiffPanel` to `gui/panels/diff_panel.py`.
+- Created `DetailsPanel` in `gui/panels/details_panel.py` to show extended JSON attributes natively below the main dashboard table.
+- Removed unused and legacy code from `gui/db_browser_window.py` (`_on_dedup`, `_on_view_product_history`).
+- Significantly streamlined DB browser window layout implementation and improved architecture maintainability.
+### Not done / deferred
+- N/A
+### Notes
+- The Database Control Panel now cleanly delegates UI modals/dialogs to respective files.
+
+---
+
+## 2026-05-18 — Database Schema Cleanup (Phase 3)
+### Done
+- Implemented Database Schema Migration v9 (`db/migrations.py`) to remove legacy and redundant tables: `price_history`, `price_observations`, `monitored_products`, `project_products`, `projects`, `competitors`, `report_runs`, and `content_templates`.
+- Added safety verification logic to migration v9: non-empty tables (except `price_history`) are preserved to prevent data loss, with warnings logged.
+- Redesigned DB Browser sidebar (`gui/db_browser_window.py`):
+    - Removed legacy "Price History" and "Discovered Products" views from the RAW DATA section.
+    - Added "All Products" view pointing directly to the `products` table for simplified discovery browsing.
+- Resolved SQL join dependencies on `price_history` by updating the `all_products` query to be standalone.
+- Updated project documentation (`project.md`) to reflect the leaner v3.0 Database Schema.
+### Not done / deferred
+- Automatic data migration: historical price data in `price_history` was dropped (per requirements) as it duplicated `snapshot_products` data.
+### Notes
+- This cleanup significantly reduces database bloat and simplifies the maintenance of the Business Intelligence layer.
+
+---
+
+## 2026-05-18 — Extended Product Schema with Attributes and Extra
+### Done
+- Extended the `NormalizedProduct` and `RawProduct` dataclasses in `core/models.py` with `attributes` and `extra` optional dict fields.
+- Implemented Database Schema Migration v8 (`db/migrations.py`) to add `attributes` and `extra` columns (TEXT, default '{}') to both `products` and `snapshot_products` tables.
+- Updated `db/product_repo.py` to correctly map and persist `attributes` and `extra` into the database during insertions and updates.
+- Ensured that `gui/main_window.py` successfully reads and provisions these columns back into target `snapshot_products`.
+- Upgraded mapping logic inside MAPI pipelines: `PromModule` now accurately injects product characteristics into `attributes` and captures `ordersCount` within `extra`.
+- Maintained schema consistency across `Rozetka`, `Allo`, `Epicentr`, and `Hotline` site extractors to return empty dicts gracefully mitigating potential failures.
+
+---
+
+## 2026-05-18 — Task Creation Workflow & UI Improvements
+- Created a reusable `TaskDialog` modal (`gui/task_dialog.py`) for creating and editing tasks with name, type, and description fields, complete with non-empty validation for the task name and project themed aesthetics.
+- Hooked `TaskDialog` into `gui/main_window.py` to trigger prior to starting extraction for *new tasks*. Parsing correctly aborts if the user cancels.
+- Enhanced DB Browser sidebar (`gui/db_browser_window.py`) to display `task_type` formatted as `title [task_type]`. Double-clicking a task now opens the `TaskDialog` to edit its details directly.
+- Developed and applied Schema Migration v7 (`db/migrations.py`) which adds the `description` column to the `tasks` table and refactors the `task_type` column to allow flexible values by using standard SQLite schema alteration techniques (Add, Update, Drop, Rename) without dropping existing data.
+
+---
+
 ## 2026-05-18 — Professional README Update
 ### Done
 - Analyzed `project.md` and recent `CHANGELOG.md` entries to synthesize the current project state.

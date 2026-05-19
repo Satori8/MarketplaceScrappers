@@ -25,7 +25,10 @@ class BaseScraper(ABC):
     ) -> None:
         self.marketplace_name = marketplace_name
         if config_path == "config.yaml":
-            config_path = str(Path(__file__).resolve().parent.parent / "config.yaml")
+            self.project_root = Path(__file__).resolve().parent.parent
+            config_path = str(self.project_root / "config.yaml")
+        else:
+            self.project_root = Path(config_path).resolve().parent
         self.config_path = Path(config_path)
         self.config = self._load_config()
         self.anti_bot = AntiBotManager(config=self.config, captcha_callback=captcha_callback)
