@@ -49,6 +49,7 @@ class MainWindow(ctk.CTkFrame):
         self.snap_mode_var = tk.StringVar(value="new")
         self.snapshots_dict = {} # "Run At - [ID]" -> id
         self.url_configs = [] # list of {"url": "...", "tag": "..."}
+        self.prom_query_config = None # In-memory buffer for Prom API config
         
         self._setup_ui()
         self._setup_logging()
@@ -181,6 +182,10 @@ class MainWindow(ctk.CTkFrame):
             self.marketplaces_methods[mp.lower()] = method_var
             m_opt = ctk.CTkOptionMenu(row, values=["Auto", "Browser", "Requests", "MAPI"], variable=method_var, width=110, height=28, font=FONTS["small"])
             m_opt.pack(side="right")
+            
+            # Prom configuration button
+            if mp.lower() == "prom":
+                ctk.CTkButton(row, text="⚙", width=28, height=28, font=("Arial", 16), command=self._open_prom_config_dialog).pack(side="right", padx=(5, 0))
             
             # Status dot/label
             lbl = ctk.CTkLabel(row, text="●", text_color="#333333", font=("Arial", 14))
@@ -316,6 +321,33 @@ class MainWindow(ctk.CTkFrame):
         
         modal = DirectUrlsWindow(self, self.url_configs, _on_save)
         modal.focus_set()
+
+    def _open_prom_config_dialog(self):
+        from gui.dialogs.prom_query_config_dialog import PromQueryConfigDialog
+        
+        is_append = self.snap_mode_var.get() == "append"
+        task_id = None
+        
+        if is_append:
+            selected_name = self.snap_dropdown.get()
+            snap_db_id = self.snapshots_dict.get(selected_name)
+            if snap_db_id:
+                try:
+                    conn = self.db.get_connection()
+                    row = conn.execute("SELECT task_id FROM snapshots WHERE id = ?", (snap_db_id,)).fetchone()
+                    if row:
+                        task_id = row["task_id"]
+                except Exception as e:
+                    logger.error(f"Failed to fetch task_id for config: {e}")
+            if not task_id:
+                messagebox.showwarning("Error", "Please select a valid snapshot first to configure the appended task.")
+                return
+                
+        def _on_save_config(new_config):
+            self.prom_query_config = new_config
+
+        modal = PromQueryConfigDialog(self, task_id=task_id, in_memory_config=self.prom_query_config, on_save_callback=_on_save_config)
+        modal.grab_set()
 
     def _refresh_clients(self):
         try:
@@ -513,7 +545,7 @@ class MainWindow(ctk.CTkFrame):
             try:
                 conn = self.db.get_connection()
                 conn.execute("BEGIN")
-                now_iso = datetime.now(timezone.utc).isoformat()
+                now_iso = datetime.now().astimezone().isoformat()
                 
                 # If we have a snapshot ID but no task ID, find the task ID
                 if _snap_db_id and not _task_db_id:
@@ -539,12 +571,15 @@ class MainWindow(ctk.CTkFrame):
                     t_type = task_data["task_type"] if task_data else task_type
                     t_desc = task_data.get("description") if task_data else None
 
+                    # If prom config exists in memory, save it to tasks table
+                    p_cfg = json.dumps(self.prom_query_config) if getattr(self, "prom_query_config", None) else None
+
                     conn.execute(
                         """INSERT INTO tasks
-                           (client_id, title, task_type, description, schedule_type, query_params, created_at, updated_at)
-                           VALUES (?, ?, ?, ?, 'one_time', ?, ?, ?)""",
+                           (client_id, title, task_type, description, schedule_type, query_params, prom_query_config, created_at, updated_at)
+                           VALUES (?, ?, ?, ?, 'one_time', ?, ?, ?, ?)""",
                         (self.active_client_id, t_title, t_type, t_desc,
-                         query_params_json, now_iso, now_iso)
+                         query_params_json, p_cfg, now_iso, now_iso)
                     )
                     _task_db_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
                 else:

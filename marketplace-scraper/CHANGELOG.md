@@ -1,3 +1,86 @@
+## 2026-05-21 — DB Viewer: Snapshot Mode Column + Details Panel Scope View
+### Done
+- **`gui/db_browser_window.py`**: Added `t.task_type as mode` to the Snapshots SQL query. Replaced the wide `Scope (Params)` column (300px) with a compact `Mode` column (100px, filterable). The `scope` field (query_params JSON) is now fetched with `width=0` (hidden from treeview) and passed to the Details panel.
+- **`gui/db_browser_window.py`**: Extended `_on_tree_select` to also trigger the Details panel for the `snapshots` table (previously only `all_products` and `snapshot_products` showed details).
+- **`gui/panels/details_panel.py`**: Refactored `DetailsPanel` with a branching renderer: `_render_snapshot()` parses and displays the `scope` (query_params JSON) in a two-column layout showing Queries list and Marketplaces on the left, Run Settings (pages, threads, delay, skip_stock) on the right. `_render_product()` retains the existing attributes/extra/image display logic. Added helper methods `_label()`, `_section()`, `_kv()` for clean, consistent label rendering.
+### Not done / deferred
+- Snapshot Details tab-style split (currently inline panel at bottom, not a tabbed widget)
+### Notes
+- Scope data (query_params) is still fetched from DB for every snapshot row — just not rendered in the treeview column. Zero performance regression.
+
+---
+
+## 2026-05-20 — Allo Category Breadcrumb Fallback
+### Done
+- **Allo Scraper**: Updated `scrapers/mapi_scraper/sites/allo.py` in `AlloAPI.normalize` to check and fallback to the last breadcrumb item's `title` or `label` if the parsed `category_name` is `None` or empty.
+- **Lightweight AJAX Scrape integration**: Modified the `_scrape_impl` method in `AlloModule` to pass the AJAX response `breadcrumbs` into the simulated `raw__allo` state so that `normalize` has access to the full breadcrumbs array when performing lightweight scrapes.
+- **Unit Testing**: Created a dedicated automated test suite in `tests/test_allo_fallback.py` to verify the category fallback functionality against mock data structure variations.
+### Notes
+- Verified all new and existing tests pass successfully.
+
+---
+
+## 2026-05-20 — Prom isDisabled Availability Support
+### Done
+- **Prom GQL Queries**: Added `isDisabled` field to the standard GraphQL queries (`CategoryListingQuery`, `CompanyListingQuery`, `SearchListingQuery`, `ManufacturerListingQuery`) in `prom_queries.json` at the `products` sibling level.
+- **Prom Parser & Availability**: Updated `scrapers/mapi_scraper/sites/prom.py` under both `graphql` and `html` parser pipelines to extract `isDisabled` and treat it as a factor in availability checks (`isDisabled: true` forces `avail_code` to `"Немає в наявності"`).
+- **Unit Tests**: Added automated unit tests to `tests/test_availability.py` verifying that both active (`isDisabled: False` -> available) and disabled (`isDisabled: True` -> out of stock) products are correctly parsed.
+### Notes
+- Executed and validated all test cases successfully with zero regressions.
+
+---
+
+## 2026-05-20 — Availability Parsing Fix
+### Done
+- **Task Scheduler / Parser**: Implemented a case-insensitive unified `parse_availability_to_code` helper in `core/scheduler.py` to correctly map scraper availability strings to database codes and filter out-of-stock items. This resolves the bug where `"Немає в наявності"` (out of stock) was mistakenly mapped to `1` (in stock) due to containing the substring `"наявності"`.
+- **Allo Scraper**: Updated `scrapers/mapi_scraper/sites/allo.py` to support `stock_status` values as both string and integer types (e.g. `"1"`, `"0"`, `1`, `0` formats) robustly.
+### Notes
+- Created `tests/test_availability.py` and `tests/test_scheduler_import.py` to verify the new parsing logic and ensure zero regression of scheduler imports.
+
+
+---
+
+## 2026-05-20 — Epicentr Attribute Extraction Fix
+### Done
+- **Epicentr Scraper**: Resolved a bug where product attributes were not being extracted correctly. The scraper now correctly maps `values` (plural) from the Epicentr MAPI response into the `attributes` dictionary, with a fallback to `value` (singular) for compatibility.
+### Notes
+- This fix ensures that specifications like "Brand", "Exchange & Return", etc., are correctly persisted in the database for Epicentr products.
+
+---
+
+## 2026-05-20 — Local Timezone Transition & DB Browser Enhancement
+### Done
+- **Database Browser**: Added `attributes` and `extra` fields to the `snapshot_products` SQL query in `gui/db_browser_window.py` to allow raw data inspection without modifying table columns.
+- **Timezone Transition**: Migrated the entire application (snapshots, products, tasks, reports, cache, migrations) from UTC to local timezone (Kyiv) with explicit offsets for better local observability and "saved-as-seen" timestamps.
+### Notes
+- All future scrapes will now record time as `YYYY-MM-DDTHH:MM:SS.mmmmmm+03:00` (or similar), matching the user's local context.
+
+---
+
+## 2026-05-20 — Human-readable Debug Timestamps
+### Done
+- **Debugging & Logging**: Switched `scrapers/mapi_scraper/http.py` from Unix timestamps to human-readable `YYYYMMDD_HHMMSS` format for `run_` directories in `logs/` and `results/`.
+- **Run Identification**: Identified `run_1779231093` as started at `2026-05-20 01:51:33` and renamed its corresponding `results` folder for easier navigation.
+### Not done / deferred
+- Existing log folder `logs/run_1779231093` could not be immediately renamed as it is currently locked by the active scraper process.
+### Notes
+- This change simplifies the process of matching log/result files to specific application runs without requiring manual timestamp conversion.
+
+---
+
+## 2026-05-19 — Prom Query Override Configuration
+### Done
+- **Prom.ua MAPI Extraction**: Externalized GraphQL queries into `prom_queries.json` to allow easy administration and limit adjustments (Limit increased to 96 items per page, adjusting pagination math).
+- **Task Query Customization**: Added `prom_query_config` column to `tasks` database table (Migration v14) to permanently store `extra_variables` and `custom_query_override` for individual parsing tasks.
+- **GUI Integration**: Created `PromQueryConfigDialog` modal to visualize and edit query configurations. Attached dynamic saving capabilities mapped to the existing DbBrowser append/new tracking logic.
+- **Scraper Pipeline Update**: Modified `core/scheduler.py` to securely fetch database config and dynamically merge override variables / manual GraphQL bodies into `PromAPI` before requesting Prom.ua data.
+### Not done / deferred
+- N/A
+### Notes
+- Extends the Master Specification for Prom.ua using `prom_queries.json` effectively serving as the live production configuration.
+
+---
+
 ## 2026-05-18 — Database Integrity & Lock Stabilization
 ### Done
 - **Structural Bug Fix (Critical)**: Resolved `FOREIGN KEY constraint failed` error by identifying and removing an orphan `REFERENCES products(id)` constraint on the `snapshot_products.product_id` column. This constraint remained from an old schema version even after the `products` table was dropped in Phase 3.

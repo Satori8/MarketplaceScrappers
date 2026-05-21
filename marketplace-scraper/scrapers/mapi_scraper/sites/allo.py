@@ -72,9 +72,18 @@ class AlloAPI:
                         cat_map[str(child.get("cat_id"))] = child.get("label")
 
             if not category_name:
-                crumbs = state.get("common", {}).get("breadcrumbs", [])
-                if crumbs:
-                    category_name = crumbs[-1].get("label")
+                crumbs = None
+                if isinstance(state, dict):
+                    crumbs = state.get("common", {}).get("breadcrumbs")
+                if not crumbs and isinstance(raw, dict):
+                    crumbs = raw.get("breadcrumbs")
+                if not crumbs and isinstance(raw_data, dict):
+                    crumbs = raw_data.get("breadcrumbs")
+                
+                if crumbs and isinstance(crumbs, list):
+                    last_crumb = crumbs[-1]
+                    if isinstance(last_crumb, dict):
+                        category_name = last_crumb.get("title") or last_crumb.get("label")
 
             # Build merchant mapping from seoMicroMarkup
             merchant_map = {}
@@ -124,7 +133,7 @@ class AlloAPI:
                     "name": p.get("name"),
                     "brand": p.get("brand"),
                     "price": str(price_val) if price_val is not None else None,
-                    "avail_code": "В наявності" if p.get("stock_status") == 1 else "Немає в наявності",
+                    "avail_code": "В наявності" if str(p.get("stock_status")) in ("1", "1.0", "True", "true") else "Немає в наявності",
                     "merchant_id": str(p.get("seller_id") or p.get("seller", {}).get("id") or partner_id),
                     "merchant_name": p.get("seller_name") or p.get("seller", {}).get("name") or merchant_map.get(psku) or ("Allo" if not partner_id else f"Seller {partner_id}"),
                     "category_id": category_id or p.get("category_id"),
@@ -223,16 +232,21 @@ class AlloModule(BaseModule):
         parts.append(f"filters={json.dumps(filters or {}, separators=(',', ':'))}")
         parts.append("qty=60")
         
-        special_keys = {'search', 'category', 'parent_category', 'filters', 'sort_order', 'sort_dir', 'category_id'}
+        special_keys = {'search', 'category', 'parent_category', 'filters', 'sort_order', 'sort_dir', 'category_id', 'path_category_id'}
         for k, v in parsed_deeplink.items():
             if k not in special_keys and v is not None:
                 parts.append(f"{k}={v}")
 
         if search_query: parts.append(f"q={search_query}")
         
-        final_cat_id = parsed_deeplink.get('category_id') or category_id
-        if not search_query and final_cat_id:
-             parts.append(f"category_id={final_cat_id}")
+        final_cat_id = parsed_deeplink.get('category_id') or parsed_deeplink.get('path_category_id') or category_id
+        if final_cat_id:
+            # Pass category_id for both category pages and category-filtered search pages.
+            if not search_query:
+                parts.append(f"category_id={final_cat_id}")
+            else:
+                # For search, append as a filter param so Allo scopes results to the category.
+                parts.append(f"category_id={final_cat_id}")
         
         if page > 1: parts.append(f"p={page}")
         elif "p=" not in [p.split('=')[0] for p in parts if '=' in p]: parts.append("p=1")
@@ -250,20 +264,20 @@ class AlloModule(BaseModule):
              
         return base + "&".join(quoted_parts)
 
-    def scrape_url(self, url: str, page: int = 1, debug: bool = False) -> dict:
+    def scrape_url(self, url: str, page: int = 1, debug: bool = False, task_config: dict = None) -> dict:
         fetch = _make_sync_fetcher()
         try:
-            return asyncio.run(self._scrape_impl(url, page, debug, fetch))
+            return asyncio.run(self._scrape_impl(url, page, debug, fetch, task_config=task_config))
         except RuntimeError as e:
             # Caller is already in an async event loop
             logger.warning(f"RuntimeError in sync scrape_url: {e}. Callers in async context must use async_scrape_url().", extra={"site": self.SITE_ID})
             raise
 
-    async def async_scrape_url(self, url: str, page: int = 1, debug: bool = False, proxy: str | None = None) -> dict:
+    async def async_scrape_url(self, url: str, page: int = 1, debug: bool = False, proxy: str | None = None, task_config: dict = None) -> dict:
         fetch = _make_async_fetcher(proxy=proxy)
-        return await self._scrape_impl(url, page, debug, fetch)
+        return await self._scrape_impl(url, page, debug, fetch, task_config=task_config)
 
-    async def _scrape_impl(self, url: str, page: int, debug: bool, fetch) -> dict:
+    async def _scrape_impl(self, url: str, page: int, debug: bool, fetch, task_config: dict = None) -> dict:
         site = self.SITE_ID
         api = self._api
         mode = "url"
@@ -273,13 +287,20 @@ class AlloModule(BaseModule):
 
         paginated_url = self._inject_page(url, page)
         
-        # Strip pagination and search prefixes to generate a stable base URL for the discovery cache
+        # Build a stable cache key.
+        # For search URLs: include the query string so different searches don't collide.
+        # Strip only the page-injection prefix (/p-N/) from the path.
         parsed = urlparse(url)
         c_path = re.sub(r'/p-\d+/?', '/', parsed.path)
         c_path = re.sub(r'/+', '/', c_path)
         if "/catalogsearch/" in c_path and "index/" in c_path:
-            c_path = c_path.replace("index/", "") 
+            c_path = c_path.replace("index/", "")
+        # Include the query string in the key so different search terms get separate cache entries
         base_url = urlunparse(parsed._replace(path=c_path))
+
+        # Never cache deeplinks for search catalog pages — the embedded category filter
+        # causes category drift across pages when search results span multiple categories.
+        _is_search_url = "/catalogsearch/" in parsed.path
 
         with self._CACHE_LOCK:
             cached_deeplink = self._DEEPLINK_CACHE.get(base_url)
@@ -294,15 +315,27 @@ class AlloModule(BaseModule):
                 extracted = self._extract_deeplink(html)
                 if extracted:
                     cached_deeplink = extracted
-                    with self._CACHE_LOCK:
-                        self._DEEPLINK_CACHE[base_url] = cached_deeplink
-                        logger.info(f"Cached deeplink for {base_url}", extra={"site": site})
+                    # Only cache deeplinks for category pages, not search results.
+                    # Search deeplinks embed category filters that drift across pages.
+                    if not _is_search_url:
+                        with self._CACHE_LOCK:
+                            self._DEEPLINK_CACHE[base_url] = cached_deeplink
+                            logger.info(f"Cached deeplink for {base_url}", extra={"site": site})
+                    else:
+                        logger.info(f"Deeplink extracted (not cached — search URL): {base_url}", extra={"site": site})
 
         normalized_data = None
         
         # 2. Attempt Lightweight AJAX implementation if deeplink found
         if cached_deeplink:
             parsed_deeplink = self._parse_deeplink(cached_deeplink)
+            
+            # Extract category ID from the original URL path (e.g. /cat-48/ → 48)
+            # and inject it into parsed_deeplink so the AJAX URL correctly scopes results.
+            _cat_match = re.search(r'/cat-(\d+)(?:/|$)', parsed.path)
+            if _cat_match:
+                parsed_deeplink['path_category_id'] = _cat_match.group(1)
+                logger.debug(f"Extracted path_category_id={parsed_deeplink['path_category_id']} from URL", extra={"site": site})
             
             # Partner overrides
             if "partner_" in url:
@@ -334,20 +367,28 @@ class AlloModule(BaseModule):
                 products = data_ajax.get("product_list", {}).get("items", [])
 
                 # Determine real total_pages from AJAX response.
-                # Allo AJAX may expose total_count at data_ajax["product_list"]["total_count"].
+                # total_count is the most reliable signal; fall back to page-count heuristics.
+                # IMPORTANT: when total_count is absent, do NOT use page+1 as that grows with each
+                # iteration. Instead use a large sentinel so the scheduler's _page_valid_products==0
+                # guard is the sole stop mechanism.
                 per_page = 60
                 product_list = data_ajax.get("product_list") or {}
                 total_count = product_list.get("total_count") or product_list.get("totalCount") or 0
                 if total_count:
                     calc_total_pages = (int(total_count) + per_page - 1) // per_page
-                elif products and len(products) >= per_page:
-                    calc_total_pages = page + 1  # full page → at least one more
+                    logger.debug(f"Allo total_count={total_count}, calc_total_pages={calc_total_pages}", extra={"site": site})
+                elif len(products) >= per_page:
+                    # Full page but no total_count — unknown total.
+                    # Use a large sentinel; rely on 0-valid-products stop in the scheduler.
+                    calc_total_pages = 999
                 else:
-                    calc_total_pages = page  # partial/empty page → this is the last
+                    # Partial or empty page — this is the last page.
+                    calc_total_pages = page
 
                 mock_raw = {
                     "source": "window.__ALLO__",
                     "raw__allo": {
+                        "breadcrumbs": data_ajax.get("breadcrumbs"),
                         "state": {
                             "catalog/category/product-list": {
                                 "products": products,
@@ -359,6 +400,9 @@ class AlloModule(BaseModule):
                             "catalog/category": {
                                 "categoryId": parsed_deeplink.get("category_id"),
                                 "category": {"name": parsed_deeplink.get("category_name")}
+                            },
+                            "common": {
+                                "breadcrumbs": data_ajax.get("breadcrumbs")
                             },
                             "layered_navigation": data_ajax.get("layered_navigation")
                         }

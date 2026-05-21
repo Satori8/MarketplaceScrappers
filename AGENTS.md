@@ -35,6 +35,7 @@ To ensure safety and maintainability, you MUST adhere to the following constrain
 - DO NOT change any existing function or method signatures (names, parameters, or return types) without prior permission.
 - DO NOT modify more than one function or one module per turn/step. Keep changes small, focused, and verifiable.
 - Always add null-checks and defensive try-except blocks when interacting with external resources (APIs, Web Pages, DB).
+- Always perform a view_file on the target section of project.md or CHANGELOG.md immediately before calling replace_file_content in the same turn. Never rely on previous view_file results from earlier turns, as the file content or line numbers may have shifted due to other edits or concurrent processes.
 
 - **Operational Workflow**:
   - **Research First**: Always view the relevant file and its dependencies before proposing an edit.

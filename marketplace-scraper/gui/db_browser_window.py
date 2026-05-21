@@ -99,7 +99,8 @@ TABLES: dict[str, dict[str, Any]] = {
         "label": "Snapshots", "icon": "📷", "section": "business",
         "table": "snapshots", "fk_join": "s.task_id",
         "sql": """
-            SELECT s.id, s.run_at, s.product_count, s.status, t.query_params as scope
+            SELECT s.id, s.run_at, s.product_count, s.status,
+                   t.task_type as mode, t.query_params as scope
             FROM snapshots s
             LEFT JOIN tasks t ON s.task_id = t.id
             ORDER BY s.run_at DESC
@@ -107,7 +108,8 @@ TABLES: dict[str, dict[str, Any]] = {
         "cols": [
             ("id", "ID", 40, False), ("run_at", "Run At", 150, False),
             ("product_count", "Products", 80, False), ("status", "Status", 80, True),
-            ("scope", "Scope (Params)", 300, True),
+            ("mode", "Mode", 100, True),
+            ("scope", "Scope (Params)", 0, False),  # hidden; shown in Details panel
         ],
         "editable": False, "pk": "id",
     },
@@ -126,7 +128,9 @@ TABLES: dict[str, dict[str, Any]] = {
                    CASE sp.avail_code WHEN 1 THEN 'Yes' WHEN 0 THEN 'No' ELSE 'Ltd' END AS avail,
                    sp.merchant_name AS merchant, 
                    sp.url_tag,
-                   sp.url
+                   sp.url,
+                   sp.attributes,
+                   sp.extra
             FROM snapshot_products sp
         """,
         "cols": [
@@ -478,6 +482,9 @@ class DbBrowserWindow(ctk.CTkToplevel):
         self._status_lbl = ctk.CTkLabel(sb, text="Ready", font=("Segoe UI", 10),
                                         text_color="#666666", anchor="w")
         self._status_lbl.pack(side="left", padx=10)
+        self._sel_lbl = ctk.CTkLabel(sb, text="", font=("Segoe UI", 10, "bold"),
+                                     text_color="#8ab4f8", anchor="e")
+        self._sel_lbl.pack(side="right", padx=10)
 
     def _set_status(self, msg: str):
         try:
@@ -648,7 +655,7 @@ class DbBrowserWindow(ctk.CTkToplevel):
                 conn.execute(
                     "UPDATE tasks SET title = ?, task_type = ?, description = ?, updated_at = ? WHERE id = ?",
                     (result["title"], result["task_type"], result["description"], 
-                     datetime.now(timezone.utc).isoformat(), t_data["id"])
+                     datetime.now().astimezone().isoformat(), t_data["id"])
                 )
                 conn.commit()
                 self._refresh_client_sidebar()
@@ -913,10 +920,18 @@ class DbBrowserWindow(ctk.CTkToplevel):
             self._on_edit_row(event)
 
     def _on_tree_select(self, event):
-        if self._current_table not in ("all_products", "snapshot_products"):
+        sel = self._tree.selection()
+        # Update selected row count label
+        try:
+            if sel:
+                self._sel_lbl.configure(text=f"{len(sel)} selected")
+            else:
+                self._sel_lbl.configure(text="")
+        except Exception:
+            pass
+        if self._current_table not in ("all_products", "snapshot_products", "snapshots"):
             self._details_panel.hide()
             return
-        sel = self._tree.selection()
         if not sel:
             self._details_panel.hide()
             return

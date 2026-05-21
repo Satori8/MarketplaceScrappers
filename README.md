@@ -87,13 +87,23 @@ Converting raw data into business value requires more than a CSV export.
 
 - [x] **Phase 1: Multi-Engine Scraper:** Completed MAPI architecture for Rozetka, Prom, Allo, and Epicentr.
 - [x] **Phase 2: Data Robustness:** Centralized directory structure and absolute path enforcement.
-- [x] **Phase 2.1: BI Layer:** Implemented "Client -> Task -> Snapshot" hierarchy for historical persistence.
+- [x] **Phase 2.1: BI Layer:** Implemented "Client → Task → Snapshot" hierarchy for historical persistence.
 - [x] **Phase 2.2: Professional Reporting:** Multi-sheet Excel export engine with price dynamics.
-- [ ] **Phase 3: Global Intelligence:** Full integration of Gemini-powered structured attribute mapping.
+- [x] **Phase 3: Data Integrity Refinement:**
+  - [x] Modular MAPI refactor — site logic isolated in `sites/` package.
+  - [x] Async pagination stability — Rozetka, Allo, and Producer endpoint fixes.
+  - [x] Stateless Epicentr API integration (v1/v2).
+  - [x] Prom GraphQL overrides — externalized query templates (`prom_queries.json`).
+  - [x] Allo lightweight AJAX API with `_DEEPLINK_CACHE` for pagination speed.
+  - [x] Debug mode — raw JSON + normalized results persisted to `results/` with human-readable timestamps.
+  - [x] Unified availability parsing — case-insensitive `parse_availability_to_code` helper.
+  - [x] Allo: Robust `stock_status` parsing (string + integer formats).
+  - [x] Allo: Category fallback to last breadcrumb title when `category` is `None`.
+  - [x] Prom: `isDisabled: true` → out-of-stock support in GQL query templates and parser.
+  - [x] DB Viewer: `Mode` column (discovery/tracking) on Snapshots list + Details panel showing scope params inline.
 - [ ] **Phase 4: Web Dashboard:** Transitioning from Tkinter to a Next.js / FastAPI web interface.
 
 ---
 
 **Built with precision for the Ukrainian e-commerce market.**  
-*This is a solo-engineered project focusing on high-load data extraction and product-market fit.*
-
+*Last updated: 2026-05-21 — Phase 3.3 Data Integrity complete.*

@@ -22,6 +22,35 @@ from core.normalizer import DataNormalizer
 logger = logging.getLogger(__name__)
 
 
+def parse_availability_to_code(availability: Any) -> int:
+    """
+    Parses availability strings/integers into a database code:
+      1: In stock / Yes
+      0: Out of stock / No
+      2: Limited / Ltd (on order, limited quantity)
+    """
+    if not availability:
+        return 0
+    if isinstance(availability, int):
+        return availability
+        
+    avail_str = str(availability).strip().lower()
+    
+    # Check for negative terms first (out of stock)
+    if any(x in avail_str for x in ["немає", "знят", "снят", "out of stock", "outofstock", "відсутн", "закінчився"]):
+        return 0
+        
+    # Check for limited availability / on order
+    if any(x in avail_str for x in ["замовлен", "заказ", "limited", "закінчується", "обмежен"]):
+        return 2
+        
+    # Check for positive/in stock indicators
+    if any(x in avail_str for x in ["наявності", "stock", "есть", "наявний", "готовий"]):
+        return 1
+        
+    return 0
+
+
 class DbWriteQueue:
     """
     Serializes all SQLite write operations through a single dedicated writer thread.
@@ -260,7 +289,7 @@ class TaskScheduler:
                 price=0, currency="UAH", brand=None,
                 raw_specs=specs, description=None, image_url=None,
                 availability=None, rating=None, reviews_count=None,
-                category_path=None, scraped_at=datetime.now(timezone.utc)
+                category_path=None, scraped_at=datetime.now().astimezone()
             )
             rp._db_id = r["id"]
             to_norm.append(rp)
@@ -333,11 +362,11 @@ class TaskScheduler:
                     logger.info("Scraper '%s' halting due to stop event.", marketplace)
                     break
                 
-                prod.scraped_at = datetime.now(timezone.utc)
+                prod.scraped_at = datetime.now().astimezone()
                 prod.marketplace = marketplace  # ensure sync
                 
                 # Filter by stock if requested
-                if task.skip_out_of_stock and prod.availability and "Out" in prod.availability:
+                if task.skip_out_of_stock and parse_availability_to_code(prod.availability) == 0:
                     logger.info(f"Skipping '{prod.title}' - Out of Stock")
                     continue
                 
@@ -358,7 +387,7 @@ class TaskScheduler:
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """, (
                             sid, p.id, p.marketplace, p.sku, p.title, p.category_path, p.image_url, p.price,
-                            1 if p.availability and any(x in p.availability.lower() for x in ["наявності", "stock", "есть"]) else 0,
+                            parse_availability_to_code(p.availability),
                             p.merchant_name, p.url, p.url_tag,
                             json.dumps(p.attributes or {}, ensure_ascii=False),
                             json.dumps(p.extra or {}, ensure_ascii=False)
@@ -423,8 +452,25 @@ class TaskScheduler:
                 for p in range(1, pages + 1):
                     if self._stop_event.is_set(): break
                     mp_tag = marketplace.upper()
+                    
+                    # Fetch task_config if Prom
+                    task_config = None
+                    if marketplace == "prom":
+                        try:
+                            # task.session_id is snapshot_id. Get task_id, then get config
+                            _conn = self.db.get_connection()
+                            _row = _conn.execute("SELECT task_id FROM snapshots WHERE id = ?", (task.session_id,)).fetchone()
+                            if _row:
+                                _t_row = _conn.execute("SELECT prom_query_config FROM tasks WHERE id = ?", (_row["task_id"],)).fetchone()
+                                if _t_row and _t_row["prom_query_config"]:
+                                    task_config = json.loads(_t_row["prom_query_config"])
+                                    if not isinstance(task_config, dict):
+                                        task_config = None
+                        except Exception as e:
+                            logger.error(f"[{mp_tag}] Could not load prom_query_config: {e}")
+
                     logger.info(f"[{mp_tag}] MAPI Page {p}: {target_url}")
-                    res = await async_scrape(marketplace, target_url, page=p, debug=task.debug)
+                    res = await async_scrape(marketplace, target_url, page=p, debug=task.debug, task_config=task_config)
                     
                     if not res.get("ok"):
                         logger.warning(f"[{mp_tag}] MAPI Failed — page {p}: {target_url}")
@@ -474,12 +520,11 @@ class TaskScheduler:
                             url_tag=url_tag,
                             attributes=d.get("attributes", {}),
                             extra=d.get("extra", {}),
-                            scraped_at=datetime.now(timezone.utc)
+                            scraped_at=datetime.now().astimezone()
                         )
 
-                        # MAPI uses Ukrainian avail_code strings — "Out" alone never matches.
-                        _OOS_TERMS = ("Немає", "Знятий", "Out of Stock", "Out")
-                        if task.skip_out_of_stock and prod.availability and any(t in prod.availability for t in _OOS_TERMS):
+                        # Filter by stock if requested
+                        if task.skip_out_of_stock and parse_availability_to_code(prod.availability) == 0:
                             continue
 
                         _prod_ref = prod
@@ -498,7 +543,7 @@ class TaskScheduler:
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 """, (
                                     sid, p.id, p.marketplace, p.sku, p.title, p.category_path, p.image_url, p.price,
-                                    1 if p.availability and any(x in p.availability.lower() for x in ["наявності", "stock", "есть"]) else 0,
+                                    parse_availability_to_code(p.availability),
                                     p.merchant_name, p.url, p.url_tag,
                                     json.dumps(p.attributes or {}, ensure_ascii=False),
                                     json.dumps(p.extra or {}, ensure_ascii=False)

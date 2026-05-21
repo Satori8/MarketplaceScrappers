@@ -1,0 +1,158 @@
+[
+  {
+    "categoryId": 6,
+    "alias": "Bytovaya-tehnika",
+    "caption": "Побутова техніка",
+    "priority_reason": "Побутова техніка — висока цінова конкуренція, стандартні SKU"
+  },
+  {
+    "categoryId": 7,
+    "alias": "Kompyuternaya-tehnika-i-programmnoe-obespechenie",
+    "caption": "Комп'ютерна техніка та ПЗ",
+    "priority_reason": "Комп'ютерна техніка та ПЗ — ноутбуки, комплектуючі, аксесуари"
+  },
+  {
+    "categoryId": 50902,
+    "alias": "Telefony",
+    "caption": "Телефони та аксесуари",
+    "priority_reason": "Телефони та аксесуари — найбільш конкурентна ніша"
+  },
+  {
+    "categoryId": 5005,
+    "alias": "Audio-i-aksessuary",
+    "caption": "Аудіотехніка та аксесуари",
+    "priority_reason": "Аудіотехніка та аксесуари"
+  },
+  {
+    "categoryId": 637,
+    "alias": "Audio-video-foto-tehnika",
+    "caption": "TV та відеотехніка",
+    "priority_reason": "TV та відеотехніка"
+  },
+  {
+    "categoryId": 5010,
+    "alias": "Avtonomnaya-energetika",
+    "caption": "Автономна енергетика",
+    "priority_reason": "Автономна енергетика — актуально для UA ринку"
+  },
+  {
+    "categoryId": 5009,
+    "alias": "Poverbanki-zaryadnye-stantsii",
+    "caption": "Повербанки та зарядні станції",
+    "priority_reason": "Повербанки та зарядні станції"
+  },
+  {
+    "categoryId": 5502,
+    "alias": "Avtozapchasti",
+    "caption": "Автозапчастини",
+    "priority_reason": "Автозапчастини — стандартні артикули, пряма цінова конкуренція"
+  },
+  {
+    "categoryId": 3416,
+    "alias": "Rashodnye-materialy-avtohimiya-i-avtokosmetika",
+    "caption": "Автохімія, автокосметика і автомастила",
+    "priority_reason": "Автохімія та автокосметика"
+  },
+  {
+    "categoryId": 1212,
+    "alias": "Avtoaksessuary",
+    "caption": "Аксесуари для авто",
+    "priority_reason": "Аксесуари для авто"
+  },
+  {
+    "categoryId": 3404,
+    "alias": "Avtomobilnaya-elektronika",
+    "caption": "Автомобільна електроніка",
+    "priority_reason": "Автомобільна електроніка"
+  },
+  {
+    "categoryId": 5506,
+    "alias": "Vse-dlya",
+    "caption": "Все для ТО",
+    "priority_reason": "Все для ТО"
+  },
+  {
+    "categoryId": 132402,
+    "alias": "Santehnika",
+    "caption": "Сантехніка",
+    "priority_reason": "Сантехніка"
+  },
+  {
+    "categoryId": 1417,
+    "alias": "Elektroinstrument",
+    "caption": "Електроінструмент",
+    "priority_reason": "Електроінструмент"
+  },
+  {
+    "categoryId": 8103,
+    "alias": "Otoplenie-i-teplyj-pol",
+    "caption": "Опалення та тепла підлога",
+    "priority_reason": "Опалення та тепла підлога"
+  },
+  {
+    "categoryId": 132413,
+    "alias": "Radiatory-i-obogrevateli",
+    "caption": "Радіатори та обігрівачі",
+    "priority_reason": "Радіатори та обігрівачі"
+  },
+  {
+    "categoryId": 13070101,
+    "alias": "Napolnye-pokrytiya-i-materialy",
+    "caption": "Підлогові покриття",
+    "priority_reason": "Підлогові покриття"
+  },
+  {
+    "categoryId": 130732,
+    "alias": "Plitka-i-keramicheskie-izdeliya",
+    "caption": "Облицювальна плитка",
+    "priority_reason": "Облицювальна плитка"
+  },
+  {
+    "categoryId": 1305,
+    "alias": "Okna-dveri-oformlenie-proemov",
+    "caption": "Вікна та двері",
+    "priority_reason": "Вікна та двері"
+  },
+  {
+    "categoryId": 142003,
+    "alias": "Ruchnoj-instrument",
+    "caption": "Ручний інструмент",
+    "priority_reason": "Ручний інструмент"
+  },
+  {
+    "categoryId": 1307,
+    "alias": "Stroitelnye-materialy",
+    "caption": "Будівельні матеріали",
+    "priority_reason": "Будівельні матеріали"
+  },
+  {
+    "categoryId": 1324,
+    "alias": "Vodo-gazo-teploobespechenie",
+    "caption": "Водо-, газо-, теплозабезпечення",
+    "priority_reason": "Водо-, газо-, теплозабезпечення"
+  },
+  {
+    "categoryId": 2702,
+    "alias": "Zootovary",
+    "caption": "Товари для домашніх тварин і птахів",
+    "priority_reason": "Товари для домашніх тварин"
+  },
+  {
+    "categoryId": 2717,
+    "alias": "Veterinariya",
+    "caption": "Ветеринарія",
+    "priority_reason": "Ветеринарія"
+  },
+  {
+    "categoryId": 2009,
+    "alias": "Trenazhery",
+    "caption": "Тренажери",
+    "priority_reason": "Тренажери"
+  },
+  {
+    "categoryId": 1821,
+    "alias": "Velosipedy-i-aksessuary",
+    "caption": "Велосипеди та аксесуари",
+    "priority_reason": "Велосипеди та аксесуари"
+  }
+]

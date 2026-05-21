@@ -1,9 +1,9 @@
 # Marketplace Scraper — Project Documentation
 
 ### Project status
-Current stage: Phase 3 — Global Intelligence Phase (Database Cleanup)
-Next stage: Phase 3.1 — Gemini Attribute Extraction
-Last updated: 2026-05-18 (Phase 3.0 stabilization: Foreign Key fix, DB Lock mitigation, and Image Integration)
+Current stage: Phase 3.3 — Data Integrity Refinement
+Next stage: Phase 4 — Enterprise Reporting Engine
+Last updated: 2026-05-21 (DB Viewer: Snapshot Mode Column + Details Panel Scope View)
 
 ---
 
@@ -97,8 +97,16 @@ All raw data from APIs/SSR maps into a strict common schema before database inge
 - **Modular Refactor**: As of 2026-05-14, the scraper is fully modular. Site logic resides in `sites/`.
 - **Async Pagination Stability**: As of 2026-05-15, resolved identified anomalies (Rozetka loops, Allo duplicate pages, Rozetka subdomain redirects, and Producer endpoint fixes) by implementing explicit page injection, subdomain redirect handling, and specialized producer API logic.
 - **Stateless Epicentr**: Epicentr logic is now fully API-driven and stateless, bypassing previous SSR/session issues.
-- **Prom GraphQL**: Prom.ua uses direct GraphQL queries for speed and reliability. Detailed API structure and documentation added in `scrapers/mapi_scraper/prom_graph.ql`.
+- **Prom GraphQL Overrides**: Prom.ua uses direct GraphQL queries (externalized to `prom_queries.json`). Configurations like `extra_variables` (e.g. `company_id`) can now be set per-task via the GUI (`PromQueryConfigDialog`) and are stored in the DB `tasks.prom_query_config`.
 - **Allo Lightweight API**: As of 2026-05-15, Allo relies on a direct AJAX API following an initial SSR discovery fetch. In-memory `_DEEPLINK_CACHE` is used for pagination speed, drastically reducing Node/execjs dependency overhead.
 - **MAPI Debug Mode**: As of 2026-05-16, implemented full debug flag propagation from GUI to Scraper Engines. Raw JSON responses and normalized results are now persisted to `scrapers/mapi_scraper/results/` when the debug checkbox is enabled.
 - **Epicentr Merchant Accuracy**: Refined Epicentr normalization to correctly identify marketplace vs. first-party sellers using the `seller` field and improved category path extraction via `sectionsUa`.
 - **MAPI Dependency**: Still reliant on Node.js availability to process Nuxt object injections using `execjs` when lightweight discovery fails. Ensure Node is on the PATH for Windows hosts.
+- **Human-readable Debugging**: As of 2026-05-20, updated `scrapers/mapi_scraper/http.py` to use human-readable timestamps (`YYYYMMDD_HHMMSS`) for run directories instead of Unix timestamps, improving logs and results traceability. Existing `run_1779231093` was identified as `2026-05-20 01:51:33`.
+- **Availability Parsing Accuracy**: As of 2026-05-20, fixed availability code parsing in `core/scheduler.py` by implementing a unified case-insensitive `parse_availability_to_code` helper. This resolved a bug where "Немає в наявності" (Ukrainian for out of stock) was incorrectly recognized as in-stock due to containing the substring "наявності".
+- **Allo Stock Status Robustness**: As of 2026-05-20, refined `scrapers/mapi_scraper/sites/allo.py` to parse `stock_status` robustly for both string and integer formats (supporting `"1"`, `"0"`, `1`, `0` representations).
+- **Prom isDisabled Availability Support**: As of 2026-05-20, added the `isDisabled` field to standard GraphQL query templates in `prom_queries.json` and updated `scrapers/mapi_scraper/sites/prom.py` parser pipelines (both GraphQL and HTML/Apollo state) to treat `isDisabled: true` as out of stock ("Немає в наявності").
+- **DB Viewer: Snapshot Mode Column + Details Panel**: As of 2026-05-21, the Snapshots view in `gui/db_browser_window.py` now shows a `Mode` column (`task_type`: discovery/tracking). The `Scope (Params)` column has been replaced by an inline Details panel (at row bottom) which parses and displays the full `query_params` JSON — showing Queries, Marketplaces, and Run Settings in a two-column layout. `gui/panels/details_panel.py` now branches between snapshot and product rendering modes automatically.
+
+
+
